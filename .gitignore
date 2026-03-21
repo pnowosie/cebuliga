@@ -24,3 +24,8 @@ npm-debug.log*
 
 # AI agents
 CLAUDE.md
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
