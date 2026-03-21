@@ -1,0 +1,77 @@
+---
+import { execSync } from 'child_process';
+
+const sha = execSync('git rev-parse --short HEAD').toString().trim();
+const date = new Date().toISOString().split('T')[0];
+const version = `${sha} - ${date}`;
+---
+
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧅</text></svg>"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Pierwsza Liga Cebularzowa 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html, body {
+        height: 100%;
+      }
+
+      body {
+        font-family: 'Space Grotesk', sans-serif;
+        background-color: #0d1117;
+        color: #c9d1d9;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+      }
+
+      h1 {
+        font-size: clamp(1.75rem, 5vw, 3rem);
+        font-weight: 700;
+        color: #e6edf3;
+        text-align: center;
+        letter-spacing: -0.02em;
+      }
+
+      footer {
+        padding: 1rem;
+        font-size: 0.75rem;
+        color: #484f58;
+        letter-spacing: 0.05em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Pierwsza Liga Cebularzowa 2026</h1>
+    </main>
+    <footer>{version}</footer>
+  </body>
+</html>
