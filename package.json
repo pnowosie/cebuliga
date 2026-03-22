@@ -13,5 +13,8 @@
   },
   "dependencies": {
     "astro": "^6.0.8"
+  },
+  "devDependencies": {
+    "tsx": "^4.21.0"
   }
 }

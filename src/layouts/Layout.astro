@@ -1,0 +1,128 @@
+---
+import { execSync } from 'child_process';
+
+interface Props {
+  title: string;
+  currentPage: 'home' | 'gracze' | 'wyniki';
+}
+
+const { title, currentPage } = Astro.props;
+
+const sha = execSync('git rev-parse --short HEAD').toString().trim();
+const date = new Date().toISOString().split('T')[0];
+const version = `${sha} - ${date}`;
+---
+
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧅</text></svg>"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html, body {
+        height: 100%;
+      }
+
+      body {
+        font-family: 'Space Grotesk', sans-serif;
+        background-color: #0d1117;
+        color: #c9d1d9;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      header {
+        padding: 1.25rem 2rem;
+        border-bottom: 1px solid #21262d;
+      }
+
+      header h1 {
+        font-size: clamp(1.1rem, 3vw, 1.5rem);
+        font-weight: 700;
+        color: #e6edf3;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.75rem;
+      }
+
+      nav {
+        display: flex;
+        gap: 1.5rem;
+      }
+
+      nav a {
+        color: #8b949e;
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 400;
+        padding-bottom: 2px;
+      }
+
+      nav a:hover {
+        color: #e6edf3;
+      }
+
+      nav a.active {
+        color: #e6edf3;
+        font-weight: 700;
+        border-bottom: 2px solid #58a6ff;
+      }
+
+      main {
+        flex: 1;
+        padding: 2rem;
+        max-width: 960px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      main h2 {
+        font-size: clamp(1.4rem, 4vw, 2rem);
+        font-weight: 700;
+        color: #e6edf3;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.02em;
+      }
+
+      footer {
+        padding: 1rem 2rem;
+        font-size: 0.75rem;
+        color: #484f58;
+        letter-spacing: 0.05em;
+        border-top: 1px solid #21262d;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Pierwsza Liga Cebularzowa 2026</h1>
+      <nav>
+        <a href="/" class={currentPage === 'home' ? 'active' : ''}>Home</a>
+        <a href="/gracze" class={currentPage === 'gracze' ? 'active' : ''}>Gracze</a>
+        <a href="/wyniki" class={currentPage === 'wyniki' ? 'active' : ''}>Wyniki</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>{version}</footer>
+  </body>
+</html>

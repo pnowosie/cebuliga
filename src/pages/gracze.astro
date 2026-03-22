@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import players from '../../data/players.json';
+
+const MAX_NAME = 18;
+const shorten = (s: string) => s.length > MAX_NAME ? s.slice(0, MAX_NAME - 1) + '…' : s;
+---
+
+<Layout title="Gracze — Pierwsza Liga Cebularzowa 2026" currentPage="gracze">
+  <h2>Gracze</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th></th>
+        <th>Gracz</th>
+        <th>Chess.com</th>
+        <th>Ranking</th>
+      </tr>
+    </thead>
+    <tbody>
+      {players.map(p => (
+        <tr>
+          <td class="no">{p.no}</td>
+          <td class="avatar">
+            {p.picture
+              ? <img src={p.picture} alt={p.id} width="32" height="32" />
+              : <span class="avatar-placeholder" />}
+          </td>
+          <td><a href={`/players/${p.id}`}>{shorten(p.displayName)}</a></td>
+          <td class="muted">{p.id}</td>
+          <td class="ranking">{p.ranking}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</Layout>
+
+<style>
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th {
+    text-align: left;
+    color: #8b949e;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid #21262d;
+  }
+
+  td {
+    padding: 0.55rem 0.75rem;
+    border-bottom: 1px solid #161b22;
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  td.no {
+    color: #484f58;
+    width: 2rem;
+    text-align: right;
+  }
+
+  td.avatar {
+    width: 40px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  td.avatar img {
+    display: block;
+    border-radius: 50%;
+  }
+
+  .avatar-placeholder {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #21262d;
+  }
+
+  td a {
+    color: #58a6ff;
+    text-decoration: none;
+  }
+
+  td a:hover {
+    text-decoration: underline;
+  }
+
+  td.muted {
+    color: #8b949e;
+    font-size: 0.82rem;
+  }
+
+  td.ranking {
+    color: #e6edf3;
+    font-weight: 600;
+    text-align: right;
+  }
+
+  th:last-child {
+    text-align: right;
+  }
+</style>

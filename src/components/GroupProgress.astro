@@ -1,0 +1,67 @@
+---
+interface Props {
+  label: string;
+  completedGames: number;
+  totalGames: number;
+}
+
+const { label, completedGames, totalGames } = Astro.props;
+const pct = totalGames > 0 ? Math.round((completedGames / totalGames) * 100) : 0;
+---
+
+<div class="pane">
+  <div class="title">{label}</div>
+  <div class="pct">{pct}%</div>
+  <div class="games">{completedGames} / {totalGames} partii</div>
+  <div class="bar-track">
+    <div class="bar-fill" style={`width: ${pct}%`} />
+  </div>
+</div>
+
+<style>
+  .pane {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 2.5rem 1.5rem 0;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .bar-track {
+    width: 100%;
+    height: 6px;
+    background: #21262d;
+    margin-top: 1.5rem;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: #2ea043;
+    transition: width 0.3s ease;
+  }
+
+  .title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #8b949e;
+    letter-spacing: 0.02em;
+  }
+
+  .pct {
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    font-weight: 700;
+    color: #e6edf3;
+    line-height: 1;
+  }
+
+  .games {
+    font-size: 0.85rem;
+    color: #484f58;
+  }
+</style>

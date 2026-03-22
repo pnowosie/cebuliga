@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import players from '../../../data/players.json';
+
+export function getStaticPaths() {
+  return players.map(p => ({ params: { id: p.id } }));
+}
+
+const { id } = Astro.params;
+const player = players.find(p => p.id === id)!;
+---
+
+<Layout
+  title={`${player.displayName} — Pierwsza Liga Cebularzowa 2026`}
+  currentPage="gracze"
+>
+  <h2>{player.displayName} <span class="cc-nick">({player.id})</span></h2>
+</Layout>
+
+<style>
+  h2 .cc-nick {
+    font-weight: 400;
+    color: #8b949e;
+    font-size: 0.85em;
+  }
+</style>

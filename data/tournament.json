@@ -1,0 +1,323 @@
+{
+  "lastRun": "2026-03-22T09:41:37.856Z",
+  "baselineRatings": {
+    "patokaczu": 2114,
+    "kirosgoli": 1927,
+    "yarosf": 1837,
+    "pioterha": 1688,
+    "bertiad": 1551,
+    "danio2022": 1223,
+    "filipplotnicki": 1102,
+    "domkepka": 374,
+    "szymonmiod": 2051,
+    "ppm2019": 1995,
+    "f0rk1ngtal": 1789,
+    "wladcachleba": 1684,
+    "slam877": 1380,
+    "dzasminaa": 1042,
+    "siemawo": 1024,
+    "sebant444": 816
+  },
+  "completedMatches": [
+    {
+      "group": "B",
+      "player1": "szymonmiod",
+      "player2": "ppm2019",
+      "score1": 1,
+      "score2": 1,
+      "games": [
+        {
+          "id": "166080236330",
+          "url": "https://www.chess.com/game/live/166080236330",
+          "date": "2026-03-17",
+          "white": "szymonmiod",
+          "black": "ppm2019",
+          "result": "0-1",
+          "whiteRatingBefore": 2048,
+          "blackRatingBefore": 1998
+        },
+        {
+          "id": "166078945440",
+          "url": "https://www.chess.com/game/live/166078945440",
+          "date": "2026-03-17",
+          "white": "ppm2019",
+          "black": "szymonmiod",
+          "result": "0-1",
+          "whiteRatingBefore": 1988,
+          "blackRatingBefore": 2058
+        }
+      ],
+      "recordedAt": "2026-03-18T12:06:55.032Z"
+    },
+    {
+      "group": "B",
+      "player1": "f0rk1ngtal",
+      "player2": "Dzasminaa",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166034702136",
+          "url": "https://www.chess.com/game/live/166034702136",
+          "date": "2026-03-16",
+          "white": "f0rk1ngtal",
+          "black": "Dzasminaa",
+          "result": "1-0",
+          "whiteRatingBefore": 1789,
+          "blackRatingBefore": 1042
+        },
+        {
+          "id": "166035430882",
+          "url": "https://www.chess.com/game/live/166035430882",
+          "date": "2026-03-16",
+          "white": "Dzasminaa",
+          "black": "f0rk1ngtal",
+          "result": "0-1",
+          "whiteRatingBefore": 1042,
+          "blackRatingBefore": 1789
+        }
+      ],
+      "recordedAt": "2026-03-18T12:06:55.033Z"
+    },
+    {
+      "group": "B",
+      "player1": "SieMaWo",
+      "player2": "Sebant444",
+      "score1": 1,
+      "score2": 1,
+      "games": [
+        {
+          "id": "166074449836",
+          "url": "https://www.chess.com/game/live/166074449836",
+          "date": "2026-03-17",
+          "white": "SieMaWo",
+          "black": "Sebant444",
+          "result": "0-1",
+          "whiteRatingBefore": 997,
+          "blackRatingBefore": 828
+        },
+        {
+          "id": "166075678506",
+          "url": "https://www.chess.com/game/live/166075678506",
+          "date": "2026-03-17",
+          "white": "Sebant444",
+          "black": "SieMaWo",
+          "result": "0-1",
+          "whiteRatingBefore": 824,
+          "blackRatingBefore": 1006
+        }
+      ],
+      "recordedAt": "2026-03-18T12:06:55.034Z"
+    },
+    {
+      "group": "B",
+      "player1": "ppm2019",
+      "player2": "f0rk1ngtal",
+      "score1": 0.5,
+      "score2": 1.5,
+      "games": [
+        {
+          "id": "166143867838",
+          "url": "https://www.chess.com/game/live/166143867838",
+          "date": "2026-03-19",
+          "white": "ppm2019",
+          "black": "f0rk1ngtal",
+          "result": "1/2-1/2",
+          "whiteRatingBefore": 1994,
+          "blackRatingBefore": 1793
+        },
+        {
+          "id": "166144663348",
+          "url": "https://www.chess.com/game/live/166144663348",
+          "date": "2026-03-19",
+          "white": "f0rk1ngtal",
+          "black": "ppm2019",
+          "result": "1-0",
+          "whiteRatingBefore": 1805,
+          "blackRatingBefore": 1982
+        }
+      ],
+      "recordedAt": "2026-03-19T10:10:20.336Z"
+    },
+    {
+      "group": "B",
+      "player1": "Slam877",
+      "player2": "Sebant444",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166126005582",
+          "url": "https://www.chess.com/game/live/166126005582",
+          "date": "2026-03-18",
+          "white": "slam877",
+          "black": "Sebant444",
+          "result": "1-0",
+          "whiteRatingBefore": 1386,
+          "blackRatingBefore": 822
+        },
+        {
+          "id": "166124638756",
+          "url": "https://www.chess.com/game/live/166124638756",
+          "date": "2026-03-18",
+          "white": "Sebant444",
+          "black": "slam877",
+          "result": "0-1",
+          "whiteRatingBefore": 823,
+          "blackRatingBefore": 1383
+        }
+      ],
+      "recordedAt": "2026-03-19T10:10:20.336Z"
+    },
+    {
+      "group": "B",
+      "player1": "szymonmiod",
+      "player2": "Dzasminaa",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166149194086",
+          "url": "https://www.chess.com/game/live/166149194086",
+          "date": "2026-03-19",
+          "white": "szymonmiod",
+          "black": "Dzasminaa",
+          "result": "1-0",
+          "whiteRatingBefore": 2048,
+          "blackRatingBefore": 1042
+        },
+        {
+          "id": "166149628678",
+          "url": "https://www.chess.com/game/live/166149628678",
+          "date": "2026-03-19",
+          "white": "Dzasminaa",
+          "black": "szymonmiod",
+          "result": "0-1",
+          "whiteRatingBefore": 1042,
+          "blackRatingBefore": 2048
+        }
+      ],
+      "recordedAt": "2026-03-19T15:05:56.255Z"
+    },
+    {
+      "group": "B",
+      "player1": "ppm2019",
+      "player2": "Dzasminaa",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166147998176",
+          "url": "https://www.chess.com/game/live/166147998176",
+          "date": "2026-03-19",
+          "white": "ppm2019",
+          "black": "Dzasminaa",
+          "result": "1-0",
+          "whiteRatingBefore": 1982,
+          "blackRatingBefore": 1042
+        },
+        {
+          "id": "166148467134",
+          "url": "https://www.chess.com/game/live/166148467134",
+          "date": "2026-03-19",
+          "white": "Dzasminaa",
+          "black": "ppm2019",
+          "result": "0-1",
+          "whiteRatingBefore": 1042,
+          "blackRatingBefore": 1982
+        }
+      ],
+      "recordedAt": "2026-03-19T15:05:56.255Z"
+    },
+    {
+      "group": "B",
+      "player1": "f0rk1ngtal",
+      "player2": "SieMaWo",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166161381050",
+          "url": "https://www.chess.com/game/live/166161381050",
+          "date": "2026-03-19",
+          "white": "f0rk1ngtal",
+          "black": "SieMaWo",
+          "result": "1-0",
+          "whiteRatingBefore": 1805,
+          "blackRatingBefore": 1006
+        },
+        {
+          "id": "166162612018",
+          "url": "https://www.chess.com/game/live/166162612018",
+          "date": "2026-03-19",
+          "white": "SieMaWo",
+          "black": "f0rk1ngtal",
+          "result": "0-1",
+          "whiteRatingBefore": 1006,
+          "blackRatingBefore": 1805
+        }
+      ],
+      "recordedAt": "2026-03-20T10:04:49.080Z"
+    },
+    {
+      "group": "B",
+      "player1": "ppm2019",
+      "player2": "Sebant444",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166269649204",
+          "url": "https://www.chess.com/game/live/166269649204",
+          "date": "2026-03-22",
+          "white": "ppm2019",
+          "black": "Sebant444",
+          "result": "1-0",
+          "whiteRatingBefore": 1983,
+          "blackRatingBefore": 813
+        },
+        {
+          "id": "166270240556",
+          "url": "https://www.chess.com/game/live/166270240556",
+          "date": "2026-03-22",
+          "white": "Sebant444",
+          "black": "ppm2019",
+          "result": "0-1",
+          "whiteRatingBefore": 813,
+          "blackRatingBefore": 1983
+        }
+      ],
+      "recordedAt": "2026-03-22T09:27:28.467Z"
+    },
+    {
+      "group": "B",
+      "player1": "f0rk1ngtal",
+      "player2": "Sebant444",
+      "score1": 1,
+      "score2": 1,
+      "games": [
+        {
+          "id": "166270931108",
+          "url": "https://www.chess.com/game/live/166270931108",
+          "date": "2026-03-22",
+          "white": "Sebant444",
+          "black": "f0rk1ngtal",
+          "result": "1-0",
+          "whiteRatingBefore": 813,
+          "blackRatingBefore": 1810
+        },
+        {
+          "id": "166272211380",
+          "url": "https://www.chess.com/game/live/166272211380",
+          "date": "2026-03-22",
+          "white": "f0rk1ngtal",
+          "black": "Sebant444",
+          "result": "1-0",
+          "whiteRatingBefore": 1794,
+          "blackRatingBefore": 829
+        }
+      ],
+      "recordedAt": "2026-03-22T09:27:28.467Z"
+    }
+  ]
+}
