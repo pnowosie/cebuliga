@@ -13,29 +13,19 @@ import { readFile, writeFile } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { logInfo, logError, logWarning } from "../lib/common.ts";
-
-const __dir = dirname(fileURLToPath(import.meta.url));
-import { loadConfig } from "../lib/config.ts";
 import {
   fetchRapidRating,
   fetchPlayerMonthGames,
   type ChessComGame,
 } from "../lib/chess.ts";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
+const __dir = dirname(fileURLToPath(import.meta.url));
 
-interface PlayerConfig {
-  number: number;
-  nick: string;
-}
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface GroupConfig {
   startDate: string; // "YYYY-MM-DD"
-  players: PlayerConfig[];
-}
-
-interface TournamentConfig {
-  groups: Record<string, GroupConfig>;
+  players: { number: number; nick: string }[];
 }
 
 interface GameRecord {
@@ -61,6 +51,7 @@ interface CompletedMatch {
 
 interface TournamentState {
   lastRun: string;
+  startDate: string; // "YYYY-MM-DD" — tournament start, filters out pre-tournament games
   baselineRatings: Record<string, number | null>; // keyed by username.toLowerCase()
   completedMatches: CompletedMatch[];
 }
@@ -84,10 +75,12 @@ const STATE_FILE = "../data/tournament.json";
 async function loadState(): Promise<TournamentState> {
   try {
     const content = await readFile(join(__dir, STATE_FILE), "utf-8");
-    return JSON.parse(content) as TournamentState;
+    const state = JSON.parse(content) as TournamentState;
+    state.startDate ??= "2026-03-15";
+    return state;
   } catch (error: any) {
     if (error.code === "ENOENT") {
-      return { lastRun: "", baselineRatings: {}, completedMatches: [] };
+      return { lastRun: "", startDate: "2026-03-15", baselineRatings: {}, completedMatches: [] };
     }
     throw new Error(`Failed to load state: ${error.message}`);
   }
@@ -545,12 +538,19 @@ async function main() {
 
   if (dryRun) logInfo("Dry run mode — state will not be saved");
 
-  const config = await loadConfig<TournamentConfig>({
-    configDir: __dir,
-    required: true,
-  });
-
   const state = await loadState();
+
+  // Build group config from data/players.json
+  const playersRaw = JSON.parse(
+    await readFile(join(__dir, "../data/players.json"), "utf-8")
+  ) as Array<{ id: string; no: number; group: string }>;
+
+  const groups: Record<string, GroupConfig> = {};
+  for (const p of playersRaw) {
+    if (!groups[p.group]) groups[p.group] = { startDate: state.startDate, players: [] };
+    groups[p.group].players.push({ number: p.no, nick: p.id });
+  }
+  const config = { groups };
 
   const allPlayers = Object.values(config.groups).flatMap((g) => g.players.map((p) => p.nick));
   const now = new Date();
