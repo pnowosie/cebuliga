@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-03-22T09:41:37.856Z",
+  "lastRun": "2026-03-23T09:44:46.475Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -301,6 +301,66 @@
         }
       ],
       "recordedAt": "2026-03-22T09:27:28.467Z"
+    },
+    {
+      "group": "A",
+      "player1": "kirosgoli",
+      "player2": "filipplotnicki",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166292166796",
+          "url": "https://www.chess.com/game/live/166292166796",
+          "date": "2026-03-22",
+          "white": "kirosgoli",
+          "black": "filipplotnicki",
+          "result": "1-0",
+          "whiteRatingBefore": 1927,
+          "blackRatingBefore": 1111
+        },
+        {
+          "id": "166292845896",
+          "url": "https://www.chess.com/game/live/166292845896",
+          "date": "2026-03-22",
+          "white": "filipplotnicki",
+          "black": "kirosgoli",
+          "result": "0-1",
+          "whiteRatingBefore": 1111,
+          "blackRatingBefore": 1927
+        }
+      ],
+      "recordedAt": "2026-03-23T09:44:46.470Z"
+    },
+    {
+      "group": "B",
+      "player1": "f0rk1ngtal",
+      "player2": "wladcachleba",
+      "score1": 1,
+      "score2": 1,
+      "games": [
+        {
+          "id": "166246068656",
+          "url": "https://www.chess.com/game/live/166246068656",
+          "date": "2026-03-21",
+          "white": "f0rk1ngtal",
+          "black": "WladcaChleba",
+          "result": "1-0",
+          "whiteRatingBefore": 1805,
+          "blackRatingBefore": 1684
+        },
+        {
+          "id": "166291130316",
+          "url": "https://www.chess.com/game/live/166291130316",
+          "date": "2026-03-22",
+          "white": "WladcaChleba",
+          "black": "f0rk1ngtal",
+          "result": "1-0",
+          "whiteRatingBefore": 1679,
+          "blackRatingBefore": 1794
+        }
+      ],
+      "recordedAt": "2026-03-23T09:44:46.473Z"
     }
   ]
 }
