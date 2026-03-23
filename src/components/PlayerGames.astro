@@ -1,0 +1,145 @@
+---
+interface Game {
+  pawn: string;
+  out: string;
+  outcomeClass: string;
+  url: string;
+}
+
+interface MatchRow {
+  oppId: string;
+  oppPlayer: { id: string; displayName: string } | undefined;
+  myScore: number;
+  oppScore: number;
+  result: 'win' | 'loss' | 'draw';
+  games: Game[];
+}
+
+interface Props {
+  matchRows: MatchRow[];
+}
+
+const { matchRows } = Astro.props;
+
+function fmt(n: number): string {
+  return Number.isInteger(n) ? String(n) : n.toFixed(1);
+}
+---
+
+<div class="section">
+  <div class="section-label">⚔️ rozegrane</div>
+  {matchRows.length > 0 ? (
+    <div class="matches">
+      {matchRows.map(row => (
+        <div class="match-row">
+          <a href={row.oppPlayer ? `/players/${row.oppPlayer.id}` : '#'} class="opp-name">
+            {row.oppPlayer?.displayName ?? row.oppId}
+          </a>
+          <span class={`match-score ${row.result}`}>
+            {fmt(row.myScore)}–{fmt(row.oppScore)}
+          </span>
+          <span class="game-pills">
+            {row.games.map(g => (
+              <a href={g.url} target="_blank" rel="noopener noreferrer" class={`pill ${g.outcomeClass}`} title="Partia na chess.com">
+                {g.pawn}{g.out}
+              </a>
+            ))}
+          </span>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <p class="empty">Brak rozegranych partii</p>
+  )}
+</div>
+
+<style>
+  .section {
+    margin-bottom: 2rem;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #484f58;
+    margin-bottom: 0.6rem;
+  }
+
+  .empty {
+    color: #484f58;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .matches {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .match-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.45rem 0.25rem;
+    border-bottom: 1px solid #161b22;
+  }
+
+  .match-row:last-child {
+    border-bottom: none;
+  }
+
+  .opp-name {
+    flex: 1;
+    color: #c9d1d9;
+    text-decoration: none;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .opp-name:hover {
+    color: #58a6ff;
+  }
+
+  .match-score {
+    font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 2.8rem;
+    text-align: center;
+  }
+
+  .match-score.win   { color: #3fb950; }
+  .match-score.loss  { color: #f85149; }
+  .match-score.draw  { color: #8b949e; }
+
+  .game-pills {
+    display: flex;
+    gap: 0.3rem;
+    flex-shrink: 0;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.35rem;
+    border-radius: 3px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    border: 1px solid transparent;
+  }
+
+  .pill.win  { background: #0d2818; color: #3fb950; border-color: #1a3d22; }
+  .pill.loss { background: #2d0f0e; color: #f85149; border-color: #3d1a19; }
+  .pill.draw { background: #1c2128; color: #8b949e; border-color: #30363d; }
+
+  .pill:hover {
+    filter: brightness(1.2);
+  }
+</style>

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import StandingsPane from '../components/StandingsPane.astro';
 import players from '../../data/players.json';
 import tournament from '../../data/tournament.json';
 
@@ -19,10 +20,6 @@ function getMatchesPlayed(playerId: string): number {
   ).length;
 }
 
-function fmtPts(pts: number): string {
-  return Number.isInteger(pts) ? String(pts) : pts.toFixed(1);
-}
-
 function buildStandings(group: string) {
   return players
     .filter(p => p.group === group)
@@ -34,40 +31,12 @@ function buildStandings(group: string) {
 
 const groupA = buildStandings('A');
 const groupB = buildStandings('B');
-
-const medals: Record<number, string> = { 1: '🏅', 2: '🥈', 3: '🥉' };
 ---
 
 <Layout title="Wyniki — Pierwsza Liga Cebularzowa 2026" currentPage="wyniki">
   <div class="panes">
-    <div class="pane">
-      <h3>Grupa 🅰️</h3>
-      <ol>
-        {groupA.map(p => (
-          <li>
-            <span class="medal">{medals[p.place] ?? ''}</span>
-            <span class="place">{p.place}.</span>
-            <span class="name"><a href={`/players/${p.id}`}>{p.displayName}</a></span>
-            <span class="pts">{fmtPts(p.pts)}<span class="pkt">pkt</span></span>
-          </li>
-        ))}
-        {groupA.length === 0 && <li class="empty">Brak rozegranych partii</li>}
-      </ol>
-    </div>
-    <div class="pane">
-      <h3>Grupa 🅱️</h3>
-      <ol>
-        {groupB.map(p => (
-          <li>
-            <span class="medal">{medals[p.place] ?? ''}</span>
-            <span class="place">{p.place}.</span>
-            <span class="name"><a href={`/players/${p.id}`}>{p.displayName}</a></span>
-            <span class="pts">{fmtPts(p.pts)}<span class="pkt">pkt</span></span>
-          </li>
-        ))}
-        {groupB.length === 0 && <li class="empty">Brak rozegranych partii</li>}
-      </ol>
-    </div>
+    <StandingsPane label="Grupa 🅰️" standings={groupA} />
+    <StandingsPane label="Grupa 🅱️" standings={groupB} />
   </div>
 </Layout>
 
@@ -82,89 +51,5 @@ const medals: Record<number, string> = { 1: '🏅', 2: '🥈', 3: '🥉' };
     .panes {
       grid-template-columns: 1fr;
     }
-  }
-
-  .pane h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #e6edf3;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.75rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #21262d;
-  }
-
-  ol {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.15rem;
-  }
-
-  li {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.4rem 0.25rem;
-    border-radius: 4px;
-  }
-
-  li:hover {
-    background: #161b22;
-  }
-
-  .medal {
-    width: 1.4em;
-    text-align: center;
-    font-size: 1rem;
-    flex-shrink: 0;
-  }
-
-  .place {
-    width: 1.6em;
-    text-align: right;
-    color: #484f58;
-    font-size: 0.85rem;
-    flex-shrink: 0;
-  }
-
-  .name {
-    flex: 1;
-    font-size: 0.95rem;
-    color: #c9d1d9;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .name a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .name a:hover {
-    color: #58a6ff;
-    text-decoration: underline;
-  }
-
-  .pts {
-    font-weight: 700;
-    font-size: 0.95rem;
-    color: #e6edf3;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .pkt {
-    font-weight: 400;
-    font-size: 0.72rem;
-    color: #8b949e;
-    margin-left: 0.2em;
-  }
-
-  li.empty {
-    color: #484f58;
-    font-size: 0.85rem;
-    font-style: italic;
   }
 </style>

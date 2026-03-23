@@ -1,0 +1,98 @@
+---
+interface Opponent {
+  id: string;
+  displayName: string;
+  url: string;
+  ranking: number;
+}
+
+interface Props {
+  yetToPlay: Opponent[];
+}
+
+const { yetToPlay } = Astro.props;
+---
+
+<div class="section">
+  <div class="section-label">🕐 do rozegrania</div>
+  {yetToPlay.length > 0 ? (
+    <div class="pending">
+      {yetToPlay.map((opp, i) => (
+        <a href={opp.url} target="_blank" rel="noopener noreferrer" class="pending-chip">
+          <span class="pending-num">{i + 1}</span>
+          <span class="pending-name">{opp.displayName}</span>
+          <span class="pending-rating">{opp.ranking}</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      ))}
+    </div>
+  ) : (
+    <p class="empty">Wszyscy przeciwnicy rozegrani</p>
+  )}
+</div>
+
+<style>
+  .section {
+    margin-bottom: 2rem;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #484f58;
+    margin-bottom: 0.6rem;
+  }
+
+  .empty {
+    color: #484f58;
+    font-size: 0.85rem;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .pending {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .pending-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.6rem;
+    background: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #c9d1d9;
+    font-size: 0.82rem;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .pending-chip:hover {
+    border-color: #58a6ff;
+    color: #e6edf3;
+  }
+
+  .pending-num {
+    color: #484f58;
+    font-size: 0.72rem;
+  }
+
+  .pending-name {
+    font-weight: 500;
+  }
+
+  .pending-rating {
+    color: #484f58;
+    font-size: 0.75rem;
+  }
+
+  .pending-chip svg {
+    color: #484f58;
+    flex-shrink: 0;
+  }
+</style>

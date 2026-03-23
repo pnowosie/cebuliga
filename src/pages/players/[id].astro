@@ -1,5 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import PlayerHero from '../../components/PlayerHero.astro';
+import PlayerGames from '../../components/PlayerGames.astro';
+import PlayerPending from '../../components/PlayerPending.astro';
 import players from '../../../data/players.json';
 import tournament from '../../../data/tournament.json';
 
@@ -26,10 +29,6 @@ function getMatchesPlayed(pid: string): number {
     m => m.player1.toLowerCase() === pid.toLowerCase() ||
          m.player2.toLowerCase() === pid.toLowerCase()
   ).length;
-}
-
-function fmt(n: number): string {
-  return Number.isInteger(n) ? String(n) : n.toFixed(1);
 }
 
 // ── group standings ─────────────────────────────────────────────────────────
@@ -60,7 +59,7 @@ const matchRows = myMatches.map(m => {
   const oppPlayer = players.find(p => p.id.toLowerCase() === oppId.toLowerCase());
   const myScore  = iAmP1 ? m.score1 : m.score2;
   const oppScore = iAmP1 ? m.score2 : m.score1;
-  const result   = myScore > oppScore ? 'win' : myScore < oppScore ? 'loss' : 'draw';
+  const result   = (myScore > oppScore ? 'win' : myScore < oppScore ? 'loss' : 'draw') as 'win' | 'loss' | 'draw';
 
   const games = m.games.map(g => {
     const white = g.white.toLowerCase() === player.id.toLowerCase();
@@ -95,329 +94,18 @@ const medals: Record<number, string> = { 1: '🏅', 2: '🥈', 3: '🥉' };
 
 <Layout title={`${player.displayName} — Pierwsza Liga Cebularzowa 2026`} currentPage="gracze">
 
-  <!-- ── HERO ── -->
-  <div class="hero">
-    <div class="avatar-wrap">
-      {player.picture
-        ? <img src={player.picture} alt={player.displayName} width="72" height="72" />
-        : <span class="avatar-fallback" />}
-    </div>
-    <div class="hero-info">
-      <div class="hero-name">{player.displayName}</div>
-      <a href={player.url} target="_blank" rel="noopener noreferrer" class="cc-link">
-        {player.id}
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-      </a>
-      <div class="hero-meta">
-        <span class="board-badge">{player.no}</span>
-        <span class="sep">·</span>
-        <span>{groupEmoji}</span>
-        {groupPlace > 0 && <>
-          <span class="sep">·</span>
-          <span class="place">{medals[groupPlace] ?? ''}{groupPlace}. w grupie</span>
-        </>}
-        <span class="sep">·</span>
-        <span class="rating">★ {player.ranking}</span>
-      </div>
-      <div class="prog-row">
-        <span class="prog-label">{playedMatches} / {totalMatches}</span>
-        <div class="prog-track">
-          <div class="prog-fill" style={`width:${pct}%`} />
-        </div>
-      </div>
-    </div>
-  </div>
+  <PlayerHero
+    player={player}
+    groupEmoji={groupEmoji}
+    groupPlace={groupPlace}
+    medals={medals}
+    playedMatches={playedMatches}
+    totalMatches={totalMatches}
+    pct={pct}
+  />
 
-  <!-- ── GAMES ── -->
-  {matchRows.length > 0 && (
-    <div class="section">
-      <div class="section-label">⚔️ rozegrane</div>
-      <div class="matches">
-        {matchRows.map(row => (
-          <div class="match-row">
-            <a href={row.oppPlayer ? `/players/${row.oppPlayer.id}` : '#'} class="opp-name">
-              {row.oppPlayer?.displayName ?? row.oppId}
-            </a>
-            <span class={`match-score ${row.result}`}>
-              {fmt(row.myScore)}–{fmt(row.oppScore)}
-            </span>
-            <span class="game-pills">
-              {row.games.map(g => (
-                <a href={g.url} target="_blank" rel="noopener noreferrer" class={`pill ${g.outcomeClass}`} title="Partia na chess.com">
-                  {g.pawn}{g.out}
-                </a>
-              ))}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  )}
+  <PlayerGames matchRows={matchRows} />
 
-  <!-- ── YET TO PLAY ── -->
-  {yetToPlay.length > 0 && (
-    <div class="section">
-      <div class="section-label">🕐 do rozegrania</div>
-      <div class="pending">
-        {yetToPlay.map((opp, i) => (
-          <a href={opp.url} target="_blank" rel="noopener noreferrer" class="pending-chip">
-            <span class="pending-num">{i + 1}</span>
-            <span class="pending-name">{opp.displayName}</span>
-            <span class="pending-rating">{opp.ranking}</span>
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-          </a>
-        ))}
-      </div>
-    </div>
-  )}
+  <PlayerPending yetToPlay={yetToPlay} />
 
 </Layout>
-
-<style>
-  /* ── HERO ── */
-  .hero {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.25rem;
-    padding: 1.25rem;
-    background: #161b22;
-    border: 1px solid #21262d;
-    border-radius: 8px;
-    margin-bottom: 2rem;
-  }
-
-  .avatar-wrap img,
-  .avatar-fallback {
-    display: block;
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .avatar-fallback {
-    background: #21262d;
-  }
-
-  .hero-info {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-  }
-
-  .hero-name {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #e6edf3;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-  }
-
-  .cc-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    color: #484f58;
-    font-size: 0.8rem;
-    text-decoration: none;
-  }
-
-  .cc-link:hover {
-    color: #8b949e;
-  }
-
-  .hero-meta {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-    font-size: 0.85rem;
-    color: #8b949e;
-    margin-top: 0.1rem;
-  }
-
-  .sep {
-    color: #30363d;
-  }
-
-  .board-badge {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.6em;
-    height: 1.6em;
-    background: repeating-conic-gradient(#30363d 0% 25%, #161b22 0% 50%) 0 0 / 8px 8px;
-    border-radius: 3px;
-    font-weight: 700;
-    font-size: 0.82rem;
-    color: #e6edf3;
-    border: 1px solid #21262d;
-  }
-
-  .place {
-    color: #c9d1d9;
-  }
-
-  .rating {
-    color: #8b949e;
-  }
-
-  .prog-row {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-top: 0.35rem;
-  }
-
-  .prog-label {
-    font-size: 0.75rem;
-    color: #484f58;
-    flex-shrink: 0;
-  }
-
-  .prog-track {
-    flex: 1;
-    max-width: 180px;
-    height: 3px;
-    background: #21262d;
-    border-radius: 2px;
-    overflow: hidden;
-  }
-
-  .prog-fill {
-    height: 100%;
-    background: #3fb950;
-    border-radius: 2px;
-  }
-
-  /* ── SECTIONS ── */
-  .section {
-    margin-bottom: 2rem;
-  }
-
-  .section-label {
-    font-size: 0.7rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: #484f58;
-    margin-bottom: 0.6rem;
-  }
-
-  /* ── MATCHES ── */
-  .matches {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .match-row {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.45rem 0.25rem;
-    border-bottom: 1px solid #161b22;
-  }
-
-  .match-row:last-child {
-    border-bottom: none;
-  }
-
-  .opp-name {
-    flex: 1;
-    color: #c9d1d9;
-    text-decoration: none;
-    font-size: 0.9rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .opp-name:hover {
-    color: #58a6ff;
-  }
-
-  .match-score {
-    font-weight: 700;
-    font-size: 0.9rem;
-    min-width: 2.8rem;
-    text-align: center;
-  }
-
-  .match-score.win   { color: #3fb950; }
-  .match-score.loss  { color: #f85149; }
-  .match-score.draw  { color: #8b949e; }
-
-  .game-pills {
-    display: flex;
-    gap: 0.3rem;
-    flex-shrink: 0;
-  }
-
-  .pill {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.15rem 0.35rem;
-    border-radius: 3px;
-    font-size: 0.78rem;
-    font-weight: 600;
-    text-decoration: none;
-    letter-spacing: 0.01em;
-    border: 1px solid transparent;
-  }
-
-  .pill.win  { background: #0d2818; color: #3fb950; border-color: #1a3d22; }
-  .pill.loss { background: #2d0f0e; color: #f85149; border-color: #3d1a19; }
-  .pill.draw { background: #1c2128; color: #8b949e; border-color: #30363d; }
-
-  .pill:hover {
-    filter: brightness(1.2);
-  }
-
-  /* ── PENDING ── */
-  .pending {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .pending-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.3rem 0.6rem;
-    background: #161b22;
-    border: 1px solid #21262d;
-    border-radius: 20px;
-    text-decoration: none;
-    color: #c9d1d9;
-    font-size: 0.82rem;
-    transition: border-color 0.15s, color 0.15s;
-  }
-
-  .pending-chip:hover {
-    border-color: #58a6ff;
-    color: #e6edf3;
-  }
-
-  .pending-num {
-    color: #484f58;
-    font-size: 0.72rem;
-  }
-
-  .pending-name {
-    font-weight: 500;
-  }
-
-  .pending-rating {
-    color: #484f58;
-    font-size: 0.75rem;
-  }
-
-  .pending-chip svg {
-    color: #484f58;
-    flex-shrink: 0;
-  }
-</style>
