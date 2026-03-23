@@ -28,14 +28,14 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - run: pnpm run refresh
-
-      - name: Commit and push if data changed
+      - name: Refresh and commit if data changed
         run: |
+          SUMMARY=$(pnpm run --silent refresh 2>&1)
+          echo "$SUMMARY"
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/tournament.json
           git diff --staged --quiet && echo "No new data." || (
-            git commit -m "data: refresh $(date -u +%Y-%m-%dT%H:%M)" &&
+            git commit -m "data: refresh $(date -u +%Y-%m-%dT%H:%M)" -m "$SUMMARY" &&
             git push
           )
