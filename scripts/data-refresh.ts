@@ -14,7 +14,6 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { logInfo, logError, logWarning } from "../lib/common.ts";
 import {
-  fetchRapidRating,
   fetchPlayerMonthGames,
   type ChessComGame,
 } from "../lib/chess.ts";
@@ -52,7 +51,6 @@ interface CompletedMatch {
 interface TournamentState {
   lastRun: string;
   startDate: string; // "YYYY-MM-DD" — tournament start, filters out pre-tournament games
-  baselineRatings: Record<string, number | null>; // keyed by username.toLowerCase()
   completedMatches: CompletedMatch[];
 }
 
@@ -80,7 +78,7 @@ async function loadState(): Promise<TournamentState> {
     return state;
   } catch (error: any) {
     if (error.code === "ENOENT") {
-      return { lastRun: "", startDate: "2026-03-15", baselineRatings: {}, completedMatches: [] };
+      return { lastRun: "", startDate: "2026-03-15", completedMatches: [] };
     }
     throw new Error(`Failed to load state: ${error.message}`);
   }
@@ -162,7 +160,7 @@ function extractGameId(url: string): string {
 function orderPair(
   p1: string,
   p2: string,
-  baselineRatings: Record<string, number | null>
+  baselineRatings: Record<string, number>
 ): [string, string] {
   const r1 = baselineRatings[p1.toLowerCase()] ?? 0;
   const r2 = baselineRatings[p2.toLowerCase()] ?? 0;
@@ -283,7 +281,7 @@ function findMatchForPair(
   playerB: string,
   allGames: ChessComGame[],
   startDateMs: number,
-  baselineRatings: Record<string, number | null>
+  baselineRatings: Record<string, number>
 ): MatchFindResult {
   const aLower = playerA.toLowerCase();
   const bLower = playerB.toLowerCase();
@@ -540,39 +538,21 @@ async function main() {
 
   const state = await loadState();
 
-  // Build group config from data/players.json
+  // Build group config and baseline ratings from data/players.json
   const playersRaw = JSON.parse(
     await readFile(join(__dir, "../data/players.json"), "utf-8")
-  ) as Array<{ id: string; no: number; group: string }>;
+  ) as Array<{ id: string; no: number; group: string; ranking: number }>;
 
+  const baselineRatings: Record<string, number> = {};
   const groups: Record<string, GroupConfig> = {};
   for (const p of playersRaw) {
+    baselineRatings[p.id.toLowerCase()] = p.ranking;
     if (!groups[p.group]) groups[p.group] = { startDate: state.startDate, players: [] };
     groups[p.group].players.push({ number: p.no, nick: p.id });
   }
   const config = { groups };
 
-  const allPlayers = Object.values(config.groups).flatMap((g) => g.players.map((p) => p.nick));
   const now = new Date();
-
-  // Fetch baseline ratings for any player not yet recorded
-  const missingBaseline = allPlayers.filter(
-    (p) => !(p.toLowerCase() in state.baselineRatings)
-  );
-
-  if (missingBaseline.length > 0) {
-    logInfo(`Fetching baseline ratings for ${missingBaseline.length} players...`);
-    const results = await Promise.all(
-      missingBaseline.map(async (p) => ({
-        player: p,
-        rating: await fetchRapidRating(p),
-      }))
-    );
-    for (const { player, rating } of results) {
-      state.baselineRatings[player.toLowerCase()] = rating;
-      if (verbose) logInfo(`  ${player}: ${rating ?? "N/A"}`);
-    }
-  }
 
   // Pre-fetch all players' games (always from startDate to handle cross-month pairs)
   const cache: GameCache = new Map();
@@ -623,7 +603,7 @@ async function main() {
       }
 
       const result = findMatchForPair(
-        groupName, pa, pb, mergedGames, startDateMs, state.baselineRatings
+        groupName, pa, pb, mergedGames, startDateMs, baselineRatings
       );
 
       if (result.status === "complete") {

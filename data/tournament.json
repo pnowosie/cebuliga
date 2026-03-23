@@ -1,23 +1,6 @@
 {
   "lastRun": "2026-03-22T09:41:37.856Z",
-  "baselineRatings": {
-    "patokaczu": 2114,
-    "kirosgoli": 1927,
-    "yarosf": 1837,
-    "pioterha": 1688,
-    "bertiad": 1551,
-    "danio2022": 1223,
-    "filipplotnicki": 1102,
-    "domkepka": 374,
-    "szymonmiod": 2051,
-    "ppm2019": 1995,
-    "f0rk1ngtal": 1789,
-    "wladcachleba": 1684,
-    "slam877": 1380,
-    "dzasminaa": 1042,
-    "siemawo": 1024,
-    "sebant444": 816
-  },
+  "startDate": "2026-03-15",
   "completedMatches": [
     {
       "group": "B",
