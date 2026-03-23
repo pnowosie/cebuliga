@@ -9,7 +9,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "refresh": "tsx scripts/data-refresh.ts",
+    "refresh:dry": "tsx scripts/data-refresh.ts --dry-run --verbose"
   },
   "dependencies": {
     "astro": "^6.0.8"

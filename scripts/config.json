@@ -1,0 +1,30 @@
+{
+  "groups": {
+    "A": {
+      "startDate": "2026-03-15",
+      "players": [
+        { "number": 1,  "nick": "patokaczu"     },
+        { "number": 4,  "nick": "kirosgoli"     },
+        { "number": 5,  "nick": "yarosf"        },
+        { "number": 8,  "nick": "pioterha"      },
+        { "number": 9,  "nick": "bertiad"       },
+        { "number": 11, "nick": "danio2022"     },
+        { "number": 12, "nick": "filipplotnicki"},
+        { "number": 16, "nick": "domkepka"      }
+      ]
+    },
+    "B": {
+      "startDate": "2026-03-15",
+      "players": [
+        { "number": 2,  "nick": "szymonmiod"   },
+        { "number": 3,  "nick": "ppm2019"      },
+        { "number": 6,  "nick": "f0rk1ngtal"   },
+        { "number": 7,  "nick": "wladcachleba" },
+        { "number": 10, "nick": "slam877"      },
+        { "number": 13, "nick": "dzasminaa"    },
+        { "number": 14, "nick": "siemawo"      },
+        { "number": 15, "nick": "sebant444"    }
+      ]
+    }
+  }
+}
