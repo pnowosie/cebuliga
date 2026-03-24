@@ -617,7 +617,7 @@ async function main() {
   }
 
   // Persist state
-  if (!dryRun) {
+  if (!dryRun && newCompleted.length > 0) {
     await saveState(state);
   }
 
