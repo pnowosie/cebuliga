@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-03-24T23:09:12.865Z",
+  "lastRun": "2026-03-25T23:11:22.456Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -421,6 +421,36 @@
         }
       ],
       "recordedAt": "2026-03-24T23:09:12.863Z"
+    },
+    {
+      "group": "A",
+      "player1": "yarosf",
+      "player2": "pioterha",
+      "score1": 0,
+      "score2": 2,
+      "games": [
+        {
+          "id": "166078588852",
+          "url": "https://www.chess.com/game/live/166078588852",
+          "date": "2026-03-17",
+          "white": "Yarosf",
+          "black": "Pioterha",
+          "result": "0-1",
+          "whiteRatingBefore": 1841,
+          "blackRatingBefore": 1676
+        },
+        {
+          "id": "166428104892",
+          "url": "https://www.chess.com/game/live/166428104892",
+          "date": "2026-03-25",
+          "white": "Pioterha",
+          "black": "Yarosf",
+          "result": "1-0",
+          "whiteRatingBefore": 1699,
+          "blackRatingBefore": 1868
+        }
+      ],
+      "recordedAt": "2026-03-25T23:11:22.452Z"
     }
   ]
 }
