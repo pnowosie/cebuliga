@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-03-26T14:39:57.619Z",
+  "lastRun": "2026-03-26T18:18:00.785Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -481,6 +481,36 @@
         }
       ],
       "recordedAt": "2026-03-26T14:39:57.619Z"
+    },
+    {
+      "group": "A",
+      "player1": "patokaczu",
+      "player2": "filipplotnicki",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166468014162",
+          "url": "https://www.chess.com/game/live/166468014162",
+          "date": "2026-03-26",
+          "white": "Patokaczu",
+          "black": "filipplotnicki",
+          "result": "1-0",
+          "whiteRatingBefore": 2134,
+          "blackRatingBefore": 1113
+        },
+        {
+          "id": "166468195606",
+          "url": "https://www.chess.com/game/live/166468195606",
+          "date": "2026-03-26",
+          "white": "filipplotnicki",
+          "black": "Patokaczu",
+          "result": "0-1",
+          "whiteRatingBefore": 1113,
+          "blackRatingBefore": 2134
+        }
+      ],
+      "recordedAt": "2026-03-26T18:18:00.780Z"
     }
   ]
 }
