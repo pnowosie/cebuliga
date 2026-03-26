@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-03-25T23:11:22.456Z",
+  "lastRun": "2026-03-26T14:39:57.619Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -451,6 +451,36 @@
         }
       ],
       "recordedAt": "2026-03-25T23:11:22.452Z"
+    },
+    {
+      "group": "B",
+      "player1": "f0rk1ngtal",
+      "player2": "slam877",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166406787172",
+          "url": "https://www.chess.com/game/live/166406787172",
+          "date": "2026-03-25",
+          "white": "f0rk1ngtal",
+          "black": "slam877",
+          "result": "1-0",
+          "whiteRatingBefore": 1785,
+          "blackRatingBefore": 1416
+        },
+        {
+          "id": "166447811200",
+          "url": "https://www.chess.com/game/live/166447811200",
+          "date": "2026-03-26",
+          "white": "slam877",
+          "black": "f0rk1ngtal",
+          "result": "0-1",
+          "whiteRatingBefore": 1409,
+          "blackRatingBefore": 1787
+        }
+      ],
+      "recordedAt": "2026-03-26T14:39:57.619Z"
     }
   ]
 }
