@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-03-26T18:18:00.785Z",
+  "lastRun": "2026-03-28T23:08:15.530Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -511,6 +511,66 @@
         }
       ],
       "recordedAt": "2026-03-26T18:18:00.780Z"
+    },
+    {
+      "group": "A",
+      "player1": "yarosf",
+      "player2": "domkepka",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166556288940",
+          "url": "https://www.chess.com/game/live/166556288940",
+          "date": "2026-03-28",
+          "white": "Yarosf",
+          "black": "domkepka",
+          "result": "1-0",
+          "whiteRatingBefore": 1911,
+          "blackRatingBefore": 301
+        },
+        {
+          "id": "166557163638",
+          "url": "https://www.chess.com/game/live/166557163638",
+          "date": "2026-03-28",
+          "white": "domkepka",
+          "black": "Yarosf",
+          "result": "0-1",
+          "whiteRatingBefore": 301,
+          "blackRatingBefore": 1911
+        }
+      ],
+      "recordedAt": "2026-03-28T23:08:15.528Z"
+    },
+    {
+      "group": "A",
+      "player1": "pioterha",
+      "player2": "danio2022",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166519976194",
+          "url": "https://www.chess.com/game/live/166519976194",
+          "date": "2026-03-27",
+          "white": "danio2022",
+          "black": "Pioterha",
+          "result": "0-1",
+          "whiteRatingBefore": 1244,
+          "blackRatingBefore": 1699
+        },
+        {
+          "id": "166558416888",
+          "url": "https://www.chess.com/game/live/166558416888",
+          "date": "2026-03-28",
+          "white": "Pioterha",
+          "black": "danio2022",
+          "result": "1-0",
+          "whiteRatingBefore": 1699,
+          "blackRatingBefore": 1236
+        }
+      ],
+      "recordedAt": "2026-03-28T23:08:15.529Z"
     }
   ]
 }
