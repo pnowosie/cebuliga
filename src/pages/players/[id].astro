@@ -90,6 +90,8 @@ const yetToPlay = players
 
 const groupEmoji = player.group === 'A' ? '🅰️' : '🅱️';
 const medals: Record<number, string> = { 1: '🏅', 2: '🥈', 3: '🥉' };
+const score = getPoints(player.id);
+const maxScore = (groupSize - 1) * 2;
 ---
 
 <Layout title={`${player.displayName} — Pierwsza Liga Cebularzowa 2026`} currentPage="gracze">
@@ -102,6 +104,9 @@ const medals: Record<number, string> = { 1: '🏅', 2: '🥈', 3: '🥉' };
     playedMatches={playedMatches}
     totalMatches={totalMatches}
     pct={pct}
+    score={score}
+    maxScore={maxScore}
+    groupSize={groupSize}
   />
 
   <PlayerGames matchRows={matchRows} />
