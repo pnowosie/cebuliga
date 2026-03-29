@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-03-28T23:08:15.530Z",
+  "lastRun": "2026-03-29T14:16:20.297Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -571,6 +571,36 @@
         }
       ],
       "recordedAt": "2026-03-28T23:08:15.529Z"
+    },
+    {
+      "group": "B",
+      "player1": "dzasminaa",
+      "player2": "sebant444",
+      "score1": 0,
+      "score2": 2,
+      "games": [
+        {
+          "id": "166577504168",
+          "url": "https://www.chess.com/game/live/166577504168",
+          "date": "2026-03-29",
+          "white": "Dzasminaa",
+          "black": "Sebant444",
+          "result": "0-1",
+          "whiteRatingBefore": 1042,
+          "blackRatingBefore": 821
+        },
+        {
+          "id": "166578332696",
+          "url": "https://www.chess.com/game/live/166578332696",
+          "date": "2026-03-29",
+          "white": "Sebant444",
+          "black": "Dzasminaa",
+          "result": "1-0",
+          "whiteRatingBefore": 821,
+          "blackRatingBefore": 1042
+        }
+      ],
+      "recordedAt": "2026-03-29T14:16:20.297Z"
     }
   ]
 }
