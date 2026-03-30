@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-03-29T14:16:20.297Z",
+  "lastRun": "2026-03-30T23:11:46.457Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -601,6 +601,66 @@
         }
       ],
       "recordedAt": "2026-03-29T14:16:20.297Z"
+    },
+    {
+      "group": "A",
+      "player1": "bertiad",
+      "player2": "filipplotnicki",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166643878572",
+          "url": "https://www.chess.com/game/live/166643878572",
+          "date": "2026-03-30",
+          "white": "Bertiad",
+          "black": "filipplotnicki",
+          "result": "1-0",
+          "whiteRatingBefore": 1552,
+          "blackRatingBefore": 1129
+        },
+        {
+          "id": "166644932624",
+          "url": "https://www.chess.com/game/live/166644932624",
+          "date": "2026-03-30",
+          "white": "filipplotnicki",
+          "black": "Bertiad",
+          "result": "0-1",
+          "whiteRatingBefore": 1129,
+          "blackRatingBefore": 1552
+        }
+      ],
+      "recordedAt": "2026-03-30T23:11:46.455Z"
+    },
+    {
+      "group": "B",
+      "player1": "ppm2019",
+      "player2": "siemawo",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166643386768",
+          "url": "https://www.chess.com/game/live/166643386768",
+          "date": "2026-03-30",
+          "white": "ppm2019",
+          "black": "SieMaWo",
+          "result": "1-0",
+          "whiteRatingBefore": 1983,
+          "blackRatingBefore": 944
+        },
+        {
+          "id": "166644261926",
+          "url": "https://www.chess.com/game/live/166644261926",
+          "date": "2026-03-30",
+          "white": "SieMaWo",
+          "black": "ppm2019",
+          "result": "0-1",
+          "whiteRatingBefore": 944,
+          "blackRatingBefore": 1983
+        }
+      ],
+      "recordedAt": "2026-03-30T23:11:46.457Z"
     }
   ]
 }
