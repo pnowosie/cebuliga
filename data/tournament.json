@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-03-30T23:11:46.457Z",
+  "lastRun": "2026-03-31T14:39:07.093Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -661,6 +661,36 @@
         }
       ],
       "recordedAt": "2026-03-30T23:11:46.457Z"
+    },
+    {
+      "group": "B",
+      "player1": "ppm2019",
+      "player2": "slam877",
+      "score1": 1,
+      "score2": 1,
+      "games": [
+        {
+          "id": "166187728904",
+          "url": "https://www.chess.com/game/live/166187728904",
+          "date": "2026-03-20",
+          "white": "ppm2019",
+          "black": "slam877",
+          "result": "1-0",
+          "whiteRatingBefore": 1982,
+          "blackRatingBefore": 1386
+        },
+        {
+          "id": "166666306972",
+          "url": "https://www.chess.com/game/live/166666306972",
+          "date": "2026-03-31",
+          "white": "slam877",
+          "black": "ppm2019",
+          "result": "1-0",
+          "whiteRatingBefore": 1402,
+          "blackRatingBefore": 1983
+        }
+      ],
+      "recordedAt": "2026-03-31T14:39:07.093Z"
     }
   ]
 }
