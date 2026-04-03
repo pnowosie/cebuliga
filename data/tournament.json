@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-01T18:14:47.160Z",
+  "lastRun": "2026-04-03T23:10:14.615Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -721,6 +721,36 @@
         }
       ],
       "recordedAt": "2026-04-01T18:14:47.157Z"
+    },
+    {
+      "group": "A",
+      "player1": "filipplotnicki",
+      "player2": "domkepka",
+      "score1": 1.5,
+      "score2": 0.5,
+      "games": [
+        {
+          "id": "166822041534",
+          "url": "https://www.chess.com/game/live/166822041534",
+          "date": "2026-04-03",
+          "white": "filipplotnicki",
+          "black": "domkepka",
+          "result": "1-0",
+          "whiteRatingBefore": 1123,
+          "blackRatingBefore": 301
+        },
+        {
+          "id": "166822511240",
+          "url": "https://www.chess.com/game/live/166822511240",
+          "date": "2026-04-03",
+          "white": "domkepka",
+          "black": "filipplotnicki",
+          "result": "1/2-1/2",
+          "whiteRatingBefore": 301,
+          "blackRatingBefore": 1123
+        }
+      ],
+      "recordedAt": "2026-04-03T23:10:14.614Z"
     }
   ]
 }
