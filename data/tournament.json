@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-03T23:10:14.615Z",
+  "lastRun": "2026-04-06T14:27:05.064Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -751,6 +751,66 @@
         }
       ],
       "recordedAt": "2026-04-03T23:10:14.614Z"
+    },
+    {
+      "group": "B",
+      "player1": "wladcachleba",
+      "player2": "siemawo",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166930222166",
+          "url": "https://www.chess.com/game/live/166930222166",
+          "date": "2026-04-06",
+          "white": "SieMaWo",
+          "black": "WladcaChleba",
+          "result": "0-1",
+          "whiteRatingBefore": 944,
+          "blackRatingBefore": 1690
+        },
+        {
+          "id": "166931058038",
+          "url": "https://www.chess.com/game/live/166931058038",
+          "date": "2026-04-06",
+          "white": "WladcaChleba",
+          "black": "SieMaWo",
+          "result": "1-0",
+          "whiteRatingBefore": 1690,
+          "blackRatingBefore": 944
+        }
+      ],
+      "recordedAt": "2026-04-06T14:27:05.064Z"
+    },
+    {
+      "group": "B",
+      "player1": "wladcachleba",
+      "player2": "sebant444",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166931925508",
+          "url": "https://www.chess.com/game/live/166931925508",
+          "date": "2026-04-06",
+          "white": "WladcaChleba",
+          "black": "Sebant444",
+          "result": "1-0",
+          "whiteRatingBefore": 1690,
+          "blackRatingBefore": 826
+        },
+        {
+          "id": "166933123336",
+          "url": "https://www.chess.com/game/live/166933123336",
+          "date": "2026-04-06",
+          "white": "Sebant444",
+          "black": "WladcaChleba",
+          "result": "0-1",
+          "whiteRatingBefore": 826,
+          "blackRatingBefore": 1690
+        }
+      ],
+      "recordedAt": "2026-04-06T14:27:05.064Z"
     }
   ]
 }
