@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-06T14:27:05.064Z",
+  "lastRun": "2026-04-07T23:13:40.699Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -811,6 +811,36 @@
         }
       ],
       "recordedAt": "2026-04-06T14:27:05.064Z"
+    },
+    {
+      "group": "A",
+      "player1": "danio2022",
+      "player2": "filipplotnicki",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166997878296",
+          "url": "https://www.chess.com/game/live/166997878296",
+          "date": "2026-04-07",
+          "white": "filipplotnicki",
+          "black": "danio2022",
+          "result": "0-1",
+          "whiteRatingBefore": 1097,
+          "blackRatingBefore": 1231
+        },
+        {
+          "id": "166998337596",
+          "url": "https://www.chess.com/game/live/166998337596",
+          "date": "2026-04-07",
+          "white": "danio2022",
+          "black": "filipplotnicki",
+          "result": "1-0",
+          "whiteRatingBefore": 1231,
+          "blackRatingBefore": 1097
+        }
+      ],
+      "recordedAt": "2026-04-07T23:13:40.697Z"
     }
   ]
 }
