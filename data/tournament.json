@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-07T23:13:40.699Z",
+  "lastRun": "2026-04-08T23:14:37.203Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -841,6 +841,36 @@
         }
       ],
       "recordedAt": "2026-04-07T23:13:40.697Z"
+    },
+    {
+      "group": "A",
+      "player1": "kirosgoli",
+      "player2": "danio2022",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "167039005478",
+          "url": "https://www.chess.com/game/live/167039005478",
+          "date": "2026-04-08",
+          "white": "danio2022",
+          "black": "kirosgoli",
+          "result": "0-1",
+          "whiteRatingBefore": 1225,
+          "blackRatingBefore": 1927
+        },
+        {
+          "id": "167040360174",
+          "url": "https://www.chess.com/game/live/167040360174",
+          "date": "2026-04-08",
+          "white": "kirosgoli",
+          "black": "danio2022",
+          "result": "1-0",
+          "whiteRatingBefore": 1928,
+          "blackRatingBefore": 1225
+        }
+      ],
+      "recordedAt": "2026-04-08T23:14:37.200Z"
     }
   ]
 }
