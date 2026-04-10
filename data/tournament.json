@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-08T23:14:37.203Z",
+  "lastRun": "2026-04-10T18:14:08.524Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -871,6 +871,36 @@
         }
       ],
       "recordedAt": "2026-04-08T23:14:37.200Z"
+    },
+    {
+      "group": "A",
+      "player1": "kirosgoli",
+      "player2": "bertiad",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166730397340",
+          "url": "https://www.chess.com/game/live/166730397340",
+          "date": "2026-04-01",
+          "white": "kirosgoli",
+          "black": "Bertiad",
+          "result": "1-0",
+          "whiteRatingBefore": 1927,
+          "blackRatingBefore": 1552
+        },
+        {
+          "id": "167123375238",
+          "url": "https://www.chess.com/game/live/167123375238",
+          "date": "2026-04-10",
+          "white": "Bertiad",
+          "black": "kirosgoli",
+          "result": "0-1",
+          "whiteRatingBefore": 1551,
+          "blackRatingBefore": 1929
+        }
+      ],
+      "recordedAt": "2026-04-10T18:14:08.518Z"
     }
   ]
 }
