@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-10T18:14:08.524Z",
+  "lastRun": "2026-04-13T18:23:00.751Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -901,6 +901,36 @@
         }
       ],
       "recordedAt": "2026-04-10T18:14:08.518Z"
+    },
+    {
+      "group": "B",
+      "player1": "ppm2019",
+      "player2": "wladcachleba",
+      "score1": 0.5,
+      "score2": 1.5,
+      "games": [
+        {
+          "id": "167259843904",
+          "url": "https://www.chess.com/game/live/167259843904",
+          "date": "2026-04-13",
+          "white": "WladcaChleba",
+          "black": "ppm2019",
+          "result": "1-0",
+          "whiteRatingBefore": 1690,
+          "blackRatingBefore": 1968
+        },
+        {
+          "id": "167260722996",
+          "url": "https://www.chess.com/game/live/167260722996",
+          "date": "2026-04-13",
+          "white": "ppm2019",
+          "black": "WladcaChleba",
+          "result": "1/2-1/2",
+          "whiteRatingBefore": 1952,
+          "blackRatingBefore": 1703
+        }
+      ],
+      "recordedAt": "2026-04-13T18:23:00.750Z"
     }
   ]
 }
