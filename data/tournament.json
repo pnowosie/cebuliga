@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-13T18:23:00.751Z",
+  "lastRun": "2026-04-14T10:10:00.100Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -931,6 +931,36 @@
         }
       ],
       "recordedAt": "2026-04-13T18:23:00.750Z"
+    },
+    {
+      "group": "B",
+      "player1": "szymonmiod",
+      "player2": "f0rk1ngtal",
+      "score1": 1,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166673061902",
+          "url": "https://www.chess.com/game/live/166673061902",
+          "date": "2026-03-31",
+          "white": "szymonmiod",
+          "black": "f0rk1ngtal",
+          "result": "1-0",
+          "whiteRatingBefore": 2051,
+          "blackRatingBefore": 1805
+        },
+        {
+          "id": "not-played",
+          "url": "https://www.chess.com/",
+          "date": "2026-04-14",
+          "white": "f0rk1ngtal",
+          "black": "szymonmiod",
+          "result": "0-0",
+          "whiteRatingBefore": 2051,
+          "blackRatingBefore": 1805
+        }
+      ],
+      "recordedAt": "2026-04-14T10:00:00.100Z"
     }
   ]
 }
