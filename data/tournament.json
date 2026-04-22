@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-22T18:20:18.936Z",
+  "lastRun": "2026-04-22T23:18:19.771Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -991,6 +991,36 @@
         }
       ],
       "recordedAt": "2026-04-22T18:20:18.936Z"
+    },
+    {
+      "group": "A",
+      "player1": "kirosgoli",
+      "player2": "pioterha",
+      "score1": 0,
+      "score2": 2,
+      "games": [
+        {
+          "id": "167357549810",
+          "url": "https://www.chess.com/game/live/167357549810",
+          "date": "2026-04-15",
+          "white": "kirosgoli",
+          "black": "Pioterha",
+          "result": "0-1",
+          "whiteRatingBefore": 1929,
+          "blackRatingBefore": 1958
+        },
+        {
+          "id": "167679126694",
+          "url": "https://www.chess.com/game/live/167679126694",
+          "date": "2026-04-22",
+          "white": "Pioterha",
+          "black": "kirosgoli",
+          "result": "1-0",
+          "whiteRatingBefore": 1881,
+          "blackRatingBefore": 1911
+        }
+      ],
+      "recordedAt": "2026-04-22T23:18:19.764Z"
     }
   ]
 }
