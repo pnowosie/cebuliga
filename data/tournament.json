@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-14T10:10:00.100Z",
+  "lastRun": "2026-04-22T18:20:18.936Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -961,6 +961,36 @@
         }
       ],
       "recordedAt": "2026-04-14T10:00:00.100Z"
+    },
+    {
+      "group": "B",
+      "player1": "dzasminaa",
+      "player2": "siemawo",
+      "score1": 1.5,
+      "score2": 0.5,
+      "games": [
+        {
+          "id": "167677658542",
+          "url": "https://www.chess.com/game/live/167677658542",
+          "date": "2026-04-22",
+          "white": "SieMaWo",
+          "black": "Dzasminaa",
+          "result": "0-1",
+          "whiteRatingBefore": 959,
+          "blackRatingBefore": 1041
+        },
+        {
+          "id": "167677925810",
+          "url": "https://www.chess.com/game/live/167677925810",
+          "date": "2026-04-22",
+          "white": "Dzasminaa",
+          "black": "SieMaWo",
+          "result": "1/2-1/2",
+          "whiteRatingBefore": 1060,
+          "blackRatingBefore": 948
+        }
+      ],
+      "recordedAt": "2026-04-22T18:20:18.936Z"
     }
   ]
 }
