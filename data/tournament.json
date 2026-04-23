@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-22T23:18:19.771Z",
+  "lastRun": "2026-04-23T18:20:59.374Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -1021,6 +1021,36 @@
         }
       ],
       "recordedAt": "2026-04-22T23:18:19.764Z"
+    },
+    {
+      "group": "A",
+      "player1": "patokaczu",
+      "player2": "bertiad",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "167721845416",
+          "url": "https://www.chess.com/game/live/167721845416",
+          "date": "2026-04-23",
+          "white": "Bertiad",
+          "black": "Patokaczu",
+          "result": "0-1",
+          "whiteRatingBefore": 1554,
+          "blackRatingBefore": 2143
+        },
+        {
+          "id": "167722723528",
+          "url": "https://www.chess.com/game/live/167722723528",
+          "date": "2026-04-23",
+          "white": "Patokaczu",
+          "black": "Bertiad",
+          "result": "1-0",
+          "whiteRatingBefore": 2144,
+          "blackRatingBefore": 1553
+        }
+      ],
+      "recordedAt": "2026-04-23T18:20:59.369Z"
     }
   ]
 }
