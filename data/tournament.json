@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-23T18:20:59.374Z",
+  "lastRun": "2026-04-24T18:12:22.262Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -1051,6 +1051,36 @@
         }
       ],
       "recordedAt": "2026-04-23T18:20:59.369Z"
+    },
+    {
+      "group": "A",
+      "player1": "pioterha",
+      "player2": "filipplotnicki",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "166595999496",
+          "url": "https://www.chess.com/game/live/166595999496",
+          "date": "2026-03-29",
+          "white": "filipplotnicki",
+          "black": "Pioterha",
+          "result": "0-1",
+          "whiteRatingBefore": 1113,
+          "blackRatingBefore": 1726
+        },
+        {
+          "id": "167768995874",
+          "url": "https://www.chess.com/game/live/167768995874",
+          "date": "2026-04-24",
+          "white": "Pioterha",
+          "black": "filipplotnicki",
+          "result": "1-0",
+          "whiteRatingBefore": 1890,
+          "blackRatingBefore": 1086
+        }
+      ],
+      "recordedAt": "2026-04-24T18:12:22.260Z"
     }
   ]
 }
