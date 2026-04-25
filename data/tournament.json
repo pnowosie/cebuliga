@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-24T18:12:22.262Z",
+  "lastRun": "2026-04-25T18:11:03.539Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -1081,6 +1081,36 @@
         }
       ],
       "recordedAt": "2026-04-24T18:12:22.260Z"
+    },
+    {
+      "group": "A",
+      "player1": "patokaczu",
+      "player2": "pioterha",
+      "score1": 0,
+      "score2": 2,
+      "games": [
+        {
+          "id": "167311843702",
+          "url": "https://www.chess.com/game/live/167311843702",
+          "date": "2026-04-14",
+          "white": "Pioterha",
+          "black": "Patokaczu",
+          "result": "1-0",
+          "whiteRatingBefore": 1978,
+          "blackRatingBefore": 2144
+        },
+        {
+          "id": "167808167728",
+          "url": "https://www.chess.com/game/live/167808167728",
+          "date": "2026-04-25",
+          "white": "Patokaczu",
+          "black": "Pioterha",
+          "result": "0-1",
+          "whiteRatingBefore": 2130,
+          "blackRatingBefore": 1890
+        }
+      ],
+      "recordedAt": "2026-04-25T18:11:03.535Z"
     }
   ]
 }
