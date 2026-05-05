@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-04-25T18:11:03.539Z",
+  "lastRun": "2026-05-05T18:26:41.028Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -1111,6 +1111,66 @@
         }
       ],
       "recordedAt": "2026-04-25T18:11:03.535Z"
+    },
+    {
+      "group": "A",
+      "player1": "patokaczu",
+      "player2": "danio2022",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "168277106894",
+          "url": "https://www.chess.com/game/live/168277106894",
+          "date": "2026-05-05",
+          "white": "Patokaczu",
+          "black": "danio2022",
+          "result": "1-0",
+          "whiteRatingBefore": 2162,
+          "blackRatingBefore": 1339
+        },
+        {
+          "id": "168277555278",
+          "url": "https://www.chess.com/game/live/168277555278",
+          "date": "2026-05-05",
+          "white": "danio2022",
+          "black": "Patokaczu",
+          "result": "0-1",
+          "whiteRatingBefore": 1339,
+          "blackRatingBefore": 2162
+        }
+      ],
+      "recordedAt": "2026-05-05T18:26:41.023Z"
+    },
+    {
+      "group": "A",
+      "player1": "yarosf",
+      "player2": "danio2022",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "168280930864",
+          "url": "https://www.chess.com/game/live/168280930864",
+          "date": "2026-05-05",
+          "white": "Yarosf",
+          "black": "danio2022",
+          "result": "1-0",
+          "whiteRatingBefore": 1876,
+          "blackRatingBefore": 1346
+        },
+        {
+          "id": "168281623926",
+          "url": "https://www.chess.com/game/live/168281623926",
+          "date": "2026-05-05",
+          "white": "danio2022",
+          "black": "Yarosf",
+          "result": "0-1",
+          "whiteRatingBefore": 1345,
+          "blackRatingBefore": 1877
+        }
+      ],
+      "recordedAt": "2026-05-05T18:26:41.026Z"
     }
   ]
 }
