@@ -1,5 +1,5 @@
 {
-  "lastRun": "2026-05-05T18:26:41.028Z",
+  "lastRun": "2026-05-06T18:30:20.684Z",
   "startDate": "2026-03-15",
   "completedMatches": [
     {
@@ -1171,6 +1171,36 @@
         }
       ],
       "recordedAt": "2026-05-05T18:26:41.026Z"
+    },
+    {
+      "group": "A",
+      "player1": "patokaczu",
+      "player2": "kirosgoli",
+      "score1": 1,
+      "score2": 1,
+      "games": [
+        {
+          "id": "166078550548",
+          "url": "https://www.chess.com/game/live/166078550548",
+          "date": "2026-03-17",
+          "white": "Patokaczu",
+          "black": "kirosgoli",
+          "result": "0-1",
+          "whiteRatingBefore": 2107,
+          "blackRatingBefore": 1927
+        },
+        {
+          "id": "168328273366",
+          "url": "https://www.chess.com/game/live/168328273366",
+          "date": "2026-05-06",
+          "white": "kirosgoli",
+          "black": "Patokaczu",
+          "result": "0-1",
+          "whiteRatingBefore": 1890,
+          "blackRatingBefore": 2147
+        }
+      ],
+      "recordedAt": "2026-05-06T18:30:20.679Z"
     }
   ]
 }
