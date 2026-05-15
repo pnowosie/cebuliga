@@ -1261,6 +1261,36 @@
         }
       ],
       "recordedAt": "2026-05-15T00:00:00.000Z"
+    },
+    {
+      "group": "A",
+      "player1": "patokaczu",
+      "player2": "yarosf",
+      "score1": 0,
+      "score2": 2,
+      "games": [
+        {
+          "id": "168550989488",
+          "url": "https://www.chess.com/game/live/168550989488",
+          "date": "2026-05-11",
+          "white": "Patokaczu",
+          "black": "Yarosf",
+          "result": "0-1",
+          "whiteRatingBefore": 2052,
+          "blackRatingBefore": 1542
+        },
+        {
+          "id": "168551193832",
+          "url": "https://www.chess.com/game/live/168551193832",
+          "date": "2026-05-11",
+          "white": "Yarosf",
+          "black": "Patokaczu",
+          "result": "1-0",
+          "whiteRatingBefore": 1542,
+          "blackRatingBefore": 2052
+        }
+      ],
+      "recordedAt": "2026-05-15T00:00:00.000Z"
     }
   ]
 }
