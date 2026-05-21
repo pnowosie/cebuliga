@@ -1321,6 +1321,186 @@
         }
       ],
       "recordedAt": "2026-05-15T23:20:33.923Z"
+    },
+    {
+      "group": "A",
+      "player1": "patokaczu",
+      "player2": "domkepka",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "Patokaczu",
+          "black": "domkepka",
+          "result": "1-0",
+          "whiteRatingBefore": 2052,
+          "blackRatingBefore": 301
+        },
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "domkepka",
+          "black": "Patokaczu",
+          "result": "0-1",
+          "whiteRatingBefore": 301,
+          "blackRatingBefore": 2052
+        }
+      ],
+      "recordedAt": "2026-05-21T00:00:00.000Z"
+    },
+    {
+      "group": "A",
+      "player1": "kirosgoli",
+      "player2": "domkepka",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "kirosgoli",
+          "black": "domkepka",
+          "result": "1-0",
+          "whiteRatingBefore": 1890,
+          "blackRatingBefore": 301
+        },
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "domkepka",
+          "black": "kirosgoli",
+          "result": "0-1",
+          "whiteRatingBefore": 301,
+          "blackRatingBefore": 1890
+        }
+      ],
+      "recordedAt": "2026-05-21T00:00:00.000Z"
+    },
+    {
+      "group": "A",
+      "player1": "pioterha",
+      "player2": "domkepka",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "Pioterha",
+          "black": "domkepka",
+          "result": "1-0",
+          "whiteRatingBefore": 1890,
+          "blackRatingBefore": 301
+        },
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "domkepka",
+          "black": "Pioterha",
+          "result": "0-1",
+          "whiteRatingBefore": 301,
+          "blackRatingBefore": 1890
+        }
+      ],
+      "recordedAt": "2026-05-21T00:00:00.000Z"
+    },
+    {
+      "group": "A",
+      "player1": "bertiad",
+      "player2": "domkepka",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "Bertiad",
+          "black": "domkepka",
+          "result": "1-0",
+          "whiteRatingBefore": 1553,
+          "blackRatingBefore": 301
+        },
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "domkepka",
+          "black": "Bertiad",
+          "result": "0-1",
+          "whiteRatingBefore": 301,
+          "blackRatingBefore": 1553
+        }
+      ],
+      "recordedAt": "2026-05-21T00:00:00.000Z"
+    },
+    {
+      "group": "A",
+      "player1": "danio2022",
+      "player2": "domkepka",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "danio2022",
+          "black": "domkepka",
+          "result": "1-0",
+          "whiteRatingBefore": 1346,
+          "blackRatingBefore": 301
+        },
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "domkepka",
+          "black": "danio2022",
+          "result": "0-1",
+          "whiteRatingBefore": 301,
+          "blackRatingBefore": 1346
+        }
+      ],
+      "recordedAt": "2026-05-21T00:00:00.000Z"
+    },
+    {
+      "group": "B",
+      "player1": "sebant444",
+      "player2": "szymonmiod",
+      "score1": 2,
+      "score2": 0,
+      "games": [
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "Sebant444",
+          "black": "szymonmiod",
+          "result": "1-0",
+          "whiteRatingBefore": 826,
+          "blackRatingBefore": 2051
+        },
+        {
+          "id": "walkover",
+          "url": "https://www.chess.com/",
+          "date": "2026-05-21",
+          "white": "szymonmiod",
+          "black": "Sebant444",
+          "result": "0-1",
+          "whiteRatingBefore": 2051,
+          "blackRatingBefore": 826
+        }
+      ],
+      "recordedAt": "2026-05-21T00:00:00.000Z"
     }
   ]
 }
