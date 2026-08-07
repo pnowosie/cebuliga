@@ -1,0 +1,38 @@
+---
+/**
+ * Board marker: a 2×2 chequer, i.e. the smallest thing that still reads as a chessboard.
+ *
+ * Inline SVG (Scalable Vector Graphics) — drawn as four squares rather than pulled from an icon
+ * set, because nothing standard ships a 2×2 board. Both shades come from `currentColor` at
+ * different opacities, so it tints itself from whatever text colour it sits in and stays muted
+ * against the dark palette instead of fighting the nick next to it.
+ *
+ * Squares follow the board convention: dark on the a1 (bottom-left) diagonal.
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: cls } = Astro.props;
+---
+
+<svg
+  class:list={['board-icon', cls]}
+  viewBox="0 0 12 12"
+  aria-hidden="true"
+  focusable="false"
+>
+  <rect x="1" y="1" width="5" height="5" fill="currentColor" opacity="0.28"></rect>
+  <rect x="6" y="1" width="5" height="5" fill="currentColor" opacity="0.8"></rect>
+  <rect x="1" y="6" width="5" height="5" fill="currentColor" opacity="0.8"></rect>
+  <rect x="6" y="6" width="5" height="5" fill="currentColor" opacity="0.28"></rect>
+</svg>
+
+<style>
+  .board-icon {
+    width: 0.85em;
+    height: 0.85em;
+    vertical-align: -0.08em;
+    flex-shrink: 0;
+  }
+</style>

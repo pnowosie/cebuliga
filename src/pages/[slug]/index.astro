@@ -1,0 +1,259 @@
+---
+/**
+ * Tournament landing page. Reachable by slug directly, or from the index.
+ *
+ * Three panels: the current round + status + link out to the pairing source, then a row of
+ * shortcuts into Wyniki (with the podium) and Gracze (with the field size and rating spread).
+ * The type / platform / time control / dates already live in the layout's subtitle, so they
+ * are deliberately not repeated here.
+ */
+import TournamentLayout from '../../layouts/TournamentLayout.astro';
+import { tournamentPaths } from '@lib/site';
+import { latestRound, statusLabel, tournamentStatus } from '@lib/display';
+import { computeStandings, ratingRange, rosterOf } from '@lib/standings';
+import ExternalIcon from '../../components/ExternalIcon.astro';
+import type { Tournament } from '@lib/manifest';
+
+export function getStaticPaths() {
+  return tournamentPaths();
+}
+
+const { tournament } = Astro.props as { tournament: Tournament };
+const t = tournament;
+const base = `/${t.slug}`;
+
+const current = latestRound(t);
+const totalRounds = t.rounds.length;
+const status = tournamentStatus(t);
+
+const podium = computeStandings(t).slice(0, 3);
+const medals = ['🥇', '🥈', '🥉'];
+
+const playerCount = rosterOf(t).length;
+const ratings = ratingRange(t);
+---
+
+<TournamentLayout tournament={t} currentPage="home">
+  <section class="panel round-panel">
+    <div class="round-block">
+      <span class="label">Runda</span>
+      {
+        current === null ? (
+          <span class="round-value faint">—</span>
+        ) : (
+          <a class="round-value" href={`${base}/rundy/${current}`}>
+            <span class="big">{current}</span>
+            <span class="of">/ {totalRounds}</span>
+          </a>
+        )
+      }
+    </div>
+
+    <span class:list={['status', status]}>{statusLabel(status)}</span>
+
+    <div class="panel-links">
+      <span class="organiser">Organizator: {t.organiser}</span>
+      {
+        t.cmUrl && (
+          <a href={t.cmUrl} target="_blank" rel="noopener">
+            Strona turnieju{' '}
+            <ExternalIcon />
+          </a>
+        )
+      }
+    </div>
+  </section>
+
+  <div class="row">
+    <section class="panel">
+      <a class="pane-title" href={`${base}/wyniki`}>Wyniki</a>
+      {
+        podium.length === 0 ? (
+          <p class="faint small">Brak wyników.</p>
+        ) : (
+          <ol class="podium">
+            {podium.map((s, i) => (
+              <li>
+                <span class="medal">{medals[i]}</span>
+                <span class="pname">{s.nick}</span>
+              </li>
+            ))}
+          </ol>
+        )
+      }
+    </section>
+
+    <section class="panel">
+      <a class="pane-title" href={`${base}/gracze`}>Gracze</a>
+      <p class="count">{playerCount}</p>
+      <p class="range">
+        {
+          ratings ? (
+            <>
+              <span class="star">★</span> {ratings.min}–{ratings.max}
+            </>
+          ) : (
+            <span class="faint small">Brak rankingów</span>
+          )
+        }
+      </p>
+    </section>
+  </div>
+</TournamentLayout>
+
+<style>
+  .panel {
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-raised);
+  }
+
+  .round-panel {
+    display: flex;
+    align-items: center;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+  }
+
+  .label {
+    display: block;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+  }
+
+  .round-value {
+    display: block;
+    margin-top: 0.1rem;
+    text-decoration: none;
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  a.round-value:hover .big {
+    color: var(--accent);
+  }
+
+  .big {
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .of {
+    margin-left: 0.2rem;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .status {
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .status.running {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .status.planned {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
+
+  .panel-links {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+    font-size: 0.82rem;
+  }
+
+  .panel-links a {
+    text-decoration: none;
+  }
+
+  .panel-links a:hover {
+    text-decoration: underline;
+  }
+
+  .organiser {
+    color: var(--muted);
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+
+  .row .panel {
+    text-align: center;
+  }
+
+  .pane-title {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-strong);
+    text-decoration: none;
+  }
+
+  .pane-title:hover {
+    color: var(--accent);
+  }
+
+  .podium {
+    list-style: none;
+    margin-top: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .podium li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.92rem;
+  }
+
+  .pname {
+    color: var(--text-strong);
+    font-weight: 600;
+  }
+
+  .count {
+    margin-top: 0.5rem;
+    font-size: 2.1rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .range {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .star {
+    color: var(--amber);
+  }
+
+  .small {
+    font-size: 0.82rem;
+  }
+</style>

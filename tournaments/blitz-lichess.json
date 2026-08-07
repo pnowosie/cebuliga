@@ -1,0 +1,90 @@
+{
+  "slug": "blitz-lichess",
+  "title": "Turniej testowy blitz (lichess)",
+  "platform": "lichess",
+  "type": "swiss",
+  "organiser": "matman",
+  "channel": "matman",
+  "timeControl": "blitz",
+  "clockInfo": "⌛ 3'+2\"",
+  "active": true,
+  "startDate": "2026-06-01T12:00:00.000Z",
+  "endDate": "2026-08-31T00:00:00.000Z",
+  "players": [
+    {
+      "nick": "Anna_L",
+      "name": "Anna Lewandowska",
+      "rating": 1720
+    },
+    {
+      "nick": "Bartek_K",
+      "rating": 1655
+    },
+    {
+      "nick": "Celina_W",
+      "rating": 1590
+    },
+    {
+      "nick": "Damian_P",
+      "name": "Damian Piątek",
+      "rating": 1488
+    },
+    {
+      "nick": "Ewa_Z",
+      "rating": 1402
+    }
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "startDate": "2026-06-01T12:00:00.000Z",
+      "pairings": [
+        {
+          "board": 1,
+          "white": "Anna_L",
+          "black": "Bartek_K",
+          "result": "1-0",
+          "game_url": "https://lichess.org/tstgame01",
+          "updated_at": "2026-06-04T17:30:00.000Z"
+        },
+        {
+          "board": 2,
+          "white": "Celina_W",
+          "black": "Damian_P",
+          "result": "½-½",
+          "game_url": "https://lichess.org/tstgame02",
+          "updated_at": "2026-06-05T19:15:00.000Z"
+        },
+        {
+          "board": 3,
+          "white": "Ewa_Z",
+          "black": null
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "startDate": "2026-06-15T12:00:00.000Z",
+      "pairings": [
+        {
+          "board": 1,
+          "white": "Anna_L",
+          "black": "Celina_W"
+        },
+        {
+          "board": 2,
+          "white": "Damian_P",
+          "black": "Ewa_Z",
+          "result": "0-1",
+          "game_url": "https://lichess.org/tstgame03",
+          "updated_at": "2026-06-18T20:44:00.000Z"
+        },
+        {
+          "board": 3,
+          "white": "Bartek_K",
+          "black": null
+        }
+      ]
+    }
+  ]
+}

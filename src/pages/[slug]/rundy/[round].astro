@@ -1,0 +1,22 @@
+---
+/** `/[slug]/rundy/[round]` — one page per declared round. */
+import TournamentLayout from '../../../layouts/TournamentLayout.astro';
+import RoundView from '../../../components/RoundView.astro';
+import { roundPaths } from '@lib/site';
+import type { Round, Tournament } from '@lib/manifest';
+
+export function getStaticPaths() {
+  return roundPaths();
+}
+
+const { tournament, round } = Astro.props as { tournament: Tournament; round: Round };
+---
+
+<TournamentLayout
+  tournament={tournament}
+  currentPage="rundy"
+  title={`Runda ${round.round} — ${tournament.title}`}
+>
+  <h2>Kojarzenia</h2>
+  <RoundView tournament={tournament} round={round} />
+</TournamentLayout>

@@ -1,0 +1,49 @@
+---
+/**
+ * "Opens in a new tab" icon: a rounded square with the arrow escaping its top-right corner.
+ *
+ * There is no Unicode character for this — `↗` (U+2197) is a bare arrow and `⧉` (U+29C9) is two
+ * overlapping squares. The standard HTML answer is an inline SVG, which is also what the icon
+ * sets ship (Bootstrap `box-arrow-up-right`, Feather `external-link`, Lucide
+ * `square-arrow-out-up-right`). Inline keeps it self-contained: no font, no network request, and
+ * it inherits `currentColor` so it recolours with the surrounding link on hover.
+ *
+ * Sized in `em`, so it scales with whatever text it sits next to.
+ *
+ * Pass `label` when the icon is the only content of a link (it becomes the accessible name);
+ * omit it when the link already has text, so screen readers don't hear it twice.
+ */
+interface Props {
+  label?: string;
+  class?: string;
+}
+
+const { label, class: cls } = Astro.props;
+---
+
+<svg
+  class:list={['ext-icon', cls]}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  role={label ? 'img' : undefined}
+  aria-hidden={label ? undefined : 'true'}
+  focusable="false"
+>
+  {label && <title>{label}</title>}
+  <path d="M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6"></path>
+  <path d="m21 3-9 9"></path>
+  <path d="M15 3h6v6"></path>
+</svg>
+
+<style>
+  .ext-icon {
+    width: 0.9em;
+    height: 0.9em;
+    vertical-align: -0.09em;
+    flex-shrink: 0;
+  }
+</style>

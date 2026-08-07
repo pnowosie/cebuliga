@@ -1,0 +1,84 @@
+---
+/** Standings. Computed at build time from the pairings — nothing is stored in the manifest. */
+import TournamentLayout from '../../layouts/TournamentLayout.astro';
+import { tournamentPaths } from '@lib/site';
+import { formatPoints, playerPageUrl } from '@lib/display';
+import { computeStandings } from '@lib/standings';
+import type { Tournament } from '@lib/manifest';
+
+export function getStaticPaths() {
+  return tournamentPaths();
+}
+
+const { tournament } = Astro.props as { tournament: Tournament };
+const t = tournament;
+const standings = computeStandings(t);
+const anyByes = standings.some((s) => s.byes > 0);
+const medals: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' };
+---
+
+<TournamentLayout tournament={t} currentPage="wyniki" title={`Wyniki — ${t.title}`}>
+  <h2>Tabela</h2>
+
+  {
+    standings.length === 0 ? (
+      <p class="empty">Brak wyników.</p>
+    ) : (
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="num" title="Miejsce">#</th>
+              <th>Gracz</th>
+              <th class="num">Punkty</th>
+              <th class="num">Partie</th>
+              {anyByes && <th class="num">Pauzy</th>}
+              <th class="num" title="Suma punktów przeciwników">
+                Buchholz
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {standings.map((s) => (
+              <tr>
+                <td class="num place">{medals[s.place] ?? s.place}</td>
+                <td>
+                  <a class="nick" href={playerPageUrl(t.slug, s.nick)}>
+                    {s.nick}
+                  </a>
+                </td>
+                <td class="num pts">{formatPoints(s.points)}</td>
+                <td class="num muted">{s.games}</td>
+                {anyByes && <td class="num muted">{s.byes || ''}</td>}
+                <td class="num faint">{formatPoints(s.buchholz)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+
+  <p class="note">
+    Punktacja: wygrana 1, remis ½, przegrana 0. Pauza liczy się jako pełny punkt i nie jest
+    wliczana do rozegranych partii. Przy równej liczbie punktów decyduje Buchholz.
+  </p>
+</TournamentLayout>
+
+<style>
+  .place {
+    white-space: nowrap;
+  }
+
+  .pts {
+    font-weight: 700;
+    color: var(--text-strong);
+  }
+
+  .note {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--faint);
+    line-height: 1.5;
+  }
+</style>

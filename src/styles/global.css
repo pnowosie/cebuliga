@@ -1,0 +1,197 @@
+/* Shared shell + primitives. Dark GitHub palette, zero client JS. */
+
+:root {
+  --bg: #0d1117;
+  --bg-raised: #161b22;
+  --border: #21262d;
+  --border-strong: #30363d;
+  --text: #c9d1d9;
+  --text-strong: #e6edf3;
+  --muted: #8b949e;
+  --faint: #484f58;
+  --accent: #58a6ff;
+  --green: #3fb950;
+  --red: #f85149;
+  --amber: #d29922;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  padding: 1.25rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+  font-size: clamp(1.1rem, 3vw, 1.5rem);
+  font-weight: 700;
+  color: var(--text-strong);
+  letter-spacing: -0.02em;
+}
+
+header .subtitle {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+nav {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.75rem;
+}
+
+nav a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding-bottom: 2px;
+}
+
+nav a:hover {
+  color: var(--text-strong);
+}
+
+nav a.active {
+  color: var(--text-strong);
+  font-weight: 700;
+  border-bottom: 2px solid var(--accent);
+}
+
+main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+footer {
+  padding: 1rem 2rem;
+  font-size: 0.75rem;
+  color: var(--faint);
+  letter-spacing: 0.05em;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+a {
+  color: var(--accent);
+}
+
+h2 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+}
+
+/* ── primitives ─────────────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* Tournament status. `finished` keeps the plain grey badge — see `tournamentStatus`. */
+.badge.running {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.badge.planned {
+  border-color: var(--amber);
+  color: var(--amber);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.faint {
+  color: var(--faint);
+}
+
+.empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--faint);
+  border: 1px dashed var(--border-strong);
+  border-radius: 8px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+
+thead th {
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  padding: 0 0.6rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+tbody td {
+  padding: 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.nick {
+  color: var(--text-strong);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nick:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-raised);
+  padding: 0.4rem 0.6rem;
+}

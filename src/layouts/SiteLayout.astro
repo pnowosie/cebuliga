@@ -1,0 +1,28 @@
+---
+/** Shell for the index. The only page that knows about more than one tournament. */
+import BaseHead from './BaseHead.astro';
+import { buildVersion } from '@lib/version';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const version = buildVersion();
+---
+
+<html lang="pl">
+  <head>
+    <BaseHead title={title} />
+  </head>
+  <body>
+    <header>
+      <h1>Turnieje</h1>
+      <p class="subtitle">Wyniki turniejów rozgrywanych na chess.com i lichess.org</p>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>{version}</footer>
+  </body>
+</html>

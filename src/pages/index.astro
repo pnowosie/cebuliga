@@ -1,37 +1,181 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import GroupProgress from '../components/GroupProgress.astro';
-import tournament from '../../data/tournament.json';
-import players from '../../data/players.json';
+/**
+ * Tournament index. Lists every manifest in `tournaments/`.
+ * Only types with an info-page are linked — round-robin rows render unlinked until their
+ * pages land (see notes/tournament-infopage-rewrite.md).
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { loadTournaments } from '@lib/manifest';
+import {
+  TOURNAMENTS_DIR,
+  clockLabel,
+  dateRange,
+  gamesLabel,
+  hasInfoPage,
+  platformLabel,
+  roundsLabel,
+  statusLabel,
+  tournamentStatus,
+  typeLabel,
+} from '@lib/display';
+import { playedGames, rosterOf, roundsProgress } from '@lib/standings';
 
-const playersInGroup = (g: string) => players.filter(p => p.group === g).length;
-const totalGames = (g: string) => {
-  const n = playersInGroup(g);
-  return n * (n - 1); // n*(n-1)/2 matches × 2 games each
-};
+const tournaments = loadTournaments(TOURNAMENTS_DIR)
+  .map(({ tournament }) => tournament)
+  .sort(
+    (a, b) =>
+      Number(b.active) - Number(a.active) ||
+      Date.parse(b.startDate) - Date.parse(a.startDate) ||
+      a.slug.localeCompare(b.slug)
+  );
 
-const gamesPlayed = (g: string) =>
-  tournament.completedMatches
-    .filter(m => m.group === g)
-    .reduce((sum, m) => sum + m.games.length, 0);
+/**
+ * Progress reads differently per format. A swiss advances round by round — pairings for round
+ * N+1 don't exist until N is played — so "rounds done / declared" is the real measure. A
+ * round-robin declares its whole schedule up front, and its players play at their own pace, so
+ * only the count of games actually played says anything.
+ */
+const rows = tournaments.map((t) => {
+  const swiss = t.type === 'swiss';
+  const { resolved, total } = roundsProgress(t);
+  return {
+    t,
+    swiss,
+    status: tournamentStatus(t),
+    pct: swiss && total ? Math.round((resolved / total) * 100) : 0,
+    // A swiss with no rounds declared yet has nothing to report — "0 / 0 rund" under an empty
+    // bar says less than saying nothing.
+    progressText: swiss
+      ? total
+        ? `${resolved} / ${roundsLabel(total)}`
+        : null
+      : gamesLabel(playedGames(t)),
+    players: rosterOf(t).length,
+    href: hasInfoPage(t.type) ? `/${t.slug}` : null,
+  };
+});
 ---
 
-<Layout title="Pierwsza Liga Cebularzowa 2026" currentPage="home">
-  <div class="groups">
-    <GroupProgress label="Grupa 🅰️" completedGames={gamesPlayed('A')} totalGames={totalGames('A')} />
-    <GroupProgress label="Grupa 🅱️" completedGames={gamesPlayed('B')} totalGames={totalGames('B')} />
-  </div>
-</Layout>
+<SiteLayout title="Turnieje">
+  {
+    rows.length === 0 ? (
+      <p class="empty">Brak turniejów.</p>
+    ) : (
+      <ul class="list">
+        {rows.map(({ t, swiss, status, pct, progressText, players, href }) => {
+          const Tag = href ? 'a' : 'div';
+          return (
+            <li>
+              <Tag href={href} class:list={['card', { linked: href }]}>
+                <div class="head">
+                  <span class="name">{t.title}</span>
+                  <span class:list={['badge', status]}>{statusLabel(status)}</span>
+                </div>
+                <div class="meta">
+                  <span class="badge">{typeLabel(t.type)}</span>
+                  <span class="badge">{platformLabel(t.platform)}</span>
+                  <span class="badge">{clockLabel(t)}</span>
+                  <span class="badge" title="Liczba graczy">👤 {players}</span>
+                  <span class="dates">{dateRange(t)}</span>
+                </div>
+                {progressText && (
+                  <div class="progress">
+                    {swiss && (
+                      <div class="bar">
+                        <div class="fill" style={`width:${pct}%`} />
+                      </div>
+                    )}
+                    <span class="count">{progressText}</span>
+                  </div>
+                )}
+                {!href && <p class="soon">Strona turnieju wkrótce</p>}
+              </Tag>
+            </li>
+          );
+        })}
+      </ul>
+    )
+  }
+</SiteLayout>
 
 <style>
-  .groups {
+  .list {
+    list-style: none;
     display: flex;
-    gap: 1.5rem;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
-  @media (max-width: 480px) {
-    .groups {
-      flex-direction: column;
-    }
+  .card {
+    display: block;
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-raised);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card.linked:hover {
+    border-color: var(--accent);
+  }
+
+  .head {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .name {
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: var(--text-strong);
+  }
+
+  .meta {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.6rem;
+  }
+
+  .dates {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .progress {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-top: 0.8rem;
+  }
+
+  .bar {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--border);
+    overflow: hidden;
+  }
+
+  .fill {
+    height: 100%;
+    background: var(--green);
+  }
+
+  .count {
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .soon {
+    margin-top: 0.6rem;
+    font-size: 0.75rem;
+    color: var(--faint);
   }
 </style>

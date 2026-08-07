@@ -1,3 +1,7 @@
+# INOPERATIVE until the cron rewrite (phase 3 of notes/tournament-infopage-rewrite.md).
+# `scripts/data-refresh.ts` and `data/` were removed in phase 1; this file is kept as the
+# skeleton the new cron will fill in (schedules, `git add tournaments/`, fetch-depth: 0,
+# concurrency group, webhook secret).
 name: Refresh tournament data
 
 on:

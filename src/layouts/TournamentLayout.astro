@@ -1,0 +1,64 @@
+---
+/**
+ * Shell for a single tournament. Deliberately has NO link back to `/` — a tournament page
+ * stands alone as an info-page, and the index is only one way in.
+ */
+import BaseHead from './BaseHead.astro';
+import { buildVersion } from '@lib/version';
+import { clockLabel, dateRange, platformLabel, roundsLabel, typeLabel } from '@lib/display';
+import type { Tournament } from '@lib/manifest';
+
+interface Props {
+  tournament: Tournament;
+  currentPage: 'home' | 'gracze' | 'rundy' | 'wyniki';
+  title?: string;
+}
+
+const { tournament: t, currentPage, title } = Astro.props;
+const version = buildVersion();
+const base = `/${t.slug}`;
+
+// Format first, then how it is played, then where, then when. A tournament with no rounds
+// declared yet simply drops that part rather than claiming "0 rund".
+const subtitle = [
+  typeLabel(t.type),
+  t.rounds.length ? roundsLabel(t.rounds.length) : null,
+  clockLabel(t),
+  platformLabel(t.platform),
+  dateRange(t),
+]
+  .filter(Boolean)
+  .join(' · ');
+---
+
+<html lang="pl">
+  <head>
+    <BaseHead title={title ?? t.title} />
+  </head>
+  <body>
+    <header>
+      <h1><a href={base} class="title-link">{t.title}</a></h1>
+      <p class="subtitle">{subtitle}</p>
+      <nav>
+        <a href={`${base}/gracze`} class={currentPage === 'gracze' ? 'active' : ''}>Gracze</a>
+        <a href={`${base}/rundy`} class={currentPage === 'rundy' ? 'active' : ''}>Rundy</a>
+        <a href={`${base}/wyniki`} class={currentPage === 'wyniki' ? 'active' : ''}>Wyniki</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>{version}</footer>
+  </body>
+</html>
+
+<style>
+  .title-link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .title-link:hover {
+    color: var(--accent);
+  }
+</style>

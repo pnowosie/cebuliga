@@ -1,0 +1,384 @@
+---
+/**
+ * Player profile, scoped to one tournament. There is no cross-tournament player identity —
+ * this page is "what this nick did in this event", nothing more.
+ *
+ * Results are shown from THIS player's perspective (1 / ½ / 0), not in pairing orientation,
+ * with the raw pairing result in the tooltip.
+ */
+import TournamentLayout from '../../../layouts/TournamentLayout.astro';
+import { playerPaths } from '@lib/site';
+import { formatPoints, hasAssignedColors, playerPageUrl, profileUrl } from '@lib/display';
+import { computeStandings, playerGames } from '@lib/standings';
+import type { Tournament } from '@lib/manifest';
+import ExternalIcon from '../../../components/ExternalIcon.astro';
+import BoardIcon from '../../../components/BoardIcon.astro';
+
+export function getStaticPaths() {
+  return playerPaths();
+}
+
+const { tournament, nick } = Astro.props as { tournament: Tournament; nick: string };
+const t = tournament;
+
+const player = (t.players ?? []).find((p) => p.nick.toLowerCase() === nick.toLowerCase());
+const standing = computeStandings(t).find((s) => s.nick.toLowerCase() === nick.toLowerCase());
+const games = playerGames(t, nick);
+const showSwapWarning = hasAssignedColors(t.type);
+
+const medals: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' };
+/** Podium gets its medal; everyone from 4th down gets a plain trophy. */
+const placeSymbol = standing ? (medals[standing.place] ?? '🏆') : null;
+const initial = nick.slice(0, 1).toUpperCase();
+
+const SWAP_HINT =
+  'Gracze zagrali odwrotnymi kolorami niż w kojarzeniu. Wynik pokazany jest zgodnie z kojarzeniem.';
+
+const outcome = (score: number | null) =>
+  score === null ? '' : score === 1 ? 'win' : score === 0 ? 'loss' : 'draw';
+
+/**
+ * The colour column doubles as the link to the game — the pawn says which colour this player
+ * had, and clicking it opens that game on the playzone. This is why it is the colour cell and
+ * not a column of its own: a double round-robin puts BOTH pawns here, each linking to its own
+ * game, with a single match total in the result column.
+ */
+type Color = 'white' | 'black' | null;
+const pawn = (c: Color) => (c === 'white' ? '♙' : '♟');
+const colorName = (c: Color) => (c === 'white' ? 'białe' : 'czarne');
+const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
+---
+
+<TournamentLayout tournament={t} currentPage="gracze" title={`${nick} — ${t.title}`}>
+  <section class="hero">
+    {
+      player?.avatar ? (
+        <img class="avatar" src={player.avatar} alt={nick} width="72" height="72" loading="lazy" />
+      ) : (
+        <div class="avatar placeholder" aria-hidden="true">
+          {initial}
+        </div>
+      )
+    }
+
+    <div class="who">
+      <a class="nick-link" href={profileUrl(t.platform, nick)} target="_blank" rel="noopener">
+        {nick}{' '}
+        <ExternalIcon />
+      </a>
+      {player?.name && <p class="realname">{player.name}</p>}
+      <p class="rating">
+        {
+          player?.rating ? (
+            <>
+              <span class="star" title="Ranking startowy">
+                ★
+              </span>{' '}
+              <strong>{player.rating}</strong>
+            </>
+          ) : (
+            <span class="faint">Brak rankingu</span>
+          )
+        }
+      </p>
+    </div>
+
+    <dl class="stats">
+      <div>
+        <dt>Punkty</dt>
+        <dd class="big">{standing ? formatPoints(standing.points) : '—'}</dd>
+      </div>
+      <div>
+        <dt>Miejsce</dt>
+        <dd class="big">
+          {
+            standing ? (
+              <>
+                <span class="place-symbol">{placeSymbol}</span> {standing.place}
+              </>
+            ) : (
+              '—'
+            )
+          }
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <h2 class="games-heading">Partie</h2>
+
+  {
+    games.length === 0 ? (
+      <p class="empty">Ten gracz nie ma jeszcze kojarzeń.</p>
+    ) : (
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th class="num">Runda</th>
+              <th></th>
+              <th>Kolor</th>
+              <th>Przeciwnik</th>
+              <th class="num">Ranking</th>
+              <th>Wynik</th>
+            </tr>
+          </thead>
+          <tbody>
+            {games.map((g) => (
+              <tr class:list={[{ pending: g.score === null }]}>
+                <td class="num faint">{g.round}</td>
+                <td class="board" title={`Szachownica ${g.board}`}>
+                  <BoardIcon /> {g.board}
+                </td>
+                <td class="color">
+                  {g.bye ? (
+                    <span class="faint">—</span>
+                  ) : g.gameUrl ? (
+                    <a
+                      class="game-link"
+                      href={g.gameUrl}
+                      target="_blank"
+                      rel="noopener"
+                      title={gameHint(g.color)}
+                      aria-label={gameHint(g.color)}
+                    >
+                      <span class="pawn">{pawn(g.color)}</span>
+                      <ExternalIcon />
+                    </a>
+                  ) : (
+                    <span class="pawn" title={colorName(g.color)}>
+                      {pawn(g.color)}
+                    </span>
+                  )}
+                </td>
+                <td>
+                  {g.bye ? (
+                    <span class="bye">pauza</span>
+                  ) : (
+                    <>
+                      <a class="nick" href={playerPageUrl(t.slug, g.opponent!)}>
+                        {g.opponent}
+                      </a>
+                      {g.score === null && (
+                        <a
+                          class="swords"
+                          href={profileUrl(t.platform, g.opponent!)}
+                          target="_blank"
+                          rel="noopener"
+                          title={`Profil ${g.opponent} na ${t.platform === 'lichess' ? 'lichess.org' : 'chess.com'}`}
+                        >
+                          ⚔️
+                        </a>
+                      )}
+                    </>
+                  )}
+                </td>
+                <td class="num muted">{g.opponentRating ?? ''}</td>
+                <td>
+                  {g.score === null ? (
+                    <span class="faint">—</span>
+                  ) : (
+                    <>
+                      <span
+                        class:list={['score', outcome(g.score)]}
+                        title={g.bye ? 'Punkt za pauzę' : `Wynik kojarzenia: ${g.result}`}
+                      >
+                        {formatPoints(g.score)}
+                      </span>
+                      {g.colorsSwapped && showSwapWarning && (
+                        <span class="warn" title={SWAP_HINT} aria-label={SWAP_HINT}>
+                          ⚠
+                        </span>
+                      )}
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )
+  }
+</TournamentLayout>
+
+<style>
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-raised);
+  }
+
+  .avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .avatar.placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--border);
+    color: var(--muted);
+    font-size: 1.9rem;
+    font-weight: 700;
+  }
+
+  .who {
+    flex: 1;
+    min-width: 160px;
+  }
+
+  .nick-link {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-strong);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .nick-link:hover {
+    color: var(--accent);
+  }
+
+  .realname {
+    margin-top: 0.15rem;
+    font-size: 0.86rem;
+    color: var(--muted);
+  }
+
+  .rating {
+    margin-top: 0.3rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  .rating strong {
+    color: var(--text-strong);
+  }
+
+  .star {
+    color: var(--amber);
+  }
+
+  .stats {
+    display: flex;
+    gap: 1.6rem;
+  }
+
+  .stats > div {
+    text-align: center;
+  }
+
+  .stats dt {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+  }
+
+  .big {
+    margin-top: 0.15rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  /* Emoji render large for their point size — pull the medal back to match the digits. */
+  .place-symbol {
+    font-size: 0.82em;
+    vertical-align: 0.06em;
+  }
+
+  .board {
+    white-space: nowrap;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .games-heading {
+    margin-top: 1.8rem;
+  }
+
+  tr.pending td {
+    background: rgba(139, 148, 158, 0.05);
+  }
+
+  tr.pending .nick {
+    color: var(--muted);
+  }
+
+  .color {
+    white-space: nowrap;
+  }
+
+  .pawn {
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+
+  .game-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.22rem;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .game-link:hover {
+    color: var(--accent);
+  }
+
+  .score {
+    display: inline-block;
+    min-width: 2.3rem;
+    text-align: center;
+    padding: 0.05rem 0.35rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    border: 1px solid var(--border-strong);
+    color: var(--text-strong);
+  }
+
+  .score.win {
+    border-color: var(--green);
+    color: var(--green);
+  }
+
+  .score.loss {
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  .score.draw {
+    border-color: var(--border-strong);
+    color: var(--muted);
+  }
+
+  .warn {
+    margin-left: 0.4rem;
+    color: var(--amber);
+    cursor: help;
+  }
+
+  .swords {
+    margin-left: 0.45rem;
+    text-decoration: none;
+  }
+
+  .bye {
+    color: var(--muted);
+    font-style: italic;
+  }
+</style>

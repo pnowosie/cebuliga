@@ -1,0 +1,22 @@
+---
+/** `/[slug]/rundy` — shows the latest round; the picker links to the rest. */
+import TournamentLayout from '../../../layouts/TournamentLayout.astro';
+import RoundView from '../../../components/RoundView.astro';
+import { tournamentPaths } from '@lib/site';
+import { latestRound } from '@lib/display';
+import type { Tournament } from '@lib/manifest';
+
+export function getStaticPaths() {
+  return tournamentPaths();
+}
+
+const { tournament } = Astro.props as { tournament: Tournament };
+const t = tournament;
+const last = latestRound(t);
+const round = last === null ? null : t.rounds.find((r) => r.round === last)!;
+---
+
+<TournamentLayout tournament={t} currentPage="rundy" title={`Rundy — ${t.title}`}>
+  <h2>Kojarzenia</h2>
+  {round ? <RoundView tournament={t} round={round} /> : <p class="empty">Brak rund.</p>}
+</TournamentLayout>

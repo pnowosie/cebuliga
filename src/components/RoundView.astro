@@ -1,0 +1,219 @@
+---
+/**
+ * One round's pairings, plus a zero-JS round picker (`<details>` holding plain links).
+ *
+ * `result` is always in PAIRING orientation — when the players took the opposite colours the
+ * cron flips it and sets `colors_swapped`, so the row still reads left-to-right as
+ * white–black. The ⚠ only means "they swapped", never "the result is upside down".
+ */
+import { hasAssignedColors, playerPageUrl } from '@lib/display';
+import ExternalIcon from './ExternalIcon.astro';
+import type { Round, Tournament } from '@lib/manifest';
+
+interface Props {
+  tournament: Tournament;
+  round: Round;
+}
+
+const { tournament: t, round } = Astro.props;
+const base = `/${t.slug}`;
+
+const rounds = [...t.rounds].sort((a, b) => a.round - b.round);
+const pairings = [...round.pairings].sort((a, b) => a.board - b.board);
+const showSwapWarning = hasAssignedColors(t.type);
+const played = pairings.filter((p) => p.result || p.black === null).length;
+
+const SWAP_HINT =
+  'Gracze zagrali odwrotnymi kolorami niż w kojarzeniu. Wynik pokazany jest zgodnie z kojarzeniem.';
+---
+
+<div class="bar">
+  <details class="picker">
+    <summary>Runda {round.round}</summary>
+    <ul>
+      {
+        rounds.map((r) => (
+          <li>
+            <a href={`${base}/rundy/${r.round}`} class:list={[{ current: r.round === round.round }]}>
+              Runda {r.round}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+  <span class="count">{played} / {pairings.length} rozegranych</span>
+</div>
+
+{
+  pairings.length === 0 ? (
+    <p class="empty">Brak kojarzeń w tej rundzie.</p>
+  ) : (
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="num">#</th>
+            <th>Białe</th>
+            <th>Czarne</th>
+            <th>Wynik</th>
+            <th>Partia</th>
+          </tr>
+        </thead>
+        <tbody>
+          {pairings.map((p) => (
+            <tr>
+              <td class="num faint">{p.board}</td>
+              <td>
+                <a class="nick" href={playerPageUrl(t.slug, p.white)}>
+                  {p.white}
+                </a>
+              </td>
+              <td>
+                {p.black === null ? (
+                  <span class="bye">pauza</span>
+                ) : (
+                  <a class="nick" href={playerPageUrl(t.slug, p.black)}>
+                    {p.black}
+                  </a>
+                )}
+              </td>
+              <td>
+                {p.black === null ? (
+                  <span class="result" title="Punkt za pauzę">
+                    1
+                  </span>
+                ) : p.result ? (
+                  <>
+                    <span class="result">{p.result}</span>
+                    {p.colors_swapped && showSwapWarning && (
+                      <span class="warn" title={SWAP_HINT} aria-label={SWAP_HINT}>
+                        ⚠
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <span class="faint">—</span>
+                )}
+              </td>
+              <td>
+                {p.game_url ? (
+                  <a href={p.game_url} target="_blank" rel="noopener" class="game">
+                    partia{' '}
+                    <ExternalIcon />
+                  </a>
+                ) : (
+                  <span class="faint">—</span>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+<style>
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .picker {
+    position: relative;
+  }
+
+  .picker summary {
+    cursor: pointer;
+    list-style: none;
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--bg-raised);
+    color: var(--text-strong);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .picker summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .picker summary::after {
+    content: ' ▾';
+    color: var(--muted);
+  }
+
+  .picker[open] summary {
+    border-color: var(--accent);
+  }
+
+  .picker ul {
+    position: absolute;
+    z-index: 10;
+    margin-top: 0.35rem;
+    min-width: 100%;
+    list-style: none;
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    background: var(--bg-raised);
+    padding: 0.25rem;
+  }
+
+  .picker li a {
+    display: block;
+    padding: 0.35rem 0.7rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+
+  .picker li a:hover {
+    background: var(--border);
+    color: var(--text-strong);
+  }
+
+  .picker li a.current {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .count {
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .result {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--text-strong);
+  }
+
+  .warn {
+    margin-left: 0.4rem;
+    color: var(--amber);
+    cursor: help;
+  }
+
+  .bye {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .game {
+    font-size: 0.82rem;
+    text-decoration: none;
+  }
+
+  .game:hover {
+    text-decoration: underline;
+  }
+</style>
