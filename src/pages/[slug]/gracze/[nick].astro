@@ -9,7 +9,7 @@
 import TournamentLayout from '../../../layouts/TournamentLayout.astro';
 import { playerPaths } from '@lib/site';
 import { formatPoints, hasAssignedColors, playerPageUrl, profileUrl } from '@lib/display';
-import { computeStandings, playerGames } from '@lib/standings';
+import { computeStandings, playerGames, tournamentProgress } from '@lib/standings';
 import type { Tournament } from '@lib/manifest';
 import ExternalIcon from '../../../components/ExternalIcon.astro';
 import BoardIcon from '../../../components/BoardIcon.astro';
@@ -26,9 +26,19 @@ const standing = computeStandings(t).find((s) => s.nick.toLowerCase() === nick.t
 const games = playerGames(t, nick);
 const showSwapWarning = hasAssignedColors(t.type);
 
+/**
+ * No place while nothing is resolved: every player sits on 0 and the standings sort collapses to
+ * the alphabetical tie-break, which would hand this player a rank — and possibly a medal — for
+ * having a nick that sorts early. Points stay visible; 0 is genuinely what the manifest says.
+ *
+ * Keyed off the DATA, never off the calendar: this page is a static snapshot rebuilt only when a
+ * commit lands, so it has no idea what day it is when someone reads it.
+ */
+const hasResults = tournamentProgress(t).resolved > 0;
+
 const medals: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' };
 /** Podium gets its medal; everyone from 4th down gets a plain trophy. */
-const placeSymbol = standing ? (medals[standing.place] ?? '🏆') : null;
+const placeSymbol = hasResults && standing ? (medals[standing.place] ?? '🏆') : null;
 const initial = nick.slice(0, 1).toUpperCase();
 
 const SWAP_HINT =
@@ -92,7 +102,7 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
         <dt>Miejsce</dt>
         <dd class="big">
           {
-            standing ? (
+            hasResults && standing ? (
               <>
                 <span class="place-symbol">{placeSymbol}</span> {standing.place}
               </>
@@ -109,7 +119,7 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
 
   {
     games.length === 0 ? (
-      <p class="empty">Ten gracz nie ma jeszcze kojarzeń.</p>
+      <p class="empty">Nie ma jeszcze kojarzeń.</p>
     ) : (
       <div class="table-wrap">
         <table>

@@ -10,7 +10,7 @@
 import TournamentLayout from '../../layouts/TournamentLayout.astro';
 import { tournamentPaths } from '@lib/site';
 import { latestRound, statusLabel, tournamentStatus } from '@lib/display';
-import { computeStandings, ratingRange, rosterOf } from '@lib/standings';
+import { computeStandings, ratingRange, rosterOf, tournamentProgress } from '@lib/standings';
 import ExternalIcon from '../../components/ExternalIcon.astro';
 import type { Tournament } from '@lib/manifest';
 
@@ -26,7 +26,10 @@ const current = latestRound(t);
 const totalRounds = t.rounds.length;
 const status = tournamentStatus(t);
 
-const podium = computeStandings(t).slice(0, 3);
+// No podium until something is resolved: with everyone on 0 the medals would go to whichever
+// three nicks sort first alphabetically. See the same guard on /wyniki.
+const hasResults = tournamentProgress(t).resolved > 0;
+const podium = hasResults ? computeStandings(t).slice(0, 3) : [];
 const medals = ['🥇', '🥈', '🥉'];
 
 const playerCount = rosterOf(t).length;

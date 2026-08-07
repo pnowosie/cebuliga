@@ -3,7 +3,7 @@
 import TournamentLayout from '../../../layouts/TournamentLayout.astro';
 import RoundView from '../../../components/RoundView.astro';
 import { tournamentPaths } from '@lib/site';
-import { latestRound } from '@lib/display';
+import { formatDate, latestRound } from '@lib/display';
 import type { Tournament } from '@lib/manifest';
 
 export function getStaticPaths() {
@@ -14,9 +14,27 @@ const { tournament } = Astro.props as { tournament: Tournament };
 const t = tournament;
 const last = latestRound(t);
 const round = last === null ? null : t.rounds.find((r) => r.round === last)!;
+
+/**
+ * Before the first ChessManager paste lands there are no rounds at all, so point at the date the
+ * manifest declares instead of a bare "Brak rund."
+ *
+ * This quotes the DATA — "the manifest says the event opens on X" — not a claim about today. It
+ * stays true on a stale page: if the date has already passed, it reads as "these were due on X",
+ * which is exactly the state of things when a paste is late.
+ */
+const opensOn = formatDate(t.startDate);
 ---
 
 <TournamentLayout tournament={t} currentPage="rundy" title={`Rundy — ${t.title}`}>
   <h2>Kojarzenia</h2>
-  {round ? <RoundView tournament={t} round={round} /> : <p class="empty">Brak rund.</p>}
+  {
+    round ? (
+      <RoundView tournament={t} round={round} />
+    ) : (
+      <p class="empty">
+        {opensOn ? `Kojarzenia pierwszej rundy pojawią się ${opensOn}.` : 'Brak rund.'}
+      </p>
+    )
+  }
 </TournamentLayout>

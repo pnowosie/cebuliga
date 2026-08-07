@@ -1,0 +1,87 @@
+{
+  "slug": "marian-rapid-202608",
+  "title": "Liga Rapida Marianczello Club",
+  "platform": "chesscom",
+  "type": "swiss",
+  "organiser": "Marianczello Club",
+  "channel": "marianczello",
+  "timeControl": "rapid",
+  "clockInfo": "⌛ 15'+10\"",
+  "active": true,
+  "startDate": "2026-08-09T00:00:00.000Z",
+  "endDate": "2026-09-27T00:00:00.000Z",
+  "cmUrl": "https://www.chessmanager.com/pl-pl/tournaments/5877465018925056",
+  "players": [
+    {
+      "nick": "Janeczek5",
+      "rating": 2301
+    },
+    {
+      "nick": "Akibajedynka",
+      "rating": 2302,
+      "avatar": "https://images.chesscomfiles.com/uploads/v1/user/80387346.c65eb02f.200x200o.37fd5f67c0fb.png"
+    },
+    {
+      "nick": "123hohoee",
+      "rating": 2163,
+      "avatar": "https://images.chesscomfiles.com/uploads/v1/user/321267277.7ef8ea49.200x200o.ad3b16c12b2a.png"
+    },
+    {
+      "nick": "HubiiQ",
+      "rating": 2053
+    },
+    {
+      "nick": "ppm2019",
+      "rating": 1921,
+      "avatar": "https://images.chesscomfiles.com/uploads/v1/user/118213974.9f0477e1.200x200o.470c0e81276b.png"
+    },
+    {
+      "nick": "f0rk1ngtal",
+      "rating": 1912,
+      "avatar": "https://images.chesscomfiles.com/uploads/v1/user/508266459.1a1a493e.200x200o.1d7e87b13b6b.jpg"
+    },
+    {
+      "nick": "CZAPLA959",
+      "name": "Karol",
+      "rating": 1869,
+      "avatar": "https://images.chesscomfiles.com/uploads/v1/user/128339776.35a05752.200x200o.89dde3a77121.jpg"
+    },
+    {
+      "nick": "ZugsonChess",
+      "name": "Krzysztof Dettlaff",
+      "rating": 1852,
+      "avatar": "https://images.chesscomfiles.com/uploads/v1/user/343110983.e8bf806b.200x200o.a88a7263bd24.jpg"
+    },
+    {
+      "nick": "Sylwester016",
+      "name": "Sylwester Wójtowicz",
+      "rating": 1590
+    },
+    {
+      "nick": "Miksukox",
+      "rating": 1600
+    },
+    {
+      "nick": "SiwerzFromPoland",
+      "rating": 1414
+    },
+    {
+      "nick": "ORPMsciciel",
+      "name": "Wojciech M.",
+      "rating": 1288,
+      "avatar": "https://images.chesscomfiles.com/uploads/v1/user/478552710.f586b81f.200x200o.c38b000a7ed6.png"
+    },
+    {
+      "nick": "TomasK14",
+      "name": "Tomasz",
+      "rating": 567,
+      "avatar": "https://images.chesscomfiles.com/uploads/v1/user/524213151.583daf49.200x200o.36a542d89557.jpg"
+    },
+    {
+      "nick": "dziad_z_ulicy_nr1",
+      "rating": 418,
+      "avatar": "https://images.chesscomfiles.com/uploads/v1/user/516664511.a1749276.200x200o.123e7430fad6.jpg"
+    }
+  ],
+  "rounds": []
+}
