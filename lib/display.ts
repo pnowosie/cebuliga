@@ -152,3 +152,15 @@ export function latestRound(t: Tournament): number | null {
   if (!t.rounds.length) return null;
   return Math.max(...t.rounds.map((r) => r.round));
 }
+
+/**
+ * How many rounds the tournament has in total — the denominator of "runda 1 / 7".
+ *
+ * The organiser's `plannedRounds` when set, because `rounds.length` counts only the rounds that
+ * exist so far: a swiss gains one per ChessManager paste, so on the opening round it would read
+ * "1 / 1". Never smaller than the rounds actually declared, so a plan that turns out short (an
+ * extra round added, or a stale `plannedRounds`) degrades to the truth instead of showing "2 / 1".
+ */
+export function totalRounds(t: Tournament): number {
+  return Math.max(t.plannedRounds ?? 0, t.rounds.length);
+}

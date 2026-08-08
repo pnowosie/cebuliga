@@ -57,6 +57,7 @@ const OPTIONS = {
   start: { type: "string" },
   end: { type: "string" },
   "cm-url": { type: "string" },
+  rounds: { type: "string" },
   round: { type: "string" },
   every: { type: "string" },
   swapped: { type: "boolean" },
@@ -311,7 +312,7 @@ function cmdStatus(positionals: string[]): void {
   out(`  dates      ${t.startDate.slice(0, 10)} → ${t.endDate.slice(0, 10)}`);
   out(`  format     ${t.type} on ${t.platform}, ${t.timeControl}${t.clockInfo ? ` (${t.clockInfo})` : ""}`);
   out(`  players    ${(t.players ?? []).length} on the roster, ${rosterOf(t).length} seen in total`);
-  out(`  rounds     ${t.rounds.length}`);
+  out(`  rounds     ${t.rounds.length}${t.plannedRounds ? ` of ${t.plannedRounds} planned` : ""}`);
 
   for (const r of [...t.rounds].sort((a, b) => a.round - b.round)) {
     const done = r.pairings.filter((p) => p.result || p.black === null).length;
@@ -336,6 +337,9 @@ function cmdStatus(positionals: string[]): void {
   }
   const unrated = (t.players ?? []).filter((p) => p.rating === undefined).map((p) => p.nick);
   if (unrated.length) warnings.push(`no rating: ${unrated.join(", ")} — try: tourney refresh ${t.slug}`);
+  if (t.plannedRounds && t.rounds.length > t.plannedRounds) {
+    warnings.push(`${t.rounds.length} rounds exist but plannedRounds is ${t.plannedRounds} — the site shows the larger`);
+  }
   const undated = t.rounds.filter((r) => !r.startDate).map((r) => r.round);
   if (undated.length) warnings.push(`no startDate on round(s) ${undated.join(", ")} — the cron needs it`);
 
@@ -397,6 +401,12 @@ async function cmdInit(positionals: string[], values: Values): Promise<number> {
   const timeControl = values["time-control"] ?? "rapid";
   perfFor(platform, timeControl); // fail now, not once someone runs `add`
 
+  // Display only — the schedule itself still comes from pastes (swiss) or Berger (r-r).
+  const plannedRounds = values.rounds ? Number(values.rounds) : 0;
+  if (values.rounds && (!Number.isInteger(plannedRounds) || plannedRounds < 1)) {
+    throw new UsageError("--rounds must be a positive integer (how many rounds the event has)");
+  }
+
   const start = values.start ? parseDate(values.start, "start") : todayUTC().toISOString();
   const end = values.end
     ? parseDate(values.end, "end")
@@ -418,6 +428,7 @@ async function cmdInit(positionals: string[], values: Values): Promise<number> {
     endDate: end,
     ...(values["cm-url"] ? { cmUrl: values["cm-url"] } : {}),
     players: [],
+    ...(plannedRounds ? { plannedRounds } : {}),
     rounds: [],
   };
 
@@ -443,6 +454,7 @@ async function cmdInit(positionals: string[], values: Values): Promise<number> {
   if (!values.start || !values.end) out(`  - check the dates: ${start.slice(0, 10)} → ${end.slice(0, 10)}`);
   if (!t.cmUrl) out(`  - set "cmUrl" if the event has a ChessManager page`);
   if (!t.clockInfo) out(`  - set "clockInfo" for the display clock, e.g. "⌛ 10'+5\\""`);
+  if (!t.plannedRounds) out(`  - set "plannedRounds" (or pass --rounds N) so the site can show "runda 1 / N"`);
   if (!nicks.length) out(`  - add players: tourney add ${slug} <nick...>`);
   out(
     t.type === "swiss"
@@ -764,7 +776,8 @@ options
   --swapped / --clear    for 'result': mark colours swapped / unset a wrong result
   --round N / --every D  for 'pair': one round only / space rounds D days apart
 
-init also takes --title --organiser --channel --time-control --clock-info --start --end --cm-url
+init also takes --title --organiser --channel --time-control --clock-info --rounds --start --end --cm-url
+  --rounds N             how many rounds the event has; display only ("runda 1 / N")
 
 examples
   pnpm tourney init liga2027 2rr cc --organiser matman --clock-info "⌛ 10'+5\\""

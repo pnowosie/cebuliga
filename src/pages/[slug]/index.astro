@@ -9,7 +9,7 @@
  */
 import TournamentLayout from '../../layouts/TournamentLayout.astro';
 import { tournamentPaths } from '@lib/site';
-import { latestRound, statusLabel, tournamentStatus } from '@lib/display';
+import { latestRound, statusLabel, totalRounds, tournamentStatus } from '@lib/display';
 import { computeStandings, ratingRange, rosterOf, tournamentProgress } from '@lib/standings';
 import ExternalIcon from '../../components/ExternalIcon.astro';
 import type { Tournament } from '@lib/manifest';
@@ -23,7 +23,7 @@ const t = tournament;
 const base = `/${t.slug}`;
 
 const current = latestRound(t);
-const totalRounds = t.rounds.length;
+const total = totalRounds(t);
 const status = tournamentStatus(t);
 
 // No podium until something is resolved: with everyone on 0 the medals would go to whichever
@@ -46,7 +46,7 @@ const ratings = ratingRange(t);
         ) : (
           <a class="round-value" href={`${base}/rundy/${current}`}>
             <span class="big">{current}</span>
-            <span class="of">/ {totalRounds}</span>
+            <span class="of">/ {total}</span>
           </a>
         )
       }

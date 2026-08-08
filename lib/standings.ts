@@ -12,6 +12,7 @@
  * presentation is missing — see the notes doc.
  */
 import type { Score, Tournament } from "./manifest";
+import { totalRounds } from "./display";
 
 export const BYE_POINTS = 1;
 
@@ -64,9 +65,12 @@ export function tournamentProgress(t: Tournament): { resolved: number; total: nu
 }
 
 /**
- * Completed vs declared rounds — the swiss progress bar. A round counts as complete once every
+ * Completed vs scheduled rounds — the swiss progress bar. A round counts as complete once every
  * one of its pairings is resolved (a bye is resolved by definition); a round declared with no
  * pairings yet is not.
+ *
+ * The total is `totalRounds` (the organiser's plan), not `rounds.length`: a swiss creates rounds
+ * as pastes land, so the bar would otherwise sit at 100% from the first completed round onwards.
  */
 export function roundsProgress(t: Tournament): { resolved: number; total: number } {
   let resolved = 0;
@@ -74,7 +78,7 @@ export function roundsProgress(t: Tournament): { resolved: number; total: number
     if (round.pairings.length && round.pairings.every((p) => p.result || p.black === null))
       resolved++;
   }
-  return { resolved, total: t.rounds.length };
+  return { resolved, total: totalRounds(t) };
 }
 
 /**

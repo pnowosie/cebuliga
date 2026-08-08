@@ -5,7 +5,7 @@
  */
 import BaseHead from './BaseHead.astro';
 import { buildVersion } from '@lib/version';
-import { clockLabel, dateRange, platformLabel, roundsLabel, typeLabel } from '@lib/display';
+import { clockLabel, dateRange, platformLabel, roundsLabel, totalRounds, typeLabel } from '@lib/display';
 import type { Tournament } from '@lib/manifest';
 
 interface Props {
@@ -18,11 +18,12 @@ const { tournament: t, currentPage, title } = Astro.props;
 const version = buildVersion();
 const base = `/${t.slug}`;
 
-// Format first, then how it is played, then where, then when. A tournament with no rounds
-// declared yet simply drops that part rather than claiming "0 rund".
+// Format first, then how it is played, then where, then when. A tournament with neither a
+// planned round count nor a declared round drops that part rather than claiming "0 rund".
+const rounds = totalRounds(t);
 const subtitle = [
   typeLabel(t.type),
-  t.rounds.length ? roundsLabel(t.rounds.length) : null,
+  rounds ? roundsLabel(rounds) : null,
   clockLabel(t),
   platformLabel(t.platform),
   dateRange(t),

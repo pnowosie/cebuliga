@@ -10,7 +10,8 @@
  *   - imports have no `.ts` suffix (upstream uses them; Astro/Vite resolves either way).
  *
  * Local extensions, all mirrored back upstream: `Player`, `Tournament.players`,
- * `Tournament.clockInfo`, `Pairing.colors_swapped`, and `"double-round-robin"` in `Tournament.type`.
+ * `Tournament.clockInfo`, `Tournament.plannedRounds`, `Pairing.colors_swapped`, and
+ * `"double-round-robin"` in `Tournament.type`.
  */
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
@@ -78,6 +79,11 @@ export interface Tournament {
   cmUrl?: string;
   /** Starting list. Maintained by `pnpm t add`; absent on hand-written manifests. */
   players?: Player[];
+  /** How many rounds the event is scheduled to have, as announced by the organiser. Display
+   *  ONLY — nothing derives pairings or windows from it. A swiss creates its rounds one paste at
+   *  a time, so `rounds.length` is "how far we got", never "how long it is"; without this the
+   *  site could only show `1 / 1` on the opening round. Unset ⇒ fall back to `rounds.length`. */
+  plannedRounds?: number;
   rounds: Round[];
 }
 

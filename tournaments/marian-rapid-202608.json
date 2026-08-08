@@ -8,7 +8,7 @@
   "timeControl": "rapid",
   "clockInfo": "⌛ 15'+10\"",
   "active": true,
-  "startDate": "2026-08-09T00:00:00.000Z",
+  "startDate": "2026-08-08T06:59:00.000Z",
   "endDate": "2026-09-27T00:00:00.000Z",
   "cmUrl": "https://www.chessmanager.com/pl-pl/tournaments/5877465018925056",
   "players": [
@@ -83,6 +83,7 @@
       "avatar": "https://images.chesscomfiles.com/uploads/v1/user/516664511.a1749276.200x200o.123e7430fad6.jpg"
     }
   ],
+  "plannedRounds": 7,
   "rounds": [
     {
       "round": 1,
