@@ -1,28 +1,53 @@
-# INOPERATIVE until the cron rewrite (phase 3 of notes/tournament-infopage-rewrite.md).
-# `scripts/data-refresh.ts` and `data/` were removed in phase 1; this file is kept as the
-# skeleton the new cron will fill in (schedules, `git add tournaments/`, fetch-depth: 0,
-# concurrency group, webhook secret).
+# Finds played tournament games, announces each to Discord once, commits the manifests.
+# The cron itself is `scripts/cron.ts` (`pnpm cron`); this file owns the schedule, the checkout
+# depth, the webhook secrets and the commit.
 name: Refresh tournament data
 
 on:
-  # Tournament is over — scheduled fetching disabled.
-  # schedule:
-  #   - cron: '0 23 * * *'  # 00:00 CET
-  #   - cron: '0 14 * * *'  # 15:00 CET
-  #   - cron: '0 18 * * *'  # 19:00 CET
-  workflow_dispatch:       # manual trigger from GH UI
+  # UTC — local is +2 in summer, +1 in winter. 10 runs a day, dense when people actually play:
+  # a morning sweep for last night's games, every 3h through the working day, hourly all evening,
+  # and one after midnight. Only a run that finds a game commits, so idle runs cost nothing.
+  # Actions may fire a schedule a few minutes late; treat these as "within the hour", not exact.
+  schedule:
+    - cron: '0 7,10,13 * * *'   # 09, 12, 15 local
+    - cron: '0 15-20 * * *'     # 17–22 local, hourly
+    - cron: '20 22 * * *'       # 00:20 local
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Find games and print, but post nothing and commit nothing'
+        type: boolean
+        default: false
 
 permissions:
   contents: write
+
+# One run at a time: the previous run may still be pushing, and a second push would race it.
+# This is why the cron needs no lock of its own.
+concurrency:
+  group: refresh-tournament-data
+  cancel-in-progress: false
 
 jobs:
   refresh:
     runs-on: ubuntu-latest
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      # TO ADD A CHANNEL: create the repo secret, then add a line here. Both, every time.
+      # Name it after the manifest's `channel` field, uppercased: `<CHANNEL>_WEBHOOK`.
+      # Miss either and the cron names the absent variable and fails the run.
+      MARIANCZELLO_WEBHOOK: ${{ secrets.MARIANCZELLO_WEBHOOK }}
+      COMMIT_MSG_FILE: ${{ github.workspace }}/.cron-commit-msg
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          # LOAD-BEARING, do not drop to a shallow clone. A round auto-created from a pairings
+          # paste takes its `startDate` from that file's git commit date minus a day. Without full
+          # history that lookup returns nothing and the date silently degrades to "now − 1 day",
+          # which puts every game older than yesterday outside the search window — a tournament
+          # declared with an empty `rounds` list dates ALL of its rounds this way.
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
         with:
@@ -34,14 +59,25 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Refresh and commit if data changed
+      - name: Find games and announce them
+        run: pnpm cron ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      # Runs even when the cron exited non-zero: a failed post or a missing webhook must not throw
+      # away the results that DID announce, or they announce again on the next run.
+      - name: Commit the manifests if they changed
+        if: ${{ !cancelled() && !inputs.dry_run }}
         run: |
-          SUMMARY=$(pnpm run --silent refresh 2>&1)
-          echo "$SUMMARY"
+          git add tournaments/
+          if git diff --staged --quiet; then
+            echo "No manifest changes."
+            exit 0
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/tournament.json
-          git diff --staged --quiet && echo "No new data." || (
-            git commit -m "data: refresh $(date -u +%Y-%m-%dT%H:%M)" -m "$SUMMARY" &&
-            git push
-          )
+          if [ -f "$COMMIT_MSG_FILE" ]; then
+            git commit -F "$COMMIT_MSG_FILE"
+          else
+            git commit -m "data: refresh $(date -u +%Y-%m-%dT%H:%M)"
+          fi
+          git pull --rebase || true   # nothing else pushes here; a failure surfaces on the push
+          git push

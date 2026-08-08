@@ -30,7 +30,7 @@ import {
 import { TOURNAMENTS_DIR, tournamentStatus } from "../lib/display";
 import { rosterOf, tournamentProgress } from "../lib/standings";
 import { bergerSchedule } from "../lib/berger";
-import { PlatformError, THROTTLE_MS, fetchProfile, perfKey, sleep } from "../lib/profile";
+import { PlatformError, THROTTLE_MS, fetchProfile, perfKey, sleep } from "../lib/index";
 
 const DAY_MS = 86_400_000;
 

@@ -12,7 +12,9 @@
     "astro": "astro",
     "check": "astro check",
     "test": "tsx --test lib/*.test.ts",
-    "tourney": "tsx scripts/tourney.ts"
+    "tourney": "tsx scripts/tourney.ts",
+    "cron": "tsx scripts/cron.ts",
+    "cron:dry": "tsx scripts/cron.ts --dry-run"
   },
   "dependencies": {
     "astro": "^7.2.0"

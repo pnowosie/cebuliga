@@ -15,6 +15,9 @@ dist/
 .env.*
 !.env.example
 
+# Commit message the cron hands to the workflow (see scripts/cron.ts)
+.cron-commit-msg
+
 # Logs
 *.log
 npm-debug.log*
