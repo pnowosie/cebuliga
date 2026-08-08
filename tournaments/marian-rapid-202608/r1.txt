@@ -1,0 +1,9 @@
+#			Białe	Ranking	Pkt	Runda 1			Czarne	Ranking	Pkt	
+1.			Zugsonchess	1820	0.0				Janeczek5	2301	0.0	
+2.			Akibajedynka	2294	0.0				Sylwester016	1590	0.0	
+3.			Miksukox	1577	0.0				123hohoee	2163	0.0	
+4.			HubiiQ	2053	0.0				SiwerzFromPoland	1414	0.0	
+5.			ORPMsciciel	1231	0.0				ppm2019	1921	0.0	
+6.			f0rk1ngtal	1919	0.0				TomasK14	567	0.0	
+7.			dziad_z_ulicy_nr1	418	0.0				Czapla959	1870	0.0	
+chess:manager

@@ -83,5 +83,47 @@
       "avatar": "https://images.chesscomfiles.com/uploads/v1/user/516664511.a1749276.200x200o.123e7430fad6.jpg"
     }
   ],
-  "rounds": []
+  "rounds": [
+    {
+      "round": 1,
+      "startDate": "2026-08-08T07:15:53.916Z",
+      "pairings": [
+        {
+          "board": 1,
+          "white": "Zugsonchess",
+          "black": "Janeczek5"
+        },
+        {
+          "board": 2,
+          "white": "Akibajedynka",
+          "black": "Sylwester016"
+        },
+        {
+          "board": 3,
+          "white": "Miksukox",
+          "black": "123hohoee"
+        },
+        {
+          "board": 4,
+          "white": "HubiiQ",
+          "black": "SiwerzFromPoland"
+        },
+        {
+          "board": 5,
+          "white": "ORPMsciciel",
+          "black": "ppm2019"
+        },
+        {
+          "board": 6,
+          "white": "f0rk1ngtal",
+          "black": "TomasK14"
+        },
+        {
+          "board": 7,
+          "white": "dziad_z_ulicy_nr1",
+          "black": "Czapla959"
+        }
+      ]
+    }
+  ]
 }
