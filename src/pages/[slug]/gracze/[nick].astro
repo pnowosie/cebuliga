@@ -20,6 +20,7 @@ export function getStaticPaths() {
 
 const { tournament, nick } = Astro.props as { tournament: Tournament; nick: string };
 const t = tournament;
+const base = `/${t.slug}`;
 
 const player = (t.players ?? []).find((p) => p.nick.toLowerCase() === nick.toLowerCase());
 const standing = computeStandings(t).find((s) => s.nick.toLowerCase() === nick.toLowerCase());
@@ -48,13 +49,23 @@ const outcome = (score: number | null) =>
   score === null ? '' : score === 1 ? 'win' : score === 0 ? 'loss' : 'draw';
 
 /**
- * The colour column doubles as the link to the game — the pawn says which colour this player
- * had, and clicking it opens that game on the playzone. This is why it is the colour cell and
- * not a column of its own: a double round-robin puts BOTH pawns here, each linking to its own
+ * The colour column doubles as the link to the game — the pawn plus its label say which colour
+ * this player had, and clicking opens that game on the playzone. This is why it is the colour cell
+ * and not a column of its own: a double round-robin puts BOTH pawns here, each linking to its own
  * game, with a single match total in the result column.
  */
 type Color = 'white' | 'black' | null;
-const pawn = (c: Color) => (c === 'white' ? '♙' : '♟');
+
+/**
+ * The glyphs are CROSSED relative to their Unicode names, on purpose.
+ *
+ * Both are painted as text in the inherited colour — light, on this dark-only theme — and
+ * U+265F BLACK CHESS PAWN is a SOLID silhouette while U+2659 WHITE CHESS PAWN is a hollow outline.
+ * Filled light-on-dark, the "black" glyph reads as a white pawn and the outlined "white" glyph
+ * reads as a black one, so mapping them by name puts the wrong pawn on every row. The written
+ * label beside it is the authority; the glyph only has to look right.
+ */
+const pawn = (c: Color) => (c === 'white' ? '♟' : '♙');
 const colorName = (c: Color) => (c === 'white' ? 'białe' : 'czarne');
 const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
 ---
@@ -136,7 +147,11 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
           <tbody>
             {games.map((g) => (
               <tr class:list={[{ pending: g.score === null }]}>
-                <td class="num faint">{g.round}</td>
+                <td class="num">
+                  <a class="round-link" href={`${base}/rundy/${g.round}`} title={`Runda ${g.round}`}>
+                    {g.round}
+                  </a>
+                </td>
                 <td class="board" title={`Szachownica ${g.board}`}>
                   <BoardIcon /> {g.board}
                 </td>
@@ -150,15 +165,20 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
                       target="_blank"
                       rel="noopener"
                       title={gameHint(g.color)}
-                      aria-label={gameHint(g.color)}
                     >
-                      <span class="pawn">{pawn(g.color)}</span>
+                      <span class:list={['pawn', g.color]} aria-hidden="true">
+                        {pawn(g.color)}
+                      </span>
+                      <span class="cname">{colorName(g.color)}</span>
                       <ExternalIcon />
                     </a>
                   ) : (
-                    <span class="pawn" title={colorName(g.color)}>
-                      {pawn(g.color)}
-                    </span>
+                    <>
+                      <span class:list={['pawn', g.color]} aria-hidden="true">
+                        {pawn(g.color)}
+                      </span>{' '}
+                      <span class="cname">{colorName(g.color)}</span>
+                    </>
                   )}
                 </td>
                 <td>
@@ -328,6 +348,19 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
     color: var(--muted);
   }
 
+  /* The round number links to that round's page. Kept quiet — it is a number in a table, not a
+     call to action; the underline only appears on hover. */
+  .round-link {
+    color: var(--muted);
+    text-decoration: none;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .round-link:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+
   .color {
     white-space: nowrap;
   }
@@ -335,6 +368,21 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
   .pawn {
     font-size: 1.15rem;
     line-height: 1;
+  }
+
+  /* Explicit, so the pair stays legible if the row's inherited colour ever changes (pending rows
+     mute their text). Solid glyph light, outlined glyph dimmer — see the note on `pawn()`. */
+  .pawn.white {
+    color: var(--text-strong);
+  }
+
+  .pawn.black {
+    color: var(--muted);
+  }
+
+  .cname {
+    font-size: 0.86rem;
+    color: var(--muted);
   }
 
   .game-link {
@@ -345,7 +393,11 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
     text-decoration: none;
   }
 
-  .game-link:hover {
+  /* The pawn and the label carry their own colours, so hover has to reach them explicitly or the
+     link would give no feedback at all. */
+  .game-link:hover,
+  .game-link:hover .pawn,
+  .game-link:hover .cname {
     color: var(--accent);
   }
 
