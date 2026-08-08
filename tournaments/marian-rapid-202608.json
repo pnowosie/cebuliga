@@ -97,7 +97,10 @@
         {
           "board": 2,
           "white": "Akibajedynka",
-          "black": "Sylwester016"
+          "black": "Sylwester016",
+          "result": "1-0",
+          "game_url": "https://www.chess.com/game/live/172718843558",
+          "updated_at": "2026-08-08T22:50:01.395Z"
         },
         {
           "board": 3,
