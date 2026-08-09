@@ -92,7 +92,10 @@
         {
           "board": 1,
           "white": "Zugsonchess",
-          "black": "Janeczek5"
+          "black": "Janeczek5",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/172758245494",
+          "updated_at": "2026-08-09T18:41:55.273Z"
         },
         {
           "board": 2,
@@ -113,7 +116,10 @@
         {
           "board": 4,
           "white": "HubiiQ",
-          "black": "SiwerzFromPoland"
+          "black": "SiwerzFromPoland",
+          "result": "½-½",
+          "game_url": "https://www.chess.com/game/live/172759315760",
+          "updated_at": "2026-08-09T18:41:57.332Z"
         },
         {
           "board": 5,
@@ -123,7 +129,10 @@
         {
           "board": 6,
           "white": "f0rk1ngtal",
-          "black": "TomasK14"
+          "black": "TomasK14",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/172759598834",
+          "updated_at": "2026-08-09T18:41:59.769Z"
         },
         {
           "board": 7,
