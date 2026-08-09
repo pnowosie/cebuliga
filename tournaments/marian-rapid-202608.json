@@ -105,7 +105,10 @@
         {
           "board": 3,
           "white": "Miksukox",
-          "black": "123hohoee"
+          "black": "123hohoee",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/172744880502",
+          "updated_at": "2026-08-09T13:50:01.685Z"
         },
         {
           "board": 4,
