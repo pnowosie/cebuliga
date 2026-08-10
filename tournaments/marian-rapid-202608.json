@@ -124,7 +124,10 @@
         {
           "board": 5,
           "white": "ORPMsciciel",
-          "black": "ppm2019"
+          "black": "ppm2019",
+          "result": "1-0",
+          "game_url": "https://www.chess.com/game/live/172784468502",
+          "updated_at": "2026-08-10T11:08:37.837Z"
         },
         {
           "board": 6,
