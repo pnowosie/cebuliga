@@ -172,12 +172,18 @@
         {
           "board": 4,
           "white": "ppm2019",
-          "black": "HubiiQ"
+          "black": "HubiiQ",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/172847561588",
+          "updated_at": "2026-08-11T17:57:43.301Z"
         },
         {
           "board": 5,
           "white": "SiwerzFromPoland",
-          "black": "f0rk1ngtal"
+          "black": "f0rk1ngtal",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/172848071372",
+          "updated_at": "2026-08-11T17:57:47.190Z"
         },
         {
           "board": 6,
