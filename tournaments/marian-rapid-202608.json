@@ -188,7 +188,10 @@
         {
           "board": 6,
           "white": "Miksukox",
-          "black": "Zugsonchess"
+          "black": "Zugsonchess",
+          "result": "½-½",
+          "game_url": "https://www.chess.com/game/live/172856868672",
+          "updated_at": "2026-08-11T20:45:34.376Z"
         },
         {
           "board": 7,
