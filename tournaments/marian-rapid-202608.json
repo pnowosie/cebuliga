@@ -140,7 +140,10 @@
         {
           "board": 7,
           "white": "dziad_z_ulicy_nr1",
-          "black": "Czapla959"
+          "black": "Czapla959",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/172831934222",
+          "updated_at": "2026-08-11T10:50:48.273Z"
         }
       ]
     }
