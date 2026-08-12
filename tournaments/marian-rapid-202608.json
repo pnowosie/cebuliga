@@ -162,7 +162,10 @@
         {
           "board": 2,
           "white": "TomasK14",
-          "black": "Akibajedynka"
+          "black": "Akibajedynka",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/172902996930",
+          "updated_at": "2026-08-12T20:45:53.118Z"
         },
         {
           "board": 3,
