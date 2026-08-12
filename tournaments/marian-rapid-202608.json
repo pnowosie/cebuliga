@@ -167,7 +167,10 @@
         {
           "board": 3,
           "white": "123hohoee",
-          "black": "ORPMsciciel"
+          "black": "ORPMsciciel",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/172882459752",
+          "updated_at": "2026-08-12T14:20:31.030Z"
         },
         {
           "board": 4,
