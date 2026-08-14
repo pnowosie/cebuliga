@@ -202,7 +202,10 @@
         {
           "board": 7,
           "white": "Sylwester016",
-          "black": "dziad_z_ulicy_nr1"
+          "black": "dziad_z_ulicy_nr1",
+          "result": "1-0",
+          "game_url": "https://www.chess.com/game/live/172988301656",
+          "updated_at": "2026-08-14T16:54:26.750Z"
         }
       ]
     }
