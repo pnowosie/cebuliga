@@ -253,7 +253,10 @@
         {
           "board": 7,
           "white": "dziad_z_ulicy_nr1",
-          "black": "ppm2019"
+          "black": "ppm2019",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/173042329168",
+          "updated_at": "2026-08-15T20:23:16.566Z"
         }
       ]
     }
