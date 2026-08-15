@@ -235,7 +235,10 @@
         {
           "board": 4,
           "white": "f0rk1ngtal",
-          "black": "Sylwester016"
+          "black": "Sylwester016",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/173031074732",
+          "updated_at": "2026-08-15T15:21:36.765Z"
         },
         {
           "board": 5,
