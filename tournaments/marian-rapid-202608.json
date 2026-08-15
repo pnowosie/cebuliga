@@ -208,6 +208,50 @@
           "updated_at": "2026-08-14T16:54:26.750Z"
         }
       ]
+    },
+    {
+      "round": 3,
+      "startDate": "2026-08-14T07:17:29.000Z",
+      "pairings": [
+        {
+          "board": 1,
+          "white": "Akibajedynka",
+          "black": "Janeczek5",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/172996779172",
+          "updated_at": "2026-08-15T07:21:46.657Z"
+        },
+        {
+          "board": 2,
+          "white": "ORPMsciciel",
+          "black": "HubiiQ"
+        },
+        {
+          "board": 3,
+          "white": "Czapla959",
+          "black": "123hohoee"
+        },
+        {
+          "board": 4,
+          "white": "f0rk1ngtal",
+          "black": "Sylwester016"
+        },
+        {
+          "board": 5,
+          "white": "Zugsonchess",
+          "black": "TomasK14"
+        },
+        {
+          "board": 6,
+          "white": "SiwerzFromPoland",
+          "black": "Miksukox"
+        },
+        {
+          "board": 7,
+          "white": "dziad_z_ulicy_nr1",
+          "black": "ppm2019"
+        }
+      ]
     }
   ]
 }
