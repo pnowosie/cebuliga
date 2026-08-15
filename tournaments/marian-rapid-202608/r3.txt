@@ -1,0 +1,12 @@
+[StartDate 2026-08-14]
+
+
+#			Białe	Ranking	Pkt	Runda 3			Czarne	Ranking	Pkt	
+1.			Akibajedynka	2294	2.0				Janeczek5	2301	2.0	
+2.			ORPMsciciel	1231	2.0				HubiiQ	2053	1.5	
+3.			Czapla959	1870	1.0				123hohoee	2163	1.0	
+4.			f0rk1ngtal	1919	1.0				Sylwester016	1590	1.0	
+5.			Zugsonchess	1820	0.5				TomasK14	567	1.0	
+6.			SiwerzFromPoland	1414	0.5				Miksukox	1577	0.5	
+7.			dziad_z_ulicy_nr1	418	0.0				ppm2019	1921	0.0	
+chess:manager
