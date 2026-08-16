@@ -248,7 +248,10 @@
         {
           "board": 6,
           "white": "SiwerzFromPoland",
-          "black": "Miksukox"
+          "black": "Miksukox",
+          "result": "1-0",
+          "game_url": "https://www.chess.com/game/live/173083592064",
+          "updated_at": "2026-08-16T17:20:04.722Z"
         },
         {
           "board": 7,
