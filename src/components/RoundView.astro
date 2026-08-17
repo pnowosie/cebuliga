@@ -5,9 +5,16 @@
  * `result` is always in PAIRING orientation — when the players took the opposite colours the
  * cron flips it and sets `colors_swapped`, so the row still reads left-to-right as
  * white–black. The ⚠ only means "they swapped", never "the result is upside down".
+ *
+ * A walkower (`forfeit`) OVERRIDES the result without erasing it: the played game stays linked and
+ * is shown struck through beside the administrative score. See `lib/forfeit.ts`.
  */
-import { hasAssignedColors, playerPageUrl } from '@lib/display';
+import {
+  BLOCKED_ICON, FORFEIT_ICON, SWAP_HINT,
+  blockedLabel, forfeitHint, forfeitResult, hasAssignedColors, playerPageUrl,
+} from '@lib/display';
 import ExternalIcon from './ExternalIcon.astro';
+import { blockOf } from '@lib/forfeit';
 import type { Round, Tournament } from '@lib/manifest';
 
 interface Props {
@@ -21,10 +28,9 @@ const base = `/${t.slug}`;
 const rounds = [...t.rounds].sort((a, b) => a.round - b.round);
 const pairings = [...round.pairings].sort((a, b) => a.board - b.board);
 const showSwapWarning = hasAssignedColors(t.type);
+// "rozegranych" means played, so a walkower on a board nobody sat down to does not count here —
+// unlike `tournamentProgress`, which asks whether the board is DECIDED.
 const played = pairings.filter((p) => p.result || p.black === null).length;
-
-const SWAP_HINT =
-  'Gracze zagrali odwrotnymi kolorami niż w kojarzeniu. Wynik pokazany jest zgodnie z kojarzeniem.';
 ---
 
 <div class="bar">
@@ -68,14 +74,26 @@ const SWAP_HINT =
                 <a class="nick" href={playerPageUrl(t.slug, p.white)}>
                   {p.white}
                 </a>
+                {blockOf(t, p.white) && (
+                  <span class="ban" title={blockedLabel(blockOf(t, p.white)!)} aria-label={blockedLabel(blockOf(t, p.white)!)}>
+                    {BLOCKED_ICON}
+                  </span>
+                )}
               </td>
               <td>
                 {p.black === null ? (
                   <span class="bye">pauza</span>
                 ) : (
-                  <a class="nick" href={playerPageUrl(t.slug, p.black)}>
-                    {p.black}
-                  </a>
+                  <>
+                    <a class="nick" href={playerPageUrl(t.slug, p.black)}>
+                      {p.black}
+                    </a>
+                    {blockOf(t, p.black) && (
+                      <span class="ban" title={blockedLabel(blockOf(t, p.black)!)} aria-label={blockedLabel(blockOf(t, p.black)!)}>
+                        {BLOCKED_ICON}
+                      </span>
+                    )}
+                  </>
                 )}
               </td>
               <td>
@@ -83,6 +101,18 @@ const SWAP_HINT =
                   <span class="result" title="Punkt za pauzę">
                     1
                   </span>
+                ) : p.forfeit ? (
+                  <>
+                    <span class="result">{forfeitResult(p)}</span>
+                    {p.result && (
+                      <s class="played" title={`Rozegrana partia: ${p.result}`}>
+                        {p.result}
+                      </s>
+                    )}
+                    <span class="wo" title={forfeitHint(t, p)} aria-label={forfeitHint(t, p)}>
+                      {FORFEIT_ICON}
+                    </span>
+                  </>
                 ) : p.result ? (
                   <>
                     <span class="result">{p.result}</span>
@@ -200,6 +230,27 @@ const SWAP_HINT =
   .warn {
     margin-left: 0.4rem;
     color: var(--amber);
+    cursor: help;
+  }
+
+  /* Red, not amber: a walkower is a different thing from a colour swap, and the two glyphs share
+     a base codepoint. Colour and position are what actually separate them on screen. */
+  .wo {
+    margin-left: 0.4rem;
+    color: var(--red);
+    cursor: help;
+  }
+
+  .played {
+    margin-left: 0.4rem;
+    font-size: 0.8em;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    cursor: help;
+  }
+
+  .ban {
+    margin-left: 0.35rem;
     cursor: help;
   }
 

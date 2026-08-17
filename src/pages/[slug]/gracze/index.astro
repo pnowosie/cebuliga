@@ -1,15 +1,20 @@
 ---
 /**
- * Starting list: number, nick, rating — nothing else. A player is only a nick on the
+ * Starting list: number, nick, rating — and one badge. A player is only a nick on the
  * tournament's playzone, so the nick is both the identifier and the label; the profile `name`
  * is decorative, usually absent, and belongs on the profile page rather than in this list.
  * The nick links to our own profile page; the playzone is one click further.
+ *
+ * The 🚫 is the sole exception to "nothing else": a player withdrawn for a blocked account still
+ * appears here (removing him would silently corrupt his opponents' Buchholz), so the list has to
+ * say why his score reads the way it does.
  */
 import TournamentLayout from '../../../layouts/TournamentLayout.astro';
 import { tournamentPaths } from '@lib/site';
-import { playerPageUrl } from '@lib/display';
+import { BLOCKED_ICON, blockedLabel, playerPageUrl } from '@lib/display';
 import type { Tournament } from '@lib/manifest';
 import { rosterOf } from '@lib/standings';
+import { blockOf } from '@lib/forfeit';
 
 export function getStaticPaths() {
   return tournamentPaths();
@@ -22,7 +27,7 @@ const t = tournament;
 const byNick = new Map((t.players ?? []).map((p) => [p.nick.toLowerCase(), p]));
 const players = rosterOf(t)
   .map((nick) => {
-    return { nick, rating: byNick.get(nick.toLowerCase())?.rating };
+    return { nick, rating: byNick.get(nick.toLowerCase())?.rating, block: blockOf(t, nick) };
   })
   .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0) || a.nick.localeCompare(b.nick));
 ---
@@ -45,12 +50,17 @@ const players = rosterOf(t)
           </thead>
           <tbody>
             {players.map((p, i) => (
-              <tr>
+              <tr class:list={[p.block && 'blocked']}>
                 <td class="num faint">{i + 1}</td>
                 <td>
                   <a class="nick" href={playerPageUrl(t.slug, p.nick)}>
                     {p.nick}
                   </a>
+                  {p.block && (
+                    <span class="ban" title={blockedLabel(p.block)} aria-label={blockedLabel(p.block)}>
+                      {BLOCKED_ICON}
+                    </span>
+                  )}
                 </td>
                 <td class="num">{p.rating ?? <span class="faint">—</span>}</td>
               </tr>
@@ -61,3 +71,14 @@ const players = rosterOf(t)
     )
   }
 </TournamentLayout>
+
+<style>
+  /* Muted, not struck through: he is still in the standings and his opponents' games still count. */
+  tr.blocked .nick {
+    opacity: 0.6;
+  }
+  .ban {
+    margin-left: 0.35rem;
+    cursor: help;
+  }
+</style>

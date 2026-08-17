@@ -97,6 +97,23 @@ kolejności decyduje: {{kryteriaPomocnicze}}.
 oznacza to przegraną i wykluczenie z turnieju — niezależnie od przyczyny
 komunikatu.
 
+W praktyce wygląda to tak:
+
+- **Wszystkie** partie takiego zawodnika — te już rozegrane i te z kolejnych rund
+  — zostają zweryfikowane jako przegrane. Jego przeciwnicy otrzymują punkt
+  **niezależnie od wyniku osiągniętego przy szachownicy**. Nie musisz nic
+  zgłaszać ani o nic prosić.
+- Wykluczenie jest **trwałe**. Nawet jeśli platforma później zdejmie blokadę,
+  zawodnik nie wraca do tego turnieju.
+- Na stronie turnieju zobaczysz to tak: 🚫 przy nicku zawodnika (na liście
+  startowej, w tabeli i w kojarzeniach) oraz ⚠️ przy wyniku zweryfikowanej
+  partii. Rozegrany wynik zostaje pokazany przekreślony obok — nie ukrywamy go,
+  bo partia naprawdę się odbyła.
+- 👉 **Przeciwnik zablokowanego zawodnika nie jest niczym oznaczany.** 🚫 dotyczy
+  wyłącznie konta, którego dotyczy komunikat platformy.
+- Partie zweryfikowane walkowerem nie są wliczane do Buchholza przeciwników — nikt
+  nie traci na tym, że akurat jego skojarzono z takim zawodnikiem.
+
 ---
 
 📖 To tylko skrót. Pełny regulamin: {{linkDoRegulaminu}}

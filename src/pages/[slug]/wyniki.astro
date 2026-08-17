@@ -2,8 +2,9 @@
 /** Standings. Computed at build time from the pairings — nothing is stored in the manifest. */
 import TournamentLayout from '../../layouts/TournamentLayout.astro';
 import { tournamentPaths } from '@lib/site';
-import { formatPoints, playerPageUrl } from '@lib/display';
+import { BLOCKED_ICON, blockedLabel, formatPoints, playerPageUrl } from '@lib/display';
 import { computeStandings, tournamentProgress } from '@lib/standings';
+import { blockOf } from '@lib/forfeit';
 import type { Tournament } from '@lib/manifest';
 
 export function getStaticPaths() {
@@ -14,6 +15,7 @@ const { tournament } = Astro.props as { tournament: Tournament };
 const t = tournament;
 const standings = computeStandings(t);
 const anyByes = standings.some((s) => s.byes > 0);
+const anyBlocked = standings.some((s) => s.blocked);
 
 /**
  * A roster alone is not a standings table. With nothing resolved every player sits on 0, so the
@@ -51,12 +53,21 @@ const medals: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' };
           </thead>
           <tbody>
             {standings.map((s) => (
-              <tr>
+              <tr class:list={[s.blocked && 'blocked']}>
                 <td class="num place">{medals[s.place] ?? s.place}</td>
                 <td>
                   <a class="nick" href={playerPageUrl(t.slug, s.nick)}>
                     {s.nick}
                   </a>
+                  {s.blocked && (
+                    <span
+                      class="ban"
+                      title={blockedLabel(blockOf(t, s.nick)!)}
+                      aria-label={blockedLabel(blockOf(t, s.nick)!)}
+                    >
+                      {BLOCKED_ICON}
+                    </span>
+                  )}
                 </td>
                 <td class="num pts">{formatPoints(s.points)}</td>
                 <td class="num muted">{s.games}</td>
@@ -73,10 +84,28 @@ const medals: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' };
   <p class="note">
     Punktacja: wygrana 1, remis ½, przegrana 0. Pauza liczy się jako pełny punkt i nie jest
     wliczana do rozegranych partii. Przy równej liczbie punktów decyduje Buchholz.
+    {anyBlocked && (
+      <>
+        {' '}
+        {BLOCKED_ICON} oznacza wykrytą blokadę konta na platformie: zgodnie z regulaminem zawodnik
+        jest wykluczony z turnieju, wszystkie jego partie są przegrane, a przeciwnicy otrzymują
+        punkt. Partie zweryfikowane walkowerem nie są wliczane do Buchholza przeciwników.
+      </>
+    )}
   </p>
 </TournamentLayout>
 
 <style>
+  /* He stays in the table: removing him would silently drop a term from his opponents' Buchholz. */
+  tr.blocked .nick {
+    opacity: 0.6;
+  }
+
+  .ban {
+    margin-left: 0.35rem;
+    cursor: help;
+  }
+
   .place {
     white-space: nowrap;
   }

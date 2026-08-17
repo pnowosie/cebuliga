@@ -13,8 +13,11 @@
  */
 import type { Score, Tournament } from "./manifest";
 import { totalRounds } from "./display";
+import { isBlocked, isSettled, pairingPoints, whitePoints } from "./forfeit";
 
 export const BYE_POINTS = 1;
+
+export { whitePoints };
 
 export interface Standing {
   place: number;
@@ -23,13 +26,10 @@ export interface Standing {
   /** Resolved pairings with a real opponent. Byes are excluded. */
   games: number;
   byes: number;
-  /** Sum of opponents' points. Byes contribute 0. */
+  /** Sum of opponents' points. Byes contribute 0, and so do walkowery — see `computeStandings`. */
   buchholz: number;
-}
-
-/** Points scored by the pairing's white player. Black scores `1 - this`. */
-export function whitePoints(result: Score): number {
-  return result === "1-0" ? 1 : result === "0-1" ? 0 : 0.5;
+  /** Account blocked on the playzone: withdrawn from the tournament, all games lost. */
+  blocked: boolean;
 }
 
 /**
@@ -51,14 +51,18 @@ export function rosterOf(t: Tournament): string[] {
   return [...seen.values()];
 }
 
-/** Resolved vs total pairings — the index page's progress bar. Byes count as resolved. */
+/**
+ * Resolved vs total pairings — the index page's progress bar. Byes count as resolved, and so do
+ * walkowery: the board will never be played, so leaving it outstanding would keep the bar
+ * permanently short of its total.
+ */
 export function tournamentProgress(t: Tournament): { resolved: number; total: number } {
   let resolved = 0;
   let total = 0;
   for (const round of t.rounds) {
     for (const p of round.pairings) {
       total++;
-      if (p.result || p.black === null) resolved++;
+      if (isSettled(p) || p.black === null) resolved++;
     }
   }
   return { resolved, total };
@@ -75,7 +79,7 @@ export function tournamentProgress(t: Tournament): { resolved: number; total: nu
 export function roundsProgress(t: Tournament): { resolved: number; total: number } {
   let resolved = 0;
   for (const round of t.rounds) {
-    if (round.pairings.length && round.pairings.every((p) => p.result || p.black === null))
+    if (round.pairings.length && round.pairings.every((p) => isSettled(p) || p.black === null))
       resolved++;
   }
   return { resolved, total: totalRounds(t) };
@@ -112,14 +116,20 @@ export interface PlayerGame {
   /** `null` on a bye. */
   opponent: string | null;
   opponentRating?: number;
-  /** This player's own score: 1 / 0.5 / 0. `null` when the game hasn't been played yet. */
+  /** This player's own score: 1 / 0.5 / 0. `null` when the game hasn't been played yet.
+   *  A walkower scores too, and overrides `result` — see `pairingPoints`. */
   score: number | null;
-  /** The pairing-oriented result, kept for the tooltip. */
+  /** The pairing-oriented result, kept for the tooltip. On a walkower this is the result of the
+   *  game that was ACTUALLY played, which may disagree with `score`; absent if it was never played. */
   result?: Score;
   gameUrl?: string;
   colorsSwapped: boolean;
   /** A bye is "played" — it scores — but it has no game and no opponent. */
   bye: boolean;
+  /** This board was decided by the regulation, not on the board. Drives the ⚠️ marker. */
+  forfeit: boolean;
+  /** The OPPONENT's account is blocked. Drives the 🚫 next to their nick — never next to ours. */
+  opponentBlocked: boolean;
 }
 
 /**
@@ -143,15 +153,20 @@ export function playerGames(t: Tournament, nick: string): PlayerGame[] {
           board: p.board,
           color: null,
           opponent: null,
-          score: BYE_POINTS,
+          // A withdrawn player keeps no free point: "wszystkie partie przegrane" plus a pauza
+          // point would be incoherent.
+          score: isBlocked(t, p.white) ? 0 : BYE_POINTS,
           colorsSwapped: false,
           bye: true,
+          forfeit: false,
+          opponentBlocked: false,
         });
         continue;
       }
 
       const opponent = isWhite ? p.black : p.white;
-      const score = p.result ? (isWhite ? whitePoints(p.result) : 1 - whitePoints(p.result)) : null;
+      const pts = pairingPoints(p);
+      const score = pts === null ? null : isWhite ? pts.white : pts.black;
 
       out.push({
         round: round.round,
@@ -164,6 +179,8 @@ export function playerGames(t: Tournament, nick: string): PlayerGame[] {
         gameUrl: p.game_url,
         colorsSwapped: p.colors_swapped === true,
         bye: false,
+        forfeit: p.forfeit !== undefined,
+        opponentBlocked: isBlocked(t, opponent),
       });
     }
   }
@@ -206,21 +223,28 @@ export function computeStandings(t: Tournament): Standing[] {
       const w = ensure(p.white);
 
       if (p.black === null) {
-        points.set(w, points.get(w)! + BYE_POINTS);
+        // A withdrawn player forfeits everything, the pauza point included.
+        if (!isBlocked(t, p.white)) points.set(w, points.get(w)! + BYE_POINTS);
         byes.set(w, byes.get(w)! + 1);
         continue;
       }
 
       const b = ensure(p.black);
-      if (!p.result) continue; // pending — scores nothing for either side
+      const pts = pairingPoints(p); // `forfeit` outranks `result`
+      if (pts === null) continue;   // pending — scores nothing for either side
 
-      const wp = whitePoints(p.result);
-      points.set(w, points.get(w)! + wp);
-      points.set(b, points.get(b)! + (1 - wp));
+      points.set(w, points.get(w)! + pts.white);
+      points.set(b, points.get(b)! + pts.black);
       games.set(w, games.get(w)! + 1);
       games.set(b, games.get(b)! + 1);
-      opponents.get(w)!.push(b);
-      opponents.get(b)!.push(w);
+
+      // A walkower contributes no Buchholz term (FIDE practice). Otherwise the handful of players
+      // who happened to be paired with a cheat would be dragged down on the tiebreak by his ~0
+      // score — punished for the draw, not for anything they did.
+      if (!p.forfeit) {
+        opponents.get(w)!.push(b);
+        opponents.get(b)!.push(w);
+      }
     }
   }
 
@@ -233,6 +257,7 @@ export function computeStandings(t: Tournament): Standing[] {
       games: games.get(k)!,
       byes: byes.get(k)!,
       buchholz: opponents.get(k)!.reduce((sum, o) => sum + (points.get(o) ?? 0), 0),
+      blocked: isBlocked(t, nick),
     };
   });
 

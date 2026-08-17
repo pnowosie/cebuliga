@@ -5,11 +5,21 @@
  *
  * Results are shown from THIS player's perspective (1 / ½ / 0), not in pairing orientation,
  * with the raw pairing result in the tooltip.
+ *
+ * Two markers can appear on a row, and they mean different things on purpose:
+ *   🚫 sits next to a NICK whose playzone account is blocked — the opponent's, never this page's
+ *      owner (his blockade is stated once, in the banner, rather than repeated on every row);
+ *   ⚠️ sits on a RESULT decided by the regulation rather than on the board.
+ * An honest opponent of a blocked player is never marked 🚫.
  */
 import TournamentLayout from '../../../layouts/TournamentLayout.astro';
 import { playerPaths } from '@lib/site';
-import { formatPoints, hasAssignedColors, playerPageUrl, profileUrl } from '@lib/display';
+import {
+  BLOCKED_ICON, FORFEIT_ICON, SWAP_HINT,
+  blockedLabel, formatPoints, hasAssignedColors, platformLabel, playerPageUrl, profileUrl,
+} from '@lib/display';
 import { computeStandings, playerGames, tournamentProgress } from '@lib/standings';
+import { blockOf } from '@lib/forfeit';
 import type { Tournament } from '@lib/manifest';
 import ExternalIcon from '../../../components/ExternalIcon.astro';
 import BoardIcon from '../../../components/BoardIcon.astro';
@@ -42,8 +52,14 @@ const medals: Record<number, string> = { 1: '🥇', 2: '🥈', 3: '🥉' };
 const placeSymbol = hasResults && standing ? (medals[standing.place] ?? '🏆') : null;
 const initial = nick.slice(0, 1).toUpperCase();
 
-const SWAP_HINT =
-  'Gracze zagrali odwrotnymi kolorami niż w kojarzeniu. Wynik pokazany jest zgodnie z kojarzeniem.';
+/** This page's own owner. Drives the banner; never a per-row badge. */
+const myBlock = blockOf(t, nick);
+
+const FORFEIT_HINT =
+  'Walkower — konto przeciwnika zostało zablokowane na platformie. Zgodnie z regulaminem partia ' +
+  'jest przegrana dla niego; wynik partii może być inny, niż pokazany tutaj.';
+const OWN_FORFEIT_HINT =
+  'Walkower — partia przegrana wskutek blokady konta. Wynik partii może być inny, niż pokazany tutaj.';
 
 const outcome = (score: number | null) =>
   score === null ? '' : score === 1 ? 'win' : score === 0 ? 'loss' : 'draw';
@@ -87,6 +103,7 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
         {nick}{' '}
         <ExternalIcon />
       </a>
+      {myBlock && <span class="ban-inline" aria-hidden="true">{BLOCKED_ICON}</span>}
       {player?.name && <p class="realname">{player.name}</p>}
       <p class="rating">
         {
@@ -125,6 +142,22 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
       </div>
     </dl>
   </section>
+
+  {
+    myBlock && (
+      <aside class="ban-note" role="note">
+        <p class="ban-title">
+          <span aria-hidden="true">{BLOCKED_ICON}</span> {blockedLabel(myBlock)}
+        </p>
+        <p>
+          Na profilu zawodnika na {platformLabel(t.platform)} pojawił się komunikat:{' '}
+          <code>{myBlock.reason}</code>. Zgodnie z regulaminem (§ Fair play) oznacza to wykluczenie
+          z turnieju — wszystkie partie zostają zweryfikowane jako przegrane, a przeciwnicy
+          otrzymują punkt, niezależnie od wyniku osiągniętego przy szachownicy.
+        </p>
+      </aside>
+    )
+  }
 
   <h2 class="games-heading">Partie</h2>
 
@@ -189,6 +222,15 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
                       <a class="nick" href={playerPageUrl(t.slug, g.opponent!)}>
                         {g.opponent}
                       </a>
+                      {g.opponentBlocked && (
+                        <span
+                          class="ban"
+                          title={blockedLabel(blockOf(t, g.opponent!)!)}
+                          aria-label={blockedLabel(blockOf(t, g.opponent!)!)}
+                        >
+                          {BLOCKED_ICON}
+                        </span>
+                      )}
                       {g.score === null && (
                         <a
                           class="swords"
@@ -211,14 +253,41 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
                     <>
                       <span
                         class:list={['score', outcome(g.score)]}
-                        title={g.bye ? 'Punkt za pauzę' : `Wynik kojarzenia: ${g.result}`}
+                        title={
+                          g.bye
+                            ? 'Punkt za pauzę'
+                            : g.forfeit
+                              ? g.opponentBlocked ? FORFEIT_HINT : OWN_FORFEIT_HINT
+                              : `Wynik kojarzenia: ${g.result}`
+                        }
                       >
                         {formatPoints(g.score)}
                       </span>
-                      {g.colorsSwapped && showSwapWarning && (
-                        <span class="warn" title={SWAP_HINT} aria-label={SWAP_HINT}>
-                          ⚠
-                        </span>
+                      {g.forfeit ? (
+                        <>
+                          {g.result && (
+                            <s class="played" title={`Rozegrana partia: ${g.result}`}>
+                              {g.result}
+                            </s>
+                          )}
+                          <span
+                            class="wo"
+                            title={g.opponentBlocked ? FORFEIT_HINT : OWN_FORFEIT_HINT}
+                            aria-label={g.opponentBlocked ? FORFEIT_HINT : OWN_FORFEIT_HINT}
+                          >
+                            {FORFEIT_ICON}
+                          </span>
+                        </>
+                      ) : (
+                        /* Suppressed on a walkower: once the result is administrative, which
+                           colour was actually played is moot, and the two glyphs share a base
+                           codepoint — side by side they are unreadable. */
+                        g.colorsSwapped &&
+                        showSwapWarning && (
+                          <span class="warn" title={SWAP_HINT} aria-label={SWAP_HINT}>
+                            ⚠
+                          </span>
+                        )
                       )}
                     </>
                   )}
@@ -432,6 +501,57 @@ const gameHint = (c: Color) => `Partia — ${colorName(c)}`;
     margin-left: 0.4rem;
     color: var(--amber);
     cursor: help;
+  }
+
+  /* Red, not amber: a walkower is not a colour swap, and ⚠️ (U+26A0 U+FE0F) shares its base
+     codepoint with the swap ⚠ (U+26A0). Colour, position and aria-label are what separate them. */
+  .wo {
+    margin-left: 0.4rem;
+    color: var(--red);
+    cursor: help;
+  }
+
+  .played {
+    margin-left: 0.4rem;
+    font-size: 0.8em;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    cursor: help;
+  }
+
+  .ban {
+    margin-left: 0.35rem;
+    cursor: help;
+  }
+
+  .ban-inline {
+    margin-left: 0.4rem;
+  }
+
+  .ban-note {
+    margin: 1rem 0 0;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--red);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--red) 8%, transparent);
+    font-size: 0.9rem;
+  }
+
+  .ban-note p {
+    margin: 0.35rem 0 0;
+  }
+
+  .ban-title {
+    margin: 0 !important;
+    font-weight: 600;
+    color: var(--red);
+  }
+
+  .ban-note code {
+    font-size: 0.85em;
+    padding: 0.05rem 0.3rem;
+    border-radius: 4px;
+    background: var(--surface, rgba(127, 127, 127, 0.15));
   }
 
   .swords {

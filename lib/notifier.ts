@@ -27,6 +27,7 @@ import {
 } from "./index";
 import type { Logger } from "./common";
 import { loadTournaments, syncRounds, writeIfChanged, type Score, type Tournament } from "./manifest";
+import { applyBlockades } from "./forfeit";
 import { postDelayedGameToDiscord, renderDiscordMessage } from "./discord";
 import type { PostedGame } from "./commit";
 
@@ -184,6 +185,13 @@ export async function notify({ tournamentsDir, dryRun, log }: NotifyOpts): Promi
     const ingested = await syncRounds(t, tournamentsDir);
     if (ingested) log.info(`${t.slug}: synced round file(s) (auto-created/materialized)`);
 
+    // Defensive, and offline. Blockades are DETECTED upstream by game-notifier's `tourney refresh`;
+    // this only enforces what the manifest already records. It has to run after syncRounds: a round
+    // pasted after the blockade arrives unforfeited, and without this the loop below would go
+    // hunting for the games of a player who has been withdrawn from the tournament.
+    const forfeited = applyBlockades(t);
+    if (forfeited) log.warn(`${t.slug}: walkowery applied for blocked account(s)`);
+
     // Say WHICH env var is missing and stop: a tournament whose webhook was never added to the
     // workflow would otherwise look like a tournament with no games. Adding a channel means both
     // a repo secret AND an `env:` line in refresh.yml — the secrets context cannot be indexed by
@@ -192,6 +200,9 @@ export async function notify({ tournamentsDir, dryRun, log }: NotifyOpts): Promi
     if (!webhook && !dryRun) {
       log.error(`${t.slug}: missing webhook env ${channelEnv(t.channel)} — skipping tournament`);
       errors++;
+      // Still persist: a missing webhook must cost the announcement, not an ingested round or a
+      // walkower this run derived.
+      if (writeIfChanged(file, t)) { anyChange = true; log.info(`${t.slug}: manifest updated (0 posted)`); }
       continue;
     }
 
@@ -206,6 +217,10 @@ export async function notify({ tournamentsDir, dryRun, log }: NotifyOpts): Promi
       const since = round.startDate ? Date.parse(round.startDate) : start;
       for (const p of round.pairings) {
         if (p.result) continue;     // already resolved → never re-post (the dedup)
+        // A walkower settles the board administratively, and a board that was never played carries
+        // no `result` — so without this the withdrawn player's games get searched for on every run,
+        // and anything he happened to play in the window would be announced as a tournament result.
+        if (p.forfeit) continue;
         if (!p.black) continue;     // bye
         const found = await findGame(t, p.white, p.black, since, until, ccCache, claimed);
         if (found.status === "rate_limited") { log.warn(`${t.slug}: rate limited — stopping this run`); break loop; }
@@ -249,7 +264,10 @@ export async function notify({ tournamentsDir, dryRun, log }: NotifyOpts): Promi
       }
     }
 
-    if (!dryRun && (ingested || posted > 0)) {
+    // Unconditional (`writeIfChanged` is already a no-op when nothing moved), matching upstream.
+    // Gating this on `ingested || posted > 0` silently dropped every OTHER way the run mutates the
+    // manifest — `delete p.colors_swapped` above, and now `applyBlockades`.
+    if (!dryRun) {
       if (writeIfChanged(file, t)) { anyChange = true; log.info(`${t.slug}: manifest updated (${posted} posted)`); }
     }
   }

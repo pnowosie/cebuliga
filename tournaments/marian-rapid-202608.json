@@ -7,8 +7,9 @@
   "channel": "marianczello",
   "timeControl": "rapid",
   "clockInfo": "⌛ 15'+10\"",
+  "rated": false,
   "active": true,
-  "startDate": "2026-08-08T06:59:00.000Z",
+  "startDate": "2026-08-05T22:00:00.000Z",
   "endDate": "2026-09-27T00:00:00.000Z",
   "cmUrl": "https://www.chessmanager.com/pl-pl/tournaments/5877465018925056",
   "players": [
@@ -63,7 +64,7 @@
     },
     {
       "nick": "SiwerzFromPoland",
-      "rating": 1352,
+      "rating": 1370,
       "avatar": "https://images.chesscomfiles.com/uploads/v1/user/523514971.c8a153f5.200x200o.bc043838632e.jpg"
     },
     {
@@ -84,11 +85,17 @@
       "avatar": "https://images.chesscomfiles.com/uploads/v1/user/516664511.a1749276.200x200o.123e7430fad6.jpg"
     }
   ],
+  "blocked": {
+    "tomask14": {
+      "detected_at": "2026-08-17T11:03:01.778Z",
+      "reason": "closed:fair_play_violations"
+    }
+  },
   "plannedRounds": 7,
   "rounds": [
     {
       "round": 1,
-      "startDate": "2026-08-08T07:15:53.916Z",
+      "startDate": "2026-08-05T22:00:00.000Z",
       "pairings": [
         {
           "board": 1,
@@ -96,7 +103,7 @@
           "black": "Janeczek5",
           "result": "0-1",
           "game_url": "https://www.chess.com/game/live/172758245494",
-          "updated_at": "2026-08-09T18:41:55.273Z"
+          "updated_at": "2026-08-13T19:38:03.289Z"
         },
         {
           "board": 2,
@@ -104,7 +111,7 @@
           "black": "Sylwester016",
           "result": "1-0",
           "game_url": "https://www.chess.com/game/live/172718843558",
-          "updated_at": "2026-08-08T22:50:01.395Z"
+          "updated_at": "2026-08-13T19:38:03.696Z"
         },
         {
           "board": 3,
@@ -112,7 +119,7 @@
           "black": "123hohoee",
           "result": "0-1",
           "game_url": "https://www.chess.com/game/live/172744880502",
-          "updated_at": "2026-08-09T13:50:01.685Z"
+          "updated_at": "2026-08-13T19:38:04.192Z"
         },
         {
           "board": 4,
@@ -120,7 +127,7 @@
           "black": "SiwerzFromPoland",
           "result": "½-½",
           "game_url": "https://www.chess.com/game/live/172759315760",
-          "updated_at": "2026-08-09T18:41:57.332Z"
+          "updated_at": "2026-08-13T19:38:04.602Z"
         },
         {
           "board": 5,
@@ -128,7 +135,7 @@
           "black": "ppm2019",
           "result": "1-0",
           "game_url": "https://www.chess.com/game/live/172784468502",
-          "updated_at": "2026-08-10T11:08:37.837Z"
+          "updated_at": "2026-08-13T19:38:05.071Z"
         },
         {
           "board": 6,
@@ -136,7 +143,8 @@
           "black": "TomasK14",
           "result": "0-1",
           "game_url": "https://www.chess.com/game/live/172759598834",
-          "updated_at": "2026-08-09T18:41:59.769Z"
+          "updated_at": "2026-08-13T19:38:05.426Z",
+          "forfeit": "black"
         },
         {
           "board": 7,
@@ -144,13 +152,13 @@
           "black": "Czapla959",
           "result": "0-1",
           "game_url": "https://www.chess.com/game/live/172831934222",
-          "updated_at": "2026-08-11T10:50:48.273Z"
+          "updated_at": "2026-08-13T19:38:05.713Z"
         }
       ]
     },
     {
       "round": 2,
-      "startDate": "2026-08-10T11:49:33.000Z",
+      "startDate": "2026-08-09T22:00:00.000Z",
       "pairings": [
         {
           "board": 1,
@@ -158,7 +166,7 @@
           "black": "Czapla959",
           "result": "1-0",
           "game_url": "https://www.chess.com/game/live/172844828702",
-          "updated_at": "2026-08-11T16:01:43.651Z"
+          "updated_at": "2026-08-13T19:38:05.986Z"
         },
         {
           "board": 2,
@@ -166,7 +174,8 @@
           "black": "Akibajedynka",
           "result": "0-1",
           "game_url": "https://www.chess.com/game/live/172902996930",
-          "updated_at": "2026-08-12T20:45:53.118Z"
+          "updated_at": "2026-08-13T19:38:06.286Z",
+          "forfeit": "white"
         },
         {
           "board": 3,
@@ -174,7 +183,7 @@
           "black": "ORPMsciciel",
           "result": "0-1",
           "game_url": "https://www.chess.com/game/live/172882459752",
-          "updated_at": "2026-08-12T14:20:31.030Z"
+          "updated_at": "2026-08-13T19:38:06.586Z"
         },
         {
           "board": 4,
@@ -182,7 +191,7 @@
           "black": "HubiiQ",
           "result": "0-1",
           "game_url": "https://www.chess.com/game/live/172847561588",
-          "updated_at": "2026-08-11T17:57:43.301Z"
+          "updated_at": "2026-08-13T19:38:06.837Z"
         },
         {
           "board": 5,
@@ -190,7 +199,7 @@
           "black": "f0rk1ngtal",
           "result": "0-1",
           "game_url": "https://www.chess.com/game/live/172848071372",
-          "updated_at": "2026-08-11T17:57:47.190Z"
+          "updated_at": "2026-08-13T19:38:07.195Z"
         },
         {
           "board": 6,
@@ -198,7 +207,7 @@
           "black": "Zugsonchess",
           "result": "½-½",
           "game_url": "https://www.chess.com/game/live/172856868672",
-          "updated_at": "2026-08-11T20:45:34.376Z"
+          "updated_at": "2026-08-13T19:38:07.195Z"
         },
         {
           "board": 7,
@@ -206,13 +215,13 @@
           "black": "dziad_z_ulicy_nr1",
           "result": "1-0",
           "game_url": "https://www.chess.com/game/live/172988301656",
-          "updated_at": "2026-08-14T16:54:26.750Z"
+          "updated_at": "2026-08-14T17:00:41.606Z"
         }
       ]
     },
     {
       "round": 3,
-      "startDate": "2026-08-14T07:17:29.000Z",
+      "startDate": "2026-08-13T22:00:00.000Z",
       "pairings": [
         {
           "board": 1,
@@ -220,7 +229,7 @@
           "black": "Janeczek5",
           "result": "0-1",
           "game_url": "https://www.chess.com/game/live/172996779172",
-          "updated_at": "2026-08-15T07:21:46.657Z"
+          "updated_at": "2026-08-15T07:18:48.895Z"
         },
         {
           "board": 2,
@@ -238,12 +247,13 @@
           "black": "Sylwester016",
           "result": "0-1",
           "game_url": "https://www.chess.com/game/live/173031074732",
-          "updated_at": "2026-08-15T15:21:36.765Z"
+          "updated_at": "2026-08-15T17:00:45.124Z"
         },
         {
           "board": 5,
           "white": "Zugsonchess",
-          "black": "TomasK14"
+          "black": "TomasK14",
+          "forfeit": "black"
         },
         {
           "board": 6,
@@ -251,7 +261,7 @@
           "black": "Miksukox",
           "result": "1-0",
           "game_url": "https://www.chess.com/game/live/173083592064",
-          "updated_at": "2026-08-16T17:20:04.722Z"
+          "updated_at": "2026-08-16T19:00:44.793Z"
         },
         {
           "board": 7,
@@ -259,7 +269,7 @@
           "black": "ppm2019",
           "result": "0-1",
           "game_url": "https://www.chess.com/game/live/173042329168",
-          "updated_at": "2026-08-15T20:23:16.566Z"
+          "updated_at": "2026-08-15T21:00:44.287Z"
         }
       ]
     }

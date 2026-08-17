@@ -2,7 +2,7 @@
  * Presentation helpers shared by the Astro pages. Polish UI strings live here so the
  * templates stay free of hardcoded labels.
  */
-import type { Tournament, TournamentType } from "./manifest";
+import type { Pairing, PlayerBlock, Tournament, TournamentType } from "./manifest";
 
 /** Where the tournament manifests live, relative to the repo root (Astro's cwd at build time). */
 export const TOURNAMENTS_DIR = "tournaments";
@@ -145,6 +145,59 @@ export function dateRange(t: Tournament): string {
   const from = formatDate(t.startDate);
   const to = formatDate(t.endDate);
   return from && to ? `${from} – ${to}` : from || to;
+}
+
+// ─── markers ────────────────────────────────────────────────────────────────
+//
+// Two warning glyphs coexist on a result cell, and they are nearly the same character: `⚠` is
+// U+26A0 and `⚠️` is U+26A0 + U+FE0F (a variation selector asking for emoji presentation). They can
+// render identically, both announce as "warning" to a screen reader, and one `grep '⚠'` matches
+// both. So they are kept apart by everything except the glyph: colour (amber `.warn` vs red `.wo`),
+// position (swap last), and a distinct `title`/`aria-label` on each. When both would apply to one
+// row the swap marker is suppressed — once the result is administrative, which colour was actually
+// played is moot, and `⚠️ ⚠` side by side is unreadable.
+
+/** Next to a NICK whose playzone account is blocked. Never next to their honest opponent. */
+export const BLOCKED_ICON = "🚫";
+/** Next to a RESULT decided by the regulation rather than on the board. */
+export const FORFEIT_ICON = "⚠️";
+
+export const SWAP_HINT =
+  "Gracze zagrali odwrotnymi kolorami niż w kojarzeniu. Wynik pokazany jest zgodnie z kojarzeniem.";
+
+/** "Wykryto blokadę konta 17.08.2026" — a DETECTION date; no platform exposes the ban date. */
+export function blockedLabel(b: PlayerBlock): string {
+  return `Wykryto blokadę konta ${formatDate(b.detected_at)}`;
+}
+
+/**
+ * A walkower written in result notation, for the cells that show one.
+ *
+ * `0-0` is deliberately not a `Score`: two blocked players facing each other both lose, and the
+ * three-value union cannot say that. It only ever reaches the page, never the manifest.
+ */
+export function forfeitResult(p: Pairing): string {
+  return p.forfeit === "white" ? "0-1" : p.forfeit === "black" ? "1-0" : "0-0";
+}
+
+/**
+ * Tooltip for a walkower. Names the blocked player and quotes the platform's wording verbatim —
+ * the rule covers a self-closed account (`closed`) as well as a fair-play ban
+ * (`closed:fair_play_violations`), and on a public page only the raw signal tells them apart.
+ */
+export function forfeitHint(t: Tournament, p: Pairing): string {
+  const who = p.forfeit === "both" ? [p.white, p.black] : p.forfeit === "white" ? [p.white] : [p.black];
+  const named = who
+    .filter((n): n is string => !!n)
+    .map((n) => {
+      const b = t.blocked?.[n.toLowerCase()];
+      return b ? `@${n} (${b.reason}, wykryto ${formatDate(b.detected_at)})` : `@${n}`;
+    })
+    .join(" i ");
+  return (
+    `Walkower — konto ${named} zablokowane na ${platformLabel(t.platform)}. ` +
+    `Zgodnie z regulaminem partia jest przegrana; wynik partii może być inny, niż pokazany tutaj.`
+  );
 }
 
 /** Latest round number, or null when the tournament has no rounds yet. */

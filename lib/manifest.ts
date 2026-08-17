@@ -46,6 +46,35 @@ export interface Pairing {
    *  PAIRING orientation (the cron flips it), so the site only needs this for the ⚠ icon.
    *  Meaningless for `type: "round-robin"`, where the playzone draws the colour. */
   colors_swapped?: boolean;
+  /**
+   * Walkower imposed by the regulation, because a player's playzone account was blocked: which
+   * side LOST, in pairing orientation.
+   *
+   * WRITTEN UPSTREAM ONLY, by `game-notifier`'s `tourney refresh`. This repo renders it and its
+   * cron refuses to touch a pairing carrying it; nothing here ever sets it.
+   *
+   * It OVERRIDES `result` for scoring rather than replacing it — `result` and `game_url` keep
+   * describing the game that was actually played, so the site can show both and the Discord
+   * history stays true. `pairingPoints()` in `lib/forfeit.ts` is the only correct way to score a
+   * pairing once this exists.
+   */
+  forfeit?: "white" | "black" | "both";
+}
+
+/**
+ * A playzone blockade, as `game-notifier`'s `tourney refresh` observed it.
+ *
+ * WRITE-ONCE upstream: per the regulation a blocked player is out of the tournament permanently,
+ * even if the platform later lifts the ban. The site only reads this.
+ */
+export interface PlayerBlock {
+  /** ISO instant the check FIRST saw it. Neither platform exposes the real ban date, so this is a
+   *  DETECTION date — the UI must say "wykryto", never "zablokowano dnia". */
+  detected_at: string;
+  /** The platform's own wording, verbatim: `closed:fair_play_violations`, `closed`,
+   *  `tosViolation`, `disabled` — or `manual`. Shown on the page, because the rule covers a
+   *  self-closed account as well as a fair-play ban and only the raw signal tells them apart. */
+  reason: string;
 }
 
 export interface Round {
@@ -79,6 +108,10 @@ export interface Tournament {
   cmUrl?: string;
   /** Starting list. Maintained by `pnpm t add`; absent on hand-written manifests. */
   players?: Player[];
+  /** Blocked accounts, keyed by LOWERCASED nick — the source of truth for `Pairing.forfeit`.
+   *  Lowercase because pairing casing and roster casing disagree in real data ("Zugsonchess" in a
+   *  pairing vs "ZugsonChess" in `players[]`), so it is the only stable join. Written upstream. */
+  blocked?: Record<string, PlayerBlock>;
   /** How many rounds the event is scheduled to have, as announced by the organiser. Display
    *  ONLY — nothing derives pairings or windows from it. A swiss creates its rounds one paste at
    *  a time, so `rounds.length` is "how far we got", never "how long it is"; without this the
