@@ -239,7 +239,10 @@
         {
           "board": 3,
           "white": "Czapla959",
-          "black": "123hohoee"
+          "black": "123hohoee",
+          "result": "1-0",
+          "game_url": "https://www.chess.com/game/live/173135093262",
+          "updated_at": "2026-08-17T19:28:55.106Z"
         },
         {
           "board": 4,
