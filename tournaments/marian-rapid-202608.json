@@ -234,7 +234,10 @@
         {
           "board": 2,
           "white": "ORPMsciciel",
-          "black": "HubiiQ"
+          "black": "HubiiQ",
+          "result": "½-½",
+          "game_url": "https://www.chess.com/game/live/173170051992",
+          "updated_at": "2026-08-18T14:27:47.160Z"
         },
         {
           "board": 3,
