@@ -275,6 +275,48 @@
           "updated_at": "2026-08-15T21:00:44.287Z"
         }
       ]
+    },
+    {
+      "round": 4,
+      "startDate": "2026-08-17T09:05:04.000Z",
+      "pairings": [
+        {
+          "board": 1,
+          "white": "Janeczek5",
+          "black": "ORPMsciciel"
+        },
+        {
+          "board": 2,
+          "white": "Czapla959",
+          "black": "Akibajedynka"
+        },
+        {
+          "board": 3,
+          "white": "HubiiQ",
+          "black": "f0rk1ngtal"
+        },
+        {
+          "board": 4,
+          "white": "Sylwester016",
+          "black": "Zugsonchess"
+        },
+        {
+          "board": 5,
+          "white": "123hohoee",
+          "black": "SiwerzFromPoland"
+        },
+        {
+          "board": 6,
+          "white": "ppm2019",
+          "black": "Miksukox"
+        },
+        {
+          "board": 7,
+          "white": "TomasK14",
+          "black": "dziad_z_ulicy_nr1",
+          "forfeit": "white"
+        }
+      ]
     }
   ]
 }
