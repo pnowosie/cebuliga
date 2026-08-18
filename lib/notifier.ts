@@ -5,9 +5,19 @@
  *
  * For each active, in-window tournament: ingest new round files, then for every unresolved (no
  * `result`) pairing of every round — past rounds included, since a delayed game still counts —
- * find the game on the platform and post it to Discord exactly once. The manifest's `result` IS
- * the dedup: it is set only after a successful post, and the manifest is committed back to the
- * repo by the caller. No Redis, no state file.
+ * find the game on the platform and record it. The manifest's `result` IS the dedup, and the
+ * manifest is committed back to the repo by the caller. No Redis, no state file.
+ *
+ * ⚠ ANNOUNCING IS DISABLED HERE. `org/game-notifier` on Forgejo is the announcer now; this repo is
+ * a pure UPDATER until it is decommissioned — it keeps the manifest (and therefore the site) fresh
+ * and posts nothing. The webhook gate and the Discord post are commented out in place rather than
+ * ported: upstream does this properly with `--no-announce` / `Tournament.notify` /
+ * `Pairing.announced_at`, none of which is worth backporting into a repo scheduled for removal.
+ * Re-enabling means reverting those two blocks — and must NEVER be done while game-notifier has
+ * ANNOUNCE=true, or every result double-posts.
+ *
+ * Consequence: `NotifyResult.errors` is now always 0 (both sites that incremented it were Discord
+ * failures), and `posted` means "discovered and recorded this run", not "announced".
  *
  * Three deliberate deltas from upstream, all to be mirrored back:
  *
@@ -17,9 +27,10 @@
  *     pairings per pair, one per colour, in the same window — hands both pairings the same game.
  *  2. **`colors_swapped` is persisted** on the pairing, not just appended to the Discord text.
  *     The site needs it to render the ⚠; upstream computes it and throws it away.
- *  3. **A failed Discord post no longer loses the run's earlier results.** It is logged, the
- *     tournament's loop stops, and the manifest is still written for the games that DID post —
+ *  3. **A failed Discord post no longer loses the run's earlier results.** It was logged, the
+ *     tournament's loop stopped, and the manifest was still written for the games that DID post —
  *     otherwise a webhook error at board 5 makes boards 1-4 announce again on the next run.
+ *     Moot while announcing is disabled; kept so the delta is still mirrored back upstream.
  */
 import {
   chesscomScore, findChesscomGames, type ChessComGame,
@@ -192,19 +203,25 @@ export async function notify({ tournamentsDir, dryRun, log }: NotifyOpts): Promi
     const forfeited = applyBlockades(t);
     if (forfeited) log.warn(`${t.slug}: walkowery applied for blocked account(s)`);
 
-    // Say WHICH env var is missing and stop: a tournament whose webhook was never added to the
-    // workflow would otherwise look like a tournament with no games. Adding a channel means both
-    // a repo secret AND an `env:` line in refresh.yml — the secrets context cannot be indexed by
-    // a channel name read out of a manifest.
-    const webhook = process.env[channelEnv(t.channel)];
-    if (!webhook && !dryRun) {
-      log.error(`${t.slug}: missing webhook env ${channelEnv(t.channel)} — skipping tournament`);
-      errors++;
-      // Still persist: a missing webhook must cost the announcement, not an ingested round or a
-      // walkower this run derived.
-      if (writeIfChanged(file, t)) { anyChange = true; log.info(`${t.slug}: manifest updated (0 posted)`); }
-      continue;
-    }
+    // ANNOUNCING DISABLED — `org/game-notifier` on Forgejo is the announcer now. This repo is
+    // phasing out; until it goes, it stays a pure UPDATER: it discovers games and keeps the
+    // manifest (and therefore the site) fresh, and posts nothing.
+    //
+    // Deliberately a deletion rather than a port. Upstream does this properly with
+    // `--no-announce` / `Tournament.notify` / `Pairing.announced_at`; none of that is worth
+    // backporting into a repo scheduled for decommission. The cost is that this cron can no
+    // longer announce at all without reverting the commit — which is the point.
+    //
+    // NEVER re-enable this while game-notifier has ANNOUNCE=true: two announcers on one channel
+    // double-post every result.
+    //
+    // const webhook = process.env[channelEnv(t.channel)];
+    // if (!webhook && !dryRun) {
+    //   log.error(`${t.slug}: missing webhook env ${channelEnv(t.channel)} — skipping tournament`);
+    //   errors++;
+    //   if (writeIfChanged(file, t)) { anyChange = true; log.info(`${t.slug}: manifest updated (0 posted)`); }
+    //   continue;
+    // }
 
     const until = Math.min(now, end);
     const ccCache = new Map<string, ChessComGame[]>();
@@ -236,18 +253,20 @@ export async function notify({ tournamentsDir, dryRun, log }: NotifyOpts): Promi
         };
 
         if (dryRun) {
-          log.info(`[dry] would post ${t.slug} r${round.round} b${p.board}:\n${renderDiscordMessage(vars)}`);
+          log.info(`[dry] would record ${t.slug} r${round.round} b${p.board}:\n${renderDiscordMessage(vars)}`);
           continue;
         }
 
-        try {
-          await postDelayedGameToDiscord(webhook!, vars);
-        } catch (e) {
-          // Stop this tournament but keep what already posted (see the header's delta 3).
-          log.error(`${t.slug}: discord post failed at r${round.round} b${p.board}: ${(e as Error).message}`);
-          errors++;
-          break loop;
-        }
+        // ANNOUNCING DISABLED — see the note above the webhook gate. The result is still written
+        // to the manifest below; only the Discord post is gone.
+        //
+        // try {
+        //   await postDelayedGameToDiscord(webhook!, vars);
+        // } catch (e) {
+        //   log.error(`${t.slug}: discord post failed at r${round.round} b${p.board}: ${(e as Error).message}`);
+        //   errors++;
+        //   break loop;
+        // }
 
         p.result = found.result;
         p.game_url = found.gameUrl;
@@ -259,7 +278,7 @@ export async function notify({ tournamentsDir, dryRun, log }: NotifyOpts): Promi
           result: found.result, endedAt: found.endedAt,
         });
         posted++;
-        log.success(`posted ${t.slug} r${round.round} b${p.board}: ${found.result}${found.swapped ? " (colors swapped)" : ""}`);
+        log.success(`recorded ${t.slug} r${round.round} b${p.board}: ${found.result}${found.swapped ? " (colors swapped)" : ""}`);
         await sleep(t.platform === "lichess" ? 2000 : 1000); // courtesy throttle
       }
     }
