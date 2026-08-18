@@ -1,0 +1,13 @@
+[StartDate 2026-08-18]
+
+#			Białe	Ranking	Pkt	Runda 4			Czarne	Ranking	Pkt	
+1.			Janeczek5	2301	3.0				ORPMsciciel	1231	2.5	
+2.			Czapla959	1870	2.0				Akibajedynka	2294	2.0	
+3.			HubiiQ	2053	2.0				f0rk1ngtal	1919	2.0	
+4.			Sylwester016	1590	2.0				Zugsonchess	1820	1.5	
+5.			123hohoee	2163	1.0				SiwerzFromPoland	1414	1.5	
+6.			ppm2019	1921	1.0				Miksukox	1577	0.5	
+7.			TomasK14	567	0.0	0 : 1			dziad_z_ulicy_nr1	418	0.0	
+Ustawienia dotyczące prywatności i plików cookie
+Zarządzana przez Google. Zgodność z zasadami TCF organizacji IAB. ID platformy: 300
+chess:manager
