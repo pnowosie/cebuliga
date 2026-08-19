@@ -286,7 +286,10 @@
         {
           "board": 1,
           "white": "Janeczek5",
-          "black": "ORPMsciciel"
+          "black": "ORPMsciciel",
+          "result": "1-0",
+          "game_url": "https://www.chess.com/game/live/173231569380",
+          "updated_at": "2026-08-19T18:26:54.832Z"
         },
         {
           "board": 2,
