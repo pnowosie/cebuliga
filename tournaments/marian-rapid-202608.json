@@ -311,7 +311,10 @@
         {
           "board": 6,
           "white": "ppm2019",
-          "black": "Miksukox"
+          "black": "Miksukox",
+          "result": "1-0",
+          "game_url": "https://www.chess.com/game/live/173210746210",
+          "updated_at": "2026-08-19T14:27:36.288Z"
         },
         {
           "board": 7,
