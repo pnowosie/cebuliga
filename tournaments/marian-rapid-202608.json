@@ -304,12 +304,18 @@
         {
           "board": 4,
           "white": "Sylwester016",
-          "black": "Zugsonchess"
+          "black": "Zugsonchess",
+          "result": "1-0",
+          "game_url": "https://www.chess.com/game/live/173232097408",
+          "updated_at": "2026-08-19T20:20:44.585Z"
         },
         {
           "board": 5,
           "white": "123hohoee",
-          "black": "SiwerzFromPoland"
+          "black": "SiwerzFromPoland",
+          "result": "1-0",
+          "game_url": "https://www.chess.com/game/live/173232281542",
+          "updated_at": "2026-08-19T20:20:45.786Z"
         },
         {
           "board": 6,
