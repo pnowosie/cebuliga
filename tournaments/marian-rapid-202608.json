@@ -335,6 +335,47 @@
           "forfeit": "white"
         }
       ]
+    },
+    {
+      "round": 5,
+      "startDate": "2026-08-19T19:46:01.000Z",
+      "pairings": [
+        {
+          "board": 1,
+          "white": "f0rk1ngtal",
+          "black": "Janeczek5"
+        },
+        {
+          "board": 2,
+          "white": "Sylwester016",
+          "black": "Czapla959"
+        },
+        {
+          "board": 3,
+          "white": "Akibajedynka",
+          "black": "ORPMsciciel"
+        },
+        {
+          "board": 4,
+          "white": "ppm2019",
+          "black": "123hohoee"
+        },
+        {
+          "board": 5,
+          "white": "Zugsonchess",
+          "black": "HubiiQ"
+        },
+        {
+          "board": 6,
+          "white": "dziad_z_ulicy_nr1",
+          "black": "SiwerzFromPoland"
+        },
+        {
+          "board": 7,
+          "white": "Miksukox",
+          "black": "Underdijo"
+        }
+      ]
     }
   ]
 }
