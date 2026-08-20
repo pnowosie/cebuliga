@@ -1,0 +1,12 @@
+[StartDate 2026-08-20]
+
+
+#			Białe	Ranking	Pkt	Runda 5			Czarne	Ranking	Pkt	
+1.			f0rk1ngtal	1919	3.0				Janeczek5	2301	4.0	
+2.			Sylwester016	1590	3.0				Czapla959	1870	2.5	
+3.			Akibajedynka	2294	2.5				ORPMsciciel	1231	2.5	
+4.			ppm2019	1921	2.0				123hohoee	2163	2.0	
+5.			Zugsonchess	1820	1.5				HubiiQ	2053	2.0	
+6.			dziad_z_ulicy_nr1	418	1.0				SiwerzFromPoland	1414	1.5	
+7.			Miksukox	1577	0.5				Underdijo	2024	0.0	
+chess:manager
