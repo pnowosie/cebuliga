@@ -343,12 +343,18 @@
         {
           "board": 1,
           "white": "f0rk1ngtal",
-          "black": "Janeczek5"
+          "black": "Janeczek5",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/173329123106",
+          "updated_at": "2026-08-21T20:19:50.845Z"
         },
         {
           "board": 2,
           "white": "Sylwester016",
-          "black": "Czapla959"
+          "black": "Czapla959",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/173330988074",
+          "updated_at": "2026-08-21T20:19:52.117Z"
         },
         {
           "board": 3,
@@ -373,7 +379,10 @@
         {
           "board": 7,
           "white": "Miksukox",
-          "black": "Underdijo"
+          "black": "Underdijo",
+          "result": "½-½",
+          "game_url": "https://www.chess.com/game/live/173328810830",
+          "updated_at": "2026-08-21T20:19:56.110Z"
         }
       ]
     }
