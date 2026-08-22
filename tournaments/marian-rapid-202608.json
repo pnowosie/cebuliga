@@ -364,7 +364,10 @@
         {
           "board": 4,
           "white": "ppm2019",
-          "black": "123hohoee"
+          "black": "123hohoee",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/173377088444",
+          "updated_at": "2026-08-22T20:16:46.908Z"
         },
         {
           "board": 5,
