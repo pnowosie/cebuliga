@@ -378,7 +378,10 @@
         {
           "board": 5,
           "white": "Zugsonchess",
-          "black": "HubiiQ"
+          "black": "HubiiQ",
+          "result": "½-½",
+          "game_url": "https://www.chess.com/game/live/173423853850",
+          "updated_at": "2026-08-23T20:16:00.235Z"
         },
         {
           "board": 6,
