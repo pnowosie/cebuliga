@@ -362,7 +362,10 @@
         {
           "board": 3,
           "white": "Akibajedynka",
-          "black": "ORPMsciciel"
+          "black": "ORPMsciciel",
+          "result": "1-0",
+          "game_url": "https://www.chess.com/game/live/173417495126",
+          "updated_at": "2026-08-23T16:18:18.345Z"
         },
         {
           "board": 4,
