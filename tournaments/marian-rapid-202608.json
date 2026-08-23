@@ -294,7 +294,10 @@
         {
           "board": 2,
           "white": "Czapla959",
-          "black": "Akibajedynka"
+          "black": "Akibajedynka",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/173409111768",
+          "updated_at": "2026-08-23T14:18:03.772Z"
         },
         {
           "board": 3,
@@ -377,7 +380,10 @@
         {
           "board": 6,
           "white": "dziad_z_ulicy_nr1",
-          "black": "SiwerzFromPoland"
+          "black": "SiwerzFromPoland",
+          "result": "0-1",
+          "game_url": "https://www.chess.com/game/live/173412734244",
+          "updated_at": "2026-08-23T14:18:06.580Z"
         },
         {
           "board": 7,
